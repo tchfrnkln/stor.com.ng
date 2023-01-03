@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "stor-com-ng",
+    "main": "stor-com-ng"
+  },
+  "targets": {},
+  "etags": {}
+}

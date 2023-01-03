@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth - stor.com.ng</title>
+    <!-- favi -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/ico/favicon-16x16.png">
+    <!-- favi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind.js"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('contents', ()=> ({
+                to:location.search.substr(1),
+                src:"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp",
+                upd(){
+                    console.log(this.src);
+                }
+            }))
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <section class="h-screen py-6" x-data="contents">
+            <div class="px-6 h-full text-gray-800">
+                <h1 class="text-center font-bold text-xl ">Ecommerce Professionally</h1>
+                <p class="text-center text-xs">brought to you by <span class="font-bold text-blue-600">SToR</span></p>
+                <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
+                    <!-- image top -->
+                    <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0" x-init="upd()">
+                        <img :src="src" class="w-full" alt="stor.com.ng" />
+                    </div>
+                    
+                    <!-- form login, new, verification sent, Email verified -->
+                    <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+                        <!-- Log in -->
+                        <form id="logIn_form" class="hidden">
+                            <!-- optional signup -->
+                            <div class="hidden">
+                                <div class="flex flex-row items-center justify-center lg:justify-start">
+                                    <p class="text-lg mb-0 mr-4">Log in with</p>
+                                    <button id="googleAuthLog"
+                                    type="button"
+                                    data-mdb-ripple="true"
+                                    data-mdb-ripple-color="light"
+                                    class="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                                        <!-- Goggle -->                  
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-google" viewBox="0 0 16 16" id="IconChangeColor"> <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" id="mainIconPathAttribute"></path> </svg>
+                                    </button>
+                                </div>
+                                <div class="flex items-center my-4 before:flex-1 before:border-t before:border-gray-300 before:mt-0.5 after:flex-1 after:border-t after:border-gray-300 after:mt-0.5">
+                                    <p class="text-center font-semibold mx-4 mb-0">Or</p>
+                                </div>
+                                <!-- already have an account register -->
+                                <p class="text-sm font-semibold mt-2 pt-1 mb-0">Don't have an Account
+                                    <a href="./?signup" class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Sign Up</a>
+                                </p>
+                            </div>
+                            
+                            <div class="hidden">
+                                <!-- Email input -->
+                                <div class="mb-6">
+                                    <input type="email" name="email"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="Email address" />
+                                </div>
+
+                                <!-- Password input -->
+                                <div class="mb-6">
+                                    <input type="password" name="password"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" placeholder="Password" />
+                                </div>
+
+                                <!-- forgot password and checkbox-->
+                                <div class="flex justify-end items-center mb-6">
+                                    <div class="form-group form-check hidden">
+                                        <input type="checkbox"
+                                        class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                                        id="exampleCheck2"/>
+                                        <label class="form-check-label inline-block     text-gray-800" for="exampleCheck2"
+                                        >Remember me</label>
+                                    </div>
+                                    <a href="#!" class="text-gray-800 text-sm lowercase ">Forgot password?</a>
+                                </div>
+
+                                <!-- login btn and don't have an account register-->
+                                <div class="text-center lg:text-left">
+                                    <button type="submit"
+                                    class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" >
+                                        Login
+                                    </button>
+                                    <!-- don't have an account register -->
+                                    <p class="text-sm font-semibold mt-2 pt-1 mb-0">
+                                        Don't have an account?
+                                        <a href="#!"
+                                        class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Register</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <!-- Create a new Account -->
+                        <form id="signUp_form" class="">
+                            <!-- optional signup -->
+                            <div class="">
+                                <div class="flex flex-row items-center justify-center">
+                                    <p class="text-lg mb-0 mr-4">Sign Up with</p>
+                                    <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" class="hidden inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                                        <!-- Facebook -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" class="w-4 h-4">
+                                            
+                                            <path
+                                            fill="currentColor"
+                                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
+                                            />
+                                        </svg>
+                                    </button>
+
+                                    <button type="button"
+                                    data-mdb-ripple="true"
+                                    data-mdb-ripple-color="light"
+                                    class="hidden inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                                        <!-- Twitter -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4 h-4">
+                                            <path fill="currentColor"
+                                            d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
+                                            />
+                                        </svg>
+                                    </button>
+
+                                    <button id="googleAuth"
+                                    type="button"
+                                    data-mdb-ripple="true"
+                                    data-mdb-ripple-color="light"
+                                    class="inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                                        <!-- Goggle -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-google" viewBox="0 0 16 16" id="IconChangeColor"> <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" id="mainIconPathAttribute"></path> </svg>
+                                    </button>
+                                </div>
+                                <div class="flex items-center my-4 before:flex-1 before:border-t before:border-blue-500 before:mt-0.5 after:flex-1 after:border-t after:border-blue-500 after:mt-0.5">
+                                    <p class="text-center font-semibold mx-4 mb-0 text-blue-500">|</p>
+                                </div>
+                                <!-- already have an account register -->
+                                <p class="hidden text-sm font-semibold mt-2 pt-1 mb-0">Already created an account?
+                                    <a href="./?login" class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Log in</a>
+                                </p>
+                            </div>
+                            
+                            <!-- auth with email -->
+                            <div class="hidden">
+                                <div class="flex justify-center align-middle p-6">
+                                    <p class="text-lg font-bold text-blue-600">Create an Account</p>
+                                </div>
+                                <!-- Store Name -->
+                                <div class="hidden mb-6">
+                                    <input type="text"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    
+                                    placeholder="Store Name" name="fullname" required value="Franklin's Store"/>
+                                </div>
+                                <!-- username -->
+                                <div class="hidden mb-6">
+                                    <input type="text"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    
+                                    placeholder="Username" name="username" required value="frankshop"/>
+                                </div>
+                                <!-- email -->
+                                <div class="mb-6">
+                                    <input type="email"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    
+                                    placeholder="Email" name="email" required value="frankshop@gmail.com"/>
+                                </div>
+                                <!-- Password -->
+                                <div class="mb-6">
+                                    <input type="password"
+                                    class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    
+                                    placeholder="Password" name="password" required value="123456789"/>
+                                </div>
+                                
+                                <!-- login btn and don't have an account register-->
+                                <div class="text-center lg:text-left">
+                                    <button type="submit"
+                                    class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" >
+                                        Verify Email
+                                    </button>
+                                    <!-- already have an account register -->
+                                    <p class="text-sm font-semibold mt-2 pt-1 mb-0">
+                                        Already created an account?
+                                        <a href="#!"
+                                        class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Sign in</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                        
+                        <!-- verification sent -->
+                        <form id="verificationSent_form" class="hidden p-6 flex justify-center align-middle flex-col">
+                            <p class="text-center p-6 max-w-2xl text-bold">A
+                                 <a class="font-bold lowercase text-blue-500">verification Email</a> has been sent to the provided email Address, Follow the given steps to continue
+                            </p>
+                            <div class="w-full flex justify-center">
+                                <div class="text-center lg:text-left">
+                                    <!-- not your Email-->
+                                    <p class="text-sm font-semibold mb-2 pb-1 mb-0 text-center">
+                                        Not Your
+                                        <a href="#!"
+                                        class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out">Email?</a>
+                                    </p>
+                                    <button type="button"
+                                    class="inline-block px-7 py-3 bg-indigo-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" >
+                                        Not my Email
+                                    </button>
+                                </div>     
+                            </div>
+                        </form>
+                        
+                        <!-- Email verified -->
+                        <form id="verified_form" class="hidden p-6 flex justify-center align-middle flex-col">
+                            <div class="flex justify-center align-middle mb-10">
+                                <p class="font-bold text-2xl text-blue-500">Email Verified</p>
+                                <div class="p-1 flex justify-center align-middle">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2e86c1" class="w-7 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                                    </svg>
+
+                                </div>
+                            </div>
+                            
+                            <!-- tagline -->
+                            <div class="mb-6">
+                                <input type="text"
+                                class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                 
+                                placeholder="Tag-Line" required/>
+                            </div>
+                            
+                            <!-- description -->
+                            <div class="mb-6">
+                                <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='How can best describe your busness, can be up to 3 sentences' required></textarea>
+                            </div>
+                            
+                            <!-- What do you sale -->
+                            <div class="mb-6">
+                                <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='What products do you sale?' required></textarea>
+                            </div>
+                            
+                            <!-- submit btn -->
+                            <div class="w-full flex justify-center">
+                                <div class="text-center lg:text-left">
+                                    <button type="button"
+                                    class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" >
+                                        Not my Email
+                                    </button>
+                                </div>     
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+<script src="../auths.js"></script>
+<script src="script.js"></script>
+    
+</body>
+</html>

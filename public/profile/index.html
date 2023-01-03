@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - stor.com.ng</title>
+    <!-- favi -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../img/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../img/ico/favicon-16x16.png">
+    <!-- favi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwind.js"></script>
+    <!-- daisy -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <!-- /daisy -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('content', () => ({      
+            stgt:true,
+            stgtHidder:false,
+            store_uid:"",
+            stat:[],
+            store_name:"GTI Insurance",
+            store_location:"New Jersey, United kingdom",
+            tag_line: "Max out Sales",
+            store_desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?",
+            store_about:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?",
+            profile_img:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.juuce.com.au%2Fwp-content%2Fuploads%2F2013%2F06%2FGTI.jpg&f=1&nofb=1&ipt=fc8c7b5fb7b4bde56e10bbb9ebde3161b3bcb1d1a1e019274343b7cd4e9a20b3&ipo=images",
+            subText:"Become a Subscriber",
+            updateAll(){
+                if(sessionStorage.getItem('store_name') && (location.search.substring(1,4) != "get")){    
+                    this.store_name = sessionStorage.getItem('store_name')
+                    this.store_location = sessionStorage.getItem('store_location')
+                    this.tag_line = sessionStorage.getItem('tag_line')
+                    this.store_desc = sessionStorage.getItem('store_desc')
+                    this.store_about = sessionStorage.getItem('store_about')
+                        
+                    var resoledImg = sessionStorage.getItem("profile_img").substring(0, 76) + sessionStorage.getItem("profile_img").substring(76).replaceAll("/", "%2F");
+                    this.profile_img = resoledImg;
+                }else if((location.search.substring(1,4) == "get")){
+                    this.stgt = !this.stgt
+                    this.stgtHidder = !this.stgtHidder
+                }else if(sessionStorage.length == 0){
+                    this.stgt = !this.stgt
+                    this.stgtHidder = !this.stgtHidder
+                    let loc = location.href.split("?")
+                    location.assign(loc[0]+"?get="+loc[1])
+                }
+            },
+            showPreview(event) {
+                if (event.target.files.length > 0) {
+                    var file = event.target.files[0];
+                    var src = URL.createObjectURL(file);
+                    this.profile_img = src;
+                }
+            },
+            reviews:[],
+            subrev(){
+                writeRev(this.store_uid, userP.uid, rev)
+            },
+            noReview:"Store Has No Review",
+            updReview(){
+                this.store_uid = location.search.substring(1)
+                this.reviews = []
+                if((location.search.substring(1,4) != "get") && revKeys){
+                    for (const i of revKeys) {
+                        snapRev(this.store_uid, true, i)
+                        this.reviews.push(currentRev)
+                    }
+                }
+                if(!revKeys) {
+                    document.querySelector("#noReviewBg").classList.remove("hidden")
+                }
+            },
+            updateNewReviews(){
+                console.log(revKeys);
+                revWrote = document.querySelector("#revWrote")
+                popInOut(revWrote)
+            },
+            subStat(){
+                // side change subscribe btn
+                if(subsVal.includes(userP.email)){
+                    this.subText = "Thanks for Being a Subscriber"
+                }
+                //carry generated statistics
+                this.genStat();  
+            },
+            genStat(){
+                this.stat = []
+                getgenerated()
+                this.stat = genVal;
+            },
+            subsToStore(){
+                subMe(location.search.substring(1))
+            },
+            copyProUrl(){
+                loc = location.href.split('?')
+                copy = loc[0]+"?get="+loc[1]                
+                navigator.clipboard.writeText(copy)
+                popInOut(copyProfileUrlcomplt)
+            }
+        }))
+    })
+    </script>
+</head>
+<body x-data="content" x-init="updateAll()" data-theme="light">
+        
+    <!-- profile main -->
+    <div class="p-4" x-show="stgt">
+        <!-- top detail/about, review and update btn -->
+        <div class="w-full bg-white p-8 shadow-sm rounded mt-24 font-bold flex flex-col">
+            <!-- top -->
+            <div class="grid grid-cols-1 lg:grid-cols-3">   
+                 <!-- store statistics  -->
+                <div class="grid grid-cols-3 text-center gap-4 lg:text-left order-last lg:order-first mt-6 lg:mt-0">
+                    <template x-for="d in stat" :key="d.name">
+                        <div class="hover:shadow p-2 rounded cursor-pointer lg:w-max">
+                            <p class="font-bold text-gray-700 text-xl" x-text="d.num"></p>        
+                            <p class="text-gray-400 text-xs md:text-sm" x-text="d.name"></p>      
+                        </div>
+                    </template>
+                </div>    
+                <!-- profile Image -->
+                <div class="relative">      
+                    <div class="border-4 w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500 bg-center bg-cover bg-no-repeat" :style="`background-image:url(${profile_img})`" id="profileImg">
+                        <div title="Copy Profile Link to Clipboard" id="copyProfileUrlbtn" @click="copyProUrl()" class="absolute -bottom-3 -left-5 text-gray-600 p-2 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 active:text-blue-400 rounded-full cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" />
+                            </svg>
+                        </div>
+                    </div>    
+                    <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="showPreview(event)">
+                </div>    
+                <!-- Top buttons -->
+                <div class="flex mt-32 lg:mt-0 justify-between align-middle">
+                    <div class="h-max flex justify-between w-full">
+                        <a class="text-white p-3 rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg transition transform hover:-translate-y-0.5 text-center text-md mx-2" :href=`./product${location.search}`> Hottest Products</a>    
+                        <a  class="text-white text-center p-3 rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg transition transform hover:-translate-y-0.5 text-md mx-2 cursor-pointer" @click="subsToStore()" x-text="subText">Subscribe</a>    
+                    </div>
+                </div>  
+            </div> 
+            <!--store detail and about, review and update btn-->
+            <div class="w-full flex justify-center align-middle flex-col p-1">
+                <!-- store detail and about -->
+                <div class="w-sm flex justify-center align-baseline flex-col lg:flex-row lg:w-full">
+                    <!-- Store details-->
+                    <div class="mt-20 my-6 md:mx-6 text-left lg:min-w-80">    
+                        <h1 class="text-4xl capitalize font-medium text-gray-700 text-blue-500 font-bold" x-text="store_name" id="addContentEdit" title="store_name"></h1>
+                        </h1>
+                        <p class="text-green-500 mt-3" x-text="store_location" id="addContentEdit" title="store_location"></p>    
+                        <p class="mt-8 text-gray-500" x-text="tag_line" id="addContentEdit" title="tag_line"></p>    
+                        <p class="mt-2 text-gray-500 font-medium" x-text="store_desc" id="addContentEdit" title="store_desc"></p>  
+                    </div> 
+                    <!-- store about -->
+                    <div class="mt-12 my-6 md:mx-6 flex flex-col justify-center text-left">    
+                        <h1 class="text-2xl text-blue-500 mb-6 md:px-4">About Us</h1>
+                        <p class="text-gray-600 md:p-4 font-medium max-w-96" x-text="store_about" id="addContentEdit" title="store_about"></p>   
+                    </div>
+                </div>
+                <!-- review btn -->
+                <div class="w-sm flex justify-center">
+                    <a :href=`./product${location.search}` id="reviewBtn" class="w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-purple-700 focus:bg-purple-600 border rounded bg-blue-600 cursor-pointer">Mouth Watering Deals</a> 
+                </div> 
+                <!-- update btn -->
+                <div class="w-sm flex justify-center">
+                    <a id="contentEditBtnUpdate" class="hidden w-32 text-white text-center p-4 mt-4 hover:shadow-lg hover:bg-green-600 border rounded bg-green-500 cursor-pointer mx-6">Update</a>  
+                    <a id="cancelEdit" class="hidden w-24 mx-6 text-white text-center p-4 mt-4 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" @click="location.reload()">cancel</a>  
+                </div> 
+            </div>
+        </div>
+        <!-- logout button -->
+        <div class="absolute z-10 top-0 right-5 p-4">
+            <button title="Log Out" id="logOut" type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" class="inline-block p-3 bg-blue-100 text-gray-900 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-200 hover:shadow-lg focus:bg-blue-200 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-300 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                <!-- logOut -->                  
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                </svg>
+            </button>
+        </div>     
+        <!-- content edit btn -->
+        <div class="absolute z-10 top-0 left-0 p-4">
+            <button title="Edit Profile" id="addContentEditBtn" type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" class="inline-block p-3 bg-blue-100 font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:shadow-lg text-gray-900 p-2 hover:bg-blue-200 focus:bg-blue-200 active:bg-blue-300 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out mx-1">
+                <!-- settings -->                  
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+        </div>            
+    </div>
+    
+    <!-- loaders -->
+    <div x-show="stgtHidder" class="fixed inset-0 bg-white h-screen w-screen flex justify-center align-middle">
+        <div class="flex justify-center items-center">
+            <div class="spinner-grow inline-block w-8 h-8 bg-blue-500 rounded-full opacity-0" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- add a review form -->
+    <div x-show="stgt">
+        <div id="reviews_main" class="hidden">
+            <h1 class="text-2xl p-6 m-4 capitalize font-bold" x-text="'Why Customers Chooses '+store_name"></h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto items-center shadow-sm mt-6 mx-8 mb-4">
+                <template x-for="rev in reviews" key="rev.id">
+                    <div class="card min-w-lg bg-base-100 shadow-sm flex justify-center align-middle my-6">
+                        <div class="card-body">
+                            <h2 class="card-title" x-text="rev.name"></h2>
+                            <p x-text="rev.value"></p>
+                        </div>
+                    </div>
+                </template>
+                <!-- shown when no Review in store -->
+                <div class="hidden bg-gray-100 border-2 rounded m-6" id="noReviewBg">
+                    <h1 class="py-36 text-center text-gray-300 font-bold text-xs md:text-3xl capitalize" x-text="noReview"></h1>
+                </div>
+                <form class="w-full max-w-xl bg-white rounded-lg px-4 pt-2 mt-20" id="tReview">
+                    <!-- rating -->
+                    <div class="rating rating-lg rating-half hidden">
+                        <input type="radio" name="rating-10" class="rating-hidden" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-1" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-2" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-2" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-1" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-2" checked/>
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-1"/>
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-2" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-1" />
+                        <input type="radio" name="rating-10" class="bg-green-500 mask mask-star-2 mask-half-2" />
+                    </div>
+                    <!-- Add comments -->
+                    <div id="reviewInpBg" class="flex flex-wrap -mx-3 mb-6">
+                        <h2 class="px-4 pt-3 pb-2 text-gray-800 text-lg hidden">Add a new comment</h2>
+                        <div class="w-full md:w-full px-3 my-2 mt-2">
+                            <textarea class="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder='Tell us Your Experience' required id="val"></textarea>
+                        </div>
+                        <div class="w-full md:w-full flex items-start md:w-full px-3">
+                        <!-- some html is okey -->
+                            <div class="flex items-start w-1/2 text-gray-700 px-2 mr-auto hidden">
+                                <svg fill="none" class="w-5 h-5 text-gray-600 mr-1" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <p class="text-xs md:text-sm pt-px">Some HTML is okay.</p>
+                            </div>
+                            <div class="-mr-1">
+                                <input type='submit' id="tReview" class="bg-green-600 btn btn-primary border-none" value='Post Review'>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="w-full flex justify-center pb-24">
+            <button id="reviews_pre" class="w-max mx-6 text-white text-center p-6 mt-2 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
+        </div>
+    </div>
+    
+    <!-- pops event complete/err -->
+    <div class="fixed right-0 bottom-0">
+        <p id="subcmplt" class="hidden p-5 font-bold text-xs rounded bg-green-300 m-4 transition">You're Subscribed to Shop!</p>
+        <p id="contentEditcmplt" class="hidden p-5 font-bold text-xs rounded bg-green-300 m-4 transition">Profile Updating...</p>
+        <p id="cEditStart" class="hidden p-5 font-bold text-xs rounded bg-green-400 m-4 transition">Start Editing by clicking on Picture or Text</p>
+        <p id="copyProfileUrlcomplt" class="hidden p-5 font-bold text-xs rounded bg-green-400 m-4 transition">Link to SToR Successfully Copied to clipboard</p>
+        <p id="revWrote" class="hidden p-5 font-bold text-xs rounded bg-green-400 m-4 transition">New Review Added to Shop</p>
+    </div>
+
+    <!-- watermark -->
+    <div class="hidden p-6 bg-blue-300 flex justify-center align-middle flex-col" x-show="stgt" id="waterAds">
+        <div class="flex justify-center align-middle p-4 flex-col md:flex-row md:justify-evenly">
+            <!-- description and details -->
+            <div class="flex justify-center align-middle flex-col lg:w-max">
+                <p class="max-w-sm p-2 my-6">
+                    <b>How to sell more of your products in 30days than you’ve sold in the Last 3months even if you have no experience selling online</b>
+                    <br><br><br>
+                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of your products; putting in only 20% their average work of your competitors
+                    <br><br>
+                    Was prepared with your <b>Business Success</b> in Mind
+                    <br><br>
+                    Let's go for a <b>Tour</b>
+                </p>
+                <!-- <p class="max-w-sm p-2 my-6">
+                    This is a preview version of <b>SToR,</b> please note that there are certain features that are only avaliable for <b>Premuim.</b>
+                    <br><br>
+                    The Premium comes with a Full package of <b>SToR</b> Which allows you take payments and monitor your <b>Brand's</b> growth
+                    <br><br> 
+                    Valued at a one-Time fee of <b class="line-through">50,000naira</b>
+                    given away for only <b>5,000naira</b>                
+                    <br><br>
+                    <span class="text-lg text-left font-bold">You can now start Selling directly From Your Stor, Collect Payments and Deliver to your Customers Addresses</span>
+                </p> -->
+            </div>
+            <!-- image and CTA -->
+            <div class="flex justify-center align-middle flex-col">
+                <img class="w-48 h-48 mt-12 mx-auto rounded-full shadow-sm flex items-center justify-center" src="../img/me.jpg" alt="SToR">
+                <div class="px-6 flex justify-center align-middle">
+                    <a class="bg-green-600 btn btn-primary border-none my-6" href="../pages/Ultimate_Tool/">
+                        I want to start Selling more
+                    </a>
+                </div>
+            </div>
+        </div>
+        <p class="text-center text-sm">Your customers don't see this ads</p>
+    </div>
+   
+    <p class="trigger" id="subStat" @click="subStat()"></p>
+    <p class="trigger" id="updateNewReviews" @click="updateNewReviews()"></p>
+    <p class="trigger" id="subrev" @click="subrev()"></p>
+    <p class="trigger" id="reviewUpdater" @click="updReview()"></p>
+    <p class="trigger" id="updateAll" @click="updateAll()"></p>
+    
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+    <script src="../auths.js"></script>
+    <script src="script.js"></script>
+    <script src="review.js"></script>
+    
+</body>
+</html>
