@@ -67,6 +67,37 @@ addToStore.addEventListener('click', (e) => {
     uploadNew(file, uniq, newContent)
 })
 
+
+
+// edit in products
+var edtThis = document.querySelector("#edtThis")
+
+edtThis.addEventListener('click',()=> edtInDb())
+
+var edtUniq
+const edtInDb = () =>{
+  // e.preventDefault();
+  const newContentEdt = {};
+  var profileImgInpEdt = document.querySelector('#profileImgInpEdt');
+  var updEditer = document.querySelectorAll('#updEditer');
+  
+  var file = profileImgInpEdt.files[0];
+  
+  if(!edtUniq) return alert("Cannot continue without a Unique Id")
+  
+  for (const i of updEditer) {
+    newContentEdt[i.title] = escapeInput(i.innerText);
+  }
+  
+  
+  if (!file) return updateUserData(userP.uid, edtUniq, newContentEdt)
+  
+    newContentEdt["alt"] = "stor.com.ng-" + profileImgInpEdt.files[0].name
+    newContentEdt["count"] = 1
+    
+    uploadNew(file, edtUniq, newContentEdt)
+}
+
 var uploadPop = document.querySelector("#uploadPop");
 
 var uploadNew = (file, key, object) => {
@@ -135,6 +166,30 @@ const preDel = (key) => {
 const writeUserData = (userId, key, data, ref) => {
   firebase.database().ref(`store/${userId}/${key}`).set(data).then(res => {
     snap(userId, key);
+  })
+}
+
+// Update user in database, editable to scale
+const updateUserData = (userId, key, data, ref) => {
+  firebase.database().ref(`store/${userId}/${key}`).update(data).then(res => {
+    snap(userId, key);
+  })
+}
+
+const writetest = () => {
+  data = {}
+  data['name'] = "Franklin"
+  data['slog'] = "killer"
+  data['tag_line'] = "there's Limits"
+  firebase.database().ref(`tests/${userP.uid}`).set(data).then(res => {
+    console.log("written");
+  })
+}
+const updtest = () => {
+  data = {}
+  data['tag_line'] = "No Limits Allall"
+  firebase.database().ref(`tests/${userP.uid}`).update(data).then(res => {
+    console.log("updated");
   })
 }
 
