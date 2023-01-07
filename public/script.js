@@ -62,7 +62,6 @@ auth.onAuthStateChanged(user => {
 })
 
 var subsValCount = 0;
-
 const getAllSub = (email) => {
     email = escapeInput(email)
     var itemsKeys = firebase.database().ref(`subs`);
