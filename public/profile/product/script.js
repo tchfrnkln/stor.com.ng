@@ -104,7 +104,8 @@ var uploadNew = (file, key, object) => {
     var metadata = {
       contentType: 'image/jpeg'
     };
-        // return preDel(key)
+    // delete pre images to utilize db
+    preDel(key)
           
       var uploadTask = storageRef.child(`images/${userP.uid}/store/${key}/` + file.name).put(file, metadata);
 
@@ -151,13 +152,20 @@ var uploadNew = (file, key, object) => {
 const preDel = (key) => {
   preImage = storageRef.child(`images/${userP.uid}/store/${key}/`)
     
-    if(preImage) console.log(preImage);
-    
-    // preImage.delete().then(() => {
-    //     console.log("deleted succesfully");
-    //   }).catch((error) => {
-    //     console.log("err", error);
-    //   });
+  preImage.listAll()
+    .then((res) => {
+      res.items.forEach((itemRef) => {
+        itemRef.delete().then(() => {
+          console.log("deleted succesfully");
+        }).catch((error) => {
+          console.log("err", error);
+        }); 
+      });
+    }).catch((error) => {
+      console.log("err", error);
+    });
+  
+  return Promise.resolve('Successfull')
 }
 
 
@@ -348,6 +356,8 @@ const getcartVals = (x) => {
 var removeProducts = (ref) => {
   if (location.search.substring(1) == userP.uid) { 
     var remover = firebase.database().ref(`store/${userP.uid}/${ref}`);
+    // remove file from storage
+    preDel(ref)
     remover.remove(() => {
       getKeyVals(userP.uid);
       console.log(ref, "should be removed")
@@ -399,7 +409,7 @@ const getAllSub = (shopId) => {
       subsVal = Object.values(subs)
     }
   });
-  return Promise.resolve("sucessfull")
+  return Promise.resolve("Success")
 }
 getAllSub(owner)
 

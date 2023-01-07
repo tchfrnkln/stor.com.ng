@@ -187,14 +187,32 @@ const checkUser = () => {
           file = profileImgInp.files[0]
     
           // Create a reference to the file to delete
-          var preFiledb = storageRef.child(`images/${userP.uid}/profile_img/${getCookie("profile_img").split("/").pop().split("?")[0]}`)
+          // var preFiledb = storageRef.child(`images/${userP.uid}/profile_img/${getCookie("profile_img").split("/").pop().split("?")[0]}`)
+    
+          // // Delete the file
+          // preFiledb.delete().then(() => {
+          //   console.log("deleted succesfully");
+          // }).catch((error) => {
+          //   console.log("err", error);
+          // });
+
+          // Create a reference to the file to delete
+          var preFiledb = storageRef.child(`images/${userP.uid}/profile_img/`)
     
           // Delete the file
-          preFiledb.delete().then(() => {
-            console.log("deleted succesfully");
-          }).catch((error) => {
-            console.log("err", error);
-          });
+          preFiledb.listAll()
+            .then((res) => {
+              res.items.forEach((itemRef) => {
+                itemRef.delete().then(() => {
+                  console.log("deleted succesfully");
+                }).catch((error) => {
+                  console.log("err", error);
+                }); 
+              });
+            }).catch((error) => {
+              console.log("err", error);
+            });
+          
           
           var uploadTask = storageRef.child(`images/${userP.uid}/profile_img/` + file.name).put(file, metadata);
     
