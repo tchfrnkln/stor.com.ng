@@ -169,7 +169,7 @@
             },
             subText:"Subscribe to Shop",
             showCheckoutMain(){
-                alert("showCheckoutMain function " + this.totalPrice())
+                alert(`Total amount of items ${this.totalPrice()}, you can start checking out when this store Upgrades`)
             },
             takePaymentPre(){
                 const paymentForm = document.getElementById('paymentForm');
@@ -605,7 +605,7 @@
     
     <!-- payments form -->
     <div>
-        <form id="paymentForm">
+        <form id="paymentForm" class="hidden">
             <div class="form-group">
                 <label for="email">Email Address</label>
                 <input type="email" id="email-address" required x-model="userP.email"/>
@@ -678,7 +678,7 @@
                 <p class="max-w-sm p-2 my-6">
                     <b>How to sell more of your products in 30days than you’ve sold in the Last 3months even if you have no experience selling online</b>
                     <br><br><br>
-                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of your products; putting in only 20% their average work of your competitors
+                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of that products; putting in only 20% their average work of your competitors
                     <br><br>
                     Was prepared with your <b>Business Success</b> in Mind
                     <br><br>

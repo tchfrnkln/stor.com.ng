@@ -19,6 +19,9 @@
   },
   "homepage": "https://github.com/tchfrnkln/stor.com.ng#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
     "firebase": "^9.14.0"
   }
 }

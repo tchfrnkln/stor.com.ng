@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="w-100 p-6 flex flex-col justify-center">
+        <h1 id="name" class="text-2xl capitalize font-bold">hello <%= name %> </h1>
+    </div>
+    <script>
+        var n1 = document.querySelector('#name');
+        console.log(n1);
+        n1.addEventListener('click',()=>{
+            location.replace('/send')
+        })
+    </script>
+</body>
+</html>
