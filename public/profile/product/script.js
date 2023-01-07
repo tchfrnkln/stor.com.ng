@@ -263,13 +263,15 @@ const snapCart = (id, key, bool) => {
       var addLogs = () => {
         if (kVal) {
           for (const i in snapData) {
-            if (allAvl.includes(snapData.id)) {
+            // if (allAvl.includes(snapData.id)) {
               if (Object.hasOwnProperty.call(snapData, i)) {
                 cartCurrent[i] = snapData[i]
                }
-            } else {
-              removeCartItm(snapData.id)
-            }
+            // } else {
+              // getcartVals(userP.uid);
+              // return console.log("SHould clear cart item with", snapData.id);
+              // removeCartItm(snapData.id)
+            // }
           }
         } else {
           for (const i in snapData) {
