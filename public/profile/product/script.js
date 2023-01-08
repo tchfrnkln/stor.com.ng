@@ -241,7 +241,6 @@ const snap = (id, key, bool) => {
     } else {
         // user not in db
       console.log('User not in db, should log you out');
-      return alert("Not in db check SnapaData file");
     }
   })
 }
@@ -454,6 +453,7 @@ payBtnForm.addEventListener('submit', (e) => {
       i["address"] = address;
       i["p_phone"] = phone;  
       i["p_img"] = p_img;  
+      i["date"] = Date.now();  
     });
     
       var currentTotal = 0;
@@ -477,11 +477,18 @@ payBtnForm.addEventListener('submit', (e) => {
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
       onClose: function () {        
         inCartPay.forEach(i => {
+          // to shop orders
           writeOnPayComplete(i.store_uid, i.id, i, "orders")
           
           // to buyer paid
           writeOnPayComplete(userP.uid, i.id, i, "paid")
+          
+          // remove from cart
+          removeCartItm(i.id)
         })
+        // assign to ordered and print completed
+        location.assign("../ordered/?checkPaid&true")
+        
       },
       callback: function(response){
         let message = 'Payment complete! Reference: ' + response.reference;
@@ -508,4 +515,19 @@ const writeOnPayComplete = (shopId, key, data, ref) => {
   firebase.database().ref(`dashboard/${ref}/${shopId}/${key}`).set(data).then(res => {
     console.log(`Written ${data} to Shop with id ${shopId}`);
   })
+}
+
+
+
+
+// check if image is Valid
+
+function imageExists(imgMain, id) {
+  var img = new Image();
+  img.onload = function() { console.log("this image exists", true); };
+  img.onerror = function () {
+    removeCartItm(id)
+    console.log("Dont exists " + false + " Deleted " + id+ " from cart");
+  };
+  img.src = imgMain;
 }

@@ -94,3 +94,9 @@ var popInOut = (ele) => {
       ele.classList.add("hidden")
     }, 5000);
 }
+
+
+var esapeOnlyNum = (x) => {  
+  var numberPattern = /\d+/g;
+  return x.match(numberPattern).join("")
+}

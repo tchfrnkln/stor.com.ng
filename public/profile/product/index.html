@@ -221,29 +221,13 @@
                     inCartPay.push(i)
                 })
             },
-            // takePaymentPre(){
-            //     const paymentForm = document.getElementById('paymentForm');
-            //     paymentForm.addEventListener("submit", payWithPaystack, false);
-            //     function payWithPaystack(e) {
-            //     e.preventDefault();
-
-            //     let handler = PaystackPop.setup({
-            //         key: 'pk_test_xxxxxxxxxx', // Replace with your public key
-            //         email: document.getElementById("email-address").value,
-            //         amount: document.getElementById("amount").value * 100,
-            //         ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
-            //         onClose: function(){
-            //         alert('Window closed.');
-            //         },
-            //         callback: function(response){
-            //         let message = 'Payment complete! Reference: ' + response.reference;
-            //         alert(message);
-            //         }
-            //     });
-
-            //     handler.openIframe();
-            //     }
-            // }
+            validateCartImg(img, id){
+                imageExists(img, id)
+                return img
+            },
+            toOrdered(){
+                location.assign("../ordered")
+            }
         }))
     })
     </script>
@@ -323,7 +307,7 @@
                                                             <li class="flex py-6">
                                                                 <!-- image -->
                                                                 <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                    <img :src="li.img" :alt="li.alt" class="h-full w-full object-cover object-center">
+                                                                    <img :src="validateCartImg(li.img, li.id)" :alt="li.alt" class="h-full w-full object-cover object-center">
                                                                 </div>
                                                                 <!-- texts -->
                                                                 <div class="ml-4 flex flex-1 flex-col">
@@ -407,8 +391,9 @@
                         <!-- product -->
                         <div class="w-sm md:w-80 bg-white shadow rounded p-4">
                             <!-- product image -->
-                            <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center rounded"
-                                :style="`background-image: url(${p.img})`">
+                            <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
+                                <img :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                                
                                 <!-- plus(+) and select svgs -->
                                 <div class="flex justify-between align-middle hidden">
                                     <input type="checkbox" />
@@ -430,7 +415,7 @@
                                     </button>
                                 </div>
                                 <!-- Availiability button -->
-                                <div>
+                                <div class="absolute left-4 bottom-4">
                                     <span class="uppercase text-xs bg-green-50 p-0.5 border-green-500 border rounded text-green-700 font-medium select-none">available</span>
                                 </div>
                             </div>
@@ -523,10 +508,10 @@
                 <div class="w-full flex justify-center align-middle">
                     <div class="w-80 bg-white shadow rounded p-6">
                         <!-- product image -->
-                        <div class="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center rounded"
-                            :style="`background-image: url(${detail.img})`">
+                        <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded relative overflow-hidden">
+                            <img :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
                             <!-- plus(+) and delete svgs-->
-                            <div class="flex justify-between align-middle">
+                            <div class="absolute p-4 top-0 right-0 flex justify-between align-middle w-full">
                                 <button title="delete item" class="text-red-800" @click="selectedProductcheck(this)" x-show="isOwner">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
@@ -544,7 +529,7 @@
                                 </button>
                             </div>
                             <!-- Availiability button -->
-                            <div>
+                            <div class="absolute left-4 bottom-4">
                                 <span class="uppercase text-xs bg-green-50 p-0.5 border-green-500 border rounded text-green-700 font-medium select-none">available</span>
                             </div>
                         </div>
@@ -610,7 +595,7 @@
         <!-- Add new button and Subscrib btn-->
         <div class="absolute top-5 left-5">
             <div id="newProductAdd" class="grid grid-cols-2 gap-4">
-                <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="location.assign(`../?get=${owner}`)">
+                <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="location.assign(`../?${owner}`)">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                     </svg>
@@ -638,8 +623,8 @@
             <div class="blur-2xl bg-gray-700 fixed w-full h-screen inset-0"></div>
             <div class="w-80 z-10 bg-white shadow rounded p-6">
                 <!-- product image upd -->
-                <div class="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center rounded"
-                    :style="`background-image: url(${upd.img})`" @click="updImgUpload()">
+                <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden" @click="updImgUpload()">
+                    <img :src="upd.img" :alt="upd.alt" class="h-full w-full object-cover object-center">
                     <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="updImgPreview(event)">
                 </div>
                 <!-- product details -->
@@ -681,8 +666,8 @@
             <template x-for="edt in editProductContent" :key="edt.id">
                 <div class="w-80 z-10 bg-white shadow rounded p-6">
                     <!-- product image upd -->
-                    <div class="h-48 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center rounded"
-                        :style="`background-image: url(${edt.img})`" @click="updImgUploadEdt()">
+                    <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden" @click="updImgUploadEdt()">
+                        <img :src="edt.img" :alt="edt.alt" class="h-full w-full object-cover object-center">
                         <input accept="image/*" type="file" name="image" id="profileImgInpEdt" class="hidden" @change="updImgPreviewEdt(event)">
                     </div>
                     
@@ -718,34 +703,13 @@
     
     
     
-    
-    <!-- payments form -->
-    <!-- <div>
-        <form id="paymentForm" class="hidden">
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email-address" required x-model="userP.email"/>
-            </div>
-            <div class="form-group">
-                <label for="amount">Amount</label>
-                <input type="tel" id="amount" required />
-            </div>
-            <div class="form-group">
-                <label for="first-name">First Name</label>
-                <input type="text" id="first-name" />
-            </div>
-            <div class="form-group">
-                <label for="last-name">Last Name</label>
-                <input type="text" id="last-name" />
-            </div>
-            <div class="form-submit">
-                <button type="submit" onclick="payWithPaystack()"> Pay </button>
-            </div>
-        </form>
-    </div> -->
         
     
     
+    <!-- go to orders after bought -->
+    <div class="fixed bottom-10 right-10">
+        <i class="fa-solid fa-fire bg-green-200 rounded-full p-4 cursor-pointer active:text-gray-900 active:bg-green-100 hover:bg-green-300" @click="toOrdered()"></i>
+    </div>
     
     <!-- cartpop and cartpoper -->
     <div class="hidden w-max fixed top-5 right-10 transition z-50" id="cartPop" >
@@ -795,7 +759,7 @@
                 <p class="max-w-sm p-2 my-6">
                     <b>How to sell more of your products in 30days than you’ve sold in the Last 3months even if you have no experience selling online</b>
                     <br><br><br>
-                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of that products; putting in only 20% their average work of your competitors
+                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of that products; putting in only 20% the average work of your competitors
                     <br><br>
                     Was prepared with your <b>Business Success</b> in Mind
                     <br><br>

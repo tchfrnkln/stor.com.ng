@@ -164,8 +164,12 @@
                     </div>
                 </div>
                 <!-- review btn -->
-                <div class="w-sm flex justify-center">
-                    <a :href=`./product${location.search}` id="reviewBtn" class="w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-purple-700 focus:bg-purple-600 border rounded bg-blue-600 cursor-pointer">Mouth Watering Deals</a> 
+                <div class="w-sm flex justify-center flex-col md:flex-row">
+                    <a :href=`./product${location.search}` id="reviewBtn" class="w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-blue-700 focus:bg-blue-400 border rounded bg-blue-600 cursor-pointer">Mouth Watering Deals</a> 
+                    
+                    <button id="reviews_pre" class="w-max mx-6 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
+                    
+                    <a :href=`./sales/` id="sales_pre" class="w-80 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-red-900 border rounded bg-red-800 cursor-pointer">Sales Chart</a>
                 </div> 
                 <!-- update btn -->
                 <div class="w-sm flex justify-center">
@@ -258,9 +262,6 @@
                 </form>
             </div>
         </div>
-        <div class="w-full flex justify-center pb-24">
-            <button id="reviews_pre" class="w-max mx-6 text-white text-center p-6 mt-2 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
-        </div>
     </div>
     
     <!-- pops event complete/err -->
@@ -280,7 +281,7 @@
                 <p class="max-w-sm p-2 my-6">
                     <b>How to sell more of your products in 30days than you’ve sold in the Last 3months even if you have no experience selling online</b>
                     <br><br><br>
-                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of your products; putting in only 20% their average work of your competitors
+                    Using a secret <b>Premium Tool</b>, combined with our <b>Challenging Mentorship</b> the odds are on your side on selling more of your products; putting in only 20% the average work of your competitors
                     <br><br>
                     Was prepared with your <b>Business Success</b> in Mind
                     <br><br>

@@ -94,6 +94,6 @@ var reviews_pre = document.querySelector("#reviews_pre")
 
 reviews_pre.addEventListener('click', () => {
   reviewUpdater.click()
-  reviews_main.classList.remove("hidden")
-  reviews_pre.classList.add("hidden")
+  reviews_main.classList.toggle("hidden")
+  // reviews_pre.classList.add("hidden")
 })

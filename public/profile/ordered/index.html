@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordered - stor.com.ng</title>
+    <!-- favi -->
+    <link rel="apple-touch-icon" sizes="180x180" href="../../img/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../img/ico/favicon-16x16.png">
+    <!-- favi -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
+    
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('content', ()=> ({
+                currency:"N",
+                store_name:sessionStorage.store_name,
+                tag_line:sessionStorage.tag_line,
+                orders:[],
+                shCount(x){
+                    return parseInt(x).toLocaleString() +" pcs"
+                },
+                currentPrice(x){
+                    return  this.currency + parseInt(x).toLocaleString()+" /per"
+                },
+                totalOrd(){
+                    return (this.ord.itm_price * this.ord.count).toLocaleString()
+                },
+                copyNumb(x){
+                    navigator.clipboard.writeText(x).then(()=>{
+                        console.log("copied to clip");
+                        popInOut(copyPop);
+                    });
+                },
+                salesCount(){
+                    let total = 0
+                    for(var i=0;i<this.orders.length;i++){
+                        total += this.orders[i].count
+                    }
+                    
+                    return total.toLocaleString()+"pcs"
+                },
+                cashFlow(){
+                    let total = 0
+                    
+                    for(var i=0;i<this.orders.length;i++){
+                        total += (this.orders[i].itm_price * this.orders[i].count)
+                    }
+                    
+                    return (total/1000).toLocaleString() +"k"
+                },
+                getOrder(){                    
+                    // current referenced in script
+                    this.orders = [];
+                    orderVal.sort();
+                    orderVal.reverse();
+                    for (let i = 0; i < orderVal.length; i++) {
+                        snap("paid", userP.uid, orderVal[i], true)
+                        current["s_key"] = orderVal[i]
+                        this.orders.push(current)   
+                    }
+                },
+                goBack(){
+                    history.back(2)
+                },
+                hasPaid:false,
+                togglePayConfirm(){
+                    var has_paid = document.querySelector("#has_paid");
+                    
+                    has_paid.classList.toggle("hidden")
+                    this.hasPaid = !this.hasPaid
+                },
+                has_paidLoad(){
+                    if(location.search.substr(1) == 'checkPaid&true') this.togglePayConfirm()
+                }
+            })
+        )})
+    </script>
+</head>
+<body data-theme="light" x-data="content">
+
+<div>    
+    
+    <!-- left arrow go back -->
+    <a class="absolute top-10 right-5">
+        <i class="rounded-full bg-blue-200 p-4 cursor-pointer active:text-gray-900 active:bg-blue-100 hover:bg-blue-300 fa fa-arrow-left" @click="goBack()"></i>
+    </a>
+    
+    <div class="p-6 mb-12">
+        <h1 x-text="store_name" class="text-3xl p-2 font-medium"></h1>
+        <p class="px-3 text-xs" x-text="tag_line"></p>
+    </div>
+    
+
+    <!-- for Order Stat -->
+    <div class="w-full flex justify-center">
+        <div class="flex w-full max-w-md">
+            <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
+                <div class="bg-accent pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
+                    <i class="fa fa-chart-simple w-5"></i>
+                </div>
+        
+                <div class="bg-gray-100 p-3 rounded float-right top-0 right-0 m-3 bg-gray-200 w-max">
+                    <div class="text-right text-sm">Bought</div>
+                    <div class="text-right text-2xl" x-text="salesCount()">0pcs</div>
+                </div>
+            </div>
+            <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
+                <div class="bg-neutral pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
+                    <i class="fa fa-sack-dollar"></i>
+                </div>
+        
+                <div class="bg-gray-100 p-3 rounded float-right top-0 right-0 m-3 w-max">
+                    <div class="text-right text-sm">Spent</div>
+                    <div class="text-right text-2xl" x-text="cashFlow()">0k</div>
+                </div>
+            </div>        
+        </div>
+    </div>
+
+    <!-- card for ordered customers -->
+    <p class="p-3 font-bold text-2xl">Recent Orders (<span x-text="orders.length" class="text-green-600"></span>)</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-blue-100 mx-3 rounded">
+        <template x-for="ord in orders" :key="ord.date">
+            <div class="flex flex-col p-3 bg-white rounded shadow">
+                <div class="p-6 relative rounded border-b-2">
+                    <!-- customer details -->
+                    <img :src="ord.p_img" class="absolute top-2 right-5 w-12 h-12 rounded-full bg-gray-300 shadow-sm border"/>
+                    <h1 class="font-bold capitalize" x-text="ord.p_name">Name</h1>
+                    <p class="pt-2" x-text="ord.address"></p>
+                                        
+                    <div class="w-full flex justify-between py-5 text-xs font-medium"><p x-text="shCount(ord.count)"></p><p x-text="currentPrice(ord.itm_price)"></p></div>
+                    <div>
+                        <h1 class="font-bold text-green-700 text-xl" x-text="ord.itm_name">Mac book 17inch</h1>
+                        <p class="pt-2" x-text="ord.letter"></p>
+                        <img :src="ord.img" class="w-32 rounded-lg shadow-lg my-3"/>
+                        <button class="btn btn-active btn-accent w-full hidden">I have delivered this</button>            
+                    </div>
+                </div>
+                <div class="flex text-gray-600 text-center">
+                    <div class="flex-1 p-2 border-r-2 active:bg-gray-100 cursor-pointer">
+                        <i class="fa fa-sack-dollar"></i>
+                        <p class="text-xs" x-text="totalOrd()">10,000</p>
+                    </div>
+                    <div class="flex-1 p-2 active:bg-gray-100 cursor-pointer" @click="copyNumb(ord.store_uid)">
+                        <i class="fa fa-shop"></i>
+                        <p class="text-xs">Copy Shop Id</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    
+    
+    <div class="flex justify-center py-6 hidden">
+        <button id="allDlvbtn" class="btn btn-primary">See Every Delivery Made</button>
+    </div>
+    
+    
+    
+    <!-- updaters/ triggers -->
+    <div class="hidden">
+        <p id="orderValUpdater" @click="getOrder()"></p>
+    </div>
+    
+    
+    <!-- Upload pop and poper -->
+    <div class="hidden w-max fixed top-5 right-10 transition" id="copyPop">
+        <div class="bg-white rounded p-3 shadow-lg">
+          <div class="flex flex-row">
+            <div class="px-2">
+              <svg width="24" height="24" viewBox="0 0 1792 1792" fill="#44C997" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1299 813l-422 422q-19 19-45 19t-45-19l-294-294q-19-19-19-45t19-45l102-102q19-19 45-19t45 19l147 147 275-275q19-19 45-19t45 19l102 102q19 19 19 45t-19 45zm141 83q0-148-73-273t-198-198-273-73-273 73-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273zm224 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/>
+                </svg>
+            </div>
+            <div class="mr-4">
+              <span class="text-sm">Shop ID Copied to clipboard</span>
+              <span class="block text-gray-500 hidden">Anyone with a link can now view this file</span>
+            </div>
+          </div>
+        </div>        
+    </div>
+</div>
+
+
+<div x-init="has_paidLoad()" id="has_paid" x-show="hasPaid" class="hidden fixed inset-0 bg-gray-100 h-screen flex justify-center">
+      <div class="bg-white p-6  md:mx-auto flex justify-center align-middle flex-col">
+        <svg viewBox="0 0 24 24" class="text-green-600 w-16 h-16 mx-auto my-6">
+            <path fill="currentColor"
+                d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z">
+            </path>
+        </svg>
+        <div class="text-center flex justify-center align-middle flex-col">
+            <h3 class="md:text-3xl text-2xl text-gray-900 text-center font-bold">Payment Completed!</h3>
+            <p class="text-gray-600 my-2">Thank you for completing your secure online payment.</p>
+            <p> You can See all the Items you Ordered on your Dashboard</p>
+            <div class="py-10 text-center">
+                <a class="cursor-pointer px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3 rounded-md capitalize" @click="location.replace('../ordered/')">
+                    Go Back
+                </a>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+    <script src="../../auths.js"></script>
+
+
+<script src="ordered.js"></script>
+</body>
+</html>
