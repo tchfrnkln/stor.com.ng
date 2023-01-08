@@ -165,11 +165,12 @@
                 </div>
                 <!-- review btn -->
                 <div class="w-sm flex justify-center flex-col md:flex-row">
-                    <a :href=`./product${location.search}` id="reviewBtn" class="w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-blue-700 focus:bg-blue-400 border rounded bg-blue-600 cursor-pointer">Mouth Watering Deals</a> 
+                    <a :href=`./product${location.search}` id="reviewBtn" class="md:w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-blue-700 focus:bg-blue-400 border rounded bg-blue-600 cursor-pointer">Mouth Watering Deals</a> 
                     
-                    <button id="reviews_pre" class="w-max mx-6 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
+                    <a :href=`./sales/` id="sales_pre" class="md:w-80 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-red-900 border rounded bg-red-800 cursor-pointer">Sales Chart</a>
                     
-                    <a :href=`./sales/` id="sales_pre" class="w-80 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-red-900 border rounded bg-red-800 cursor-pointer">Sales Chart</a>
+                    <button id="reviews_pre" class="mx-6 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
+                    
                 </div> 
                 <!-- update btn -->
                 <div class="w-sm flex justify-center">
