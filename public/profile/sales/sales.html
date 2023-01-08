@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
+    
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('content', ()=> ({
+                currency:"N",
+                store_name:"Zilus",
+                orders:[
+                    // {id:1, p_name:"Franklin", p_phone:"08153244501",address:"Country, State, City, street", p_img:'../../img/me.jpg', itm_price:2500, count:5, itm_name:"Mac OS 13inch", letter:"Lorem ipsum dolor sit amet consectetur adipisicing elit.", img:"../../img/me.jpeg", shop_id:""}
+                ],
+                delivered:[],
+                dlvFunx(){
+                    var check = confirm("Have you Sent this Item to your Customer? Clicking okay will move it out of Orders")
+                    if(check) {
+                        // add to delivered
+                        writeOnPayComplete(userP.uid, this.ord.id, this.ord, "delivered")
+
+                        
+                        // this.delivered.push(this.ord)
+                        
+                        // remove from order
+                        for( var i = 0; i < this.orders.length; i++){ 
+                            if (this.orders[i].s_key == this.ord.s_key) { 
+                                this.orders.splice(i, 1)
+                                removeRef("orders", this.ord.s_key).then(()=>{
+                                    location.reload()
+                                }) 
+                            }
+                        }
+                    }
+                },
+                shCount(x){
+                    return parseInt(x).toLocaleString() +" pcs"
+                },
+                currentPrice(x){
+                    return  this.currency + parseInt(x).toLocaleString()+" /per"
+                },
+                totalOrd(){
+                    return (this.ord.itm_price * this.ord.count).toLocaleString()
+                },
+                totalDlv(){
+                    return (this.dlv.itm_price * this.dlv.count).toLocaleString()
+                },
+                copyNumb(x){
+                    navigator.clipboard.writeText(x).then(()=>{
+                        console.log("copied to clip");
+                        popInOut(copyPop);
+                    });
+                },
+                salesCount(){
+                    let total = 0
+                    for(var i=0;i<this.orders.length;i++){
+                        total += this.orders[i].count
+                    }
+                    for(var i=0;i<this.delivered.length;i++){
+                        total += this.delivered[i].count
+                    }
+                    return total.toLocaleString()+"pcs"
+                },
+                cashFlow(){
+                    let total = 0
+                    
+                    for(var i=0;i<this.orders.length;i++){
+                        total += (this.orders[i].itm_price * this.orders[i].count)
+                    }
+                    for(var i=0;i<this.delivered.length;i++){
+                        total += (this.delivered[i].itm_price * this.delivered[i].count)
+                    }
+                    
+                    return (total/1000).toLocaleString() +"k"
+                },
+                settle:{acc_number:2209714175, acc_name:"Franklin Tochukwu", bank_name:"zenith"},
+                stlhd:true,
+                stlCncl:false,
+                stlUpdBtn:false,
+                edtSettlements(x){
+                    if(x != true){
+                        this.stlhd = true
+                        this.stlCncl = false
+                        this.stlUpdBtn = false
+                        this.editSettlements(false)
+                    }else{
+                        this.stlhd = false
+                        this.stlCncl = true
+                        this.stlUpdBtn = true
+                        this.editSettlements(true)
+                    }
+                },
+                stlUpdBtnClicked(){           
+                    this.edtSettlements(false)
+                },
+                editSettlements(x){                    
+                    var stlDetAll = document.querySelectorAll("#stlDet");
+                    
+                    stlDetAll.forEach(i =>{
+                        i.setAttribute("contenteditable", x)
+                    })
+                },
+                getOrder(){                    
+                    // current referenced in script
+                    this.orders = [];
+                    orderVal.sort();
+                    orderVal.reverse();
+                    for (let i = 0; i < orderVal.length; i++) {
+                        snap("orders", userP.uid, orderVal[i], true)
+                        current["s_key"] = orderVal[i]
+                        this.orders.push(current)   
+                    }
+                },
+                getDl(){
+                    // current referenced in script
+                    this.delivered = [];
+                    dlVal.sort();
+                    dlVal.reverse();
+                    for (let i = 0; i < dlVal.length; i++) {
+                        snap("delivered", userP.uid, dlVal[i], true)
+                        
+                        this.delivered.push(current)
+                    }
+                }
+            })
+        )})
+    </script>
+</head>
+<body>
+
+<div x-data="content">    
+    
+    <div class="p-6 mb-12">
+        <h1 x-text="store_name" class="text-3xl p-2 font-medium"></h1>
+        <p class="px-3 text-xs">dash-board</p>
+    </div>
+    
+
+    <!-- for Order Stat -->
+    <div class="w-full flex justify-center">
+        <div class="flex w-full max-w-md">
+            <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
+                <div class="bg-green-500 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
+                    <i class="fa fa-chart-simple w-5"></i>
+                </div>
+        
+                <div class="bg-gray-100 p-3 rounded float-right top-0 right-0 m-3 bg-gray-200 w-max">
+                    <div class="text-right text-sm">Total Sales</div>
+                    <div class="text-right text-2xl" x-text="salesCount()">25</div>
+                </div>
+            </div>
+            <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
+                <div class="bg-red-800 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
+                    <i class="fa fa-sack-dollar"></i>
+                </div>
+        
+                <div class="bg-gray-100 p-3 rounded float-right top-0 right-0 m-3 w-max">
+                    <div class="text-right text-sm">Cash Flow</div>
+                    <div class="text-right text-2xl" x-text="cashFlow()">10</div>
+                </div>
+            </div>        
+        </div>
+    </div>
+    
+    <!-- Settlemens -->
+    <div class="w-full flex justify-center flex-col p-6 relative">
+        <div class="w-full flex justify-center">
+            <div class="w-full max-w-sm text-center rounded grid grid-cols-2 p-4 gap-4">
+                <div class="text-center py-6 bg-accent rounded-box font-medium text-xs relative">
+                    <p x-text="settle.acc_number" id="stlDet"></p>
+                    <i class="absolute bottom-3 right-3 text-white fa fa-piggy-bank"></i>
+                </div>
+                <div class="text-center py-6 rounded-box bg-error font-medium text-xs capitalize relative">
+                    <p x-text="settle.bank_name" id="stlDet"></p>
+                    <i class="absolute bottom-3 right-3 text-white fa fa-building-columns"></i>                    
+                </div>
+                
+            </div>
+        </div>
+        <div class="w-90 text-center p-6 rounded-box bg-error font-medium capitalize relative">
+            <p x-text="settle.acc_name" id="stlDet"></p>
+            <i class="fa fa-signature absolute bottom-3 right-3 text-white"></i>
+        </div>
+        
+        <button class="btn my-6 transition" x-show="stlUpdBtn" @click="stlUpdBtnClicked()">update</button>
+        
+        <!-- setting -->
+        <div class="absolute top-0 right-2">
+            <i @click="edtSettlements(true)" x-show="stlhd" class="bg-blue-200 active:bg-blue-500 active:text-white cursor-pointer rounded-full p-2 fa-regular fa-hand"></i>
+            <i @click="edtSettlements(false)" x-show="stlCncl" class="bg-red-200 active:bg-red-500 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
+        </div>
+    </div>
+
+    <!-- card for ordered customers -->
+    <p class="p-3 font-bold text-2xl">Recent Orders (<span x-text="orders.length" class="text-green-600"></span>)</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-blue-100 mx-3 rounded">
+        <template x-for="ord in orders" :key="ord.id + Math.floor((Math.random() * 1000000000) + 1)">
+            <div class="flex flex-col p-3 bg-white rounded shadow">
+                <div class="p-6 relative rounded border-b-2">
+                    <!-- customer details -->
+                    <img :src="ord.p_img" class="absolute top-2 right-5 w-12 h-12 rounded-full bg-gray-300 shadow-sm border"/>
+                    <h1 class="font-bold capitalize" x-text="ord.p_name">Name</h1>
+                    <p class="pt-2" x-text="ord.address"></p>
+                                        
+                    <div class="w-full flex justify-between py-5 text-xs font-medium"><p x-text="shCount(ord.count)"></p><p x-text="currentPrice(ord.itm_price)"></p></div>
+                    <div>
+                        <h1 class="font-bold text-green-700 text-xl" x-text="ord.itm_name">Mac book 17inch</h1>
+                        <p class="pt-2" x-text="ord.letter"></p>
+                        <img :src="ord.img" class="w-32 rounded-lg shadow-lg my-3"/>
+                        <button class="btn btn-active btn-accent w-full" @click="dlvFunx()">I have delivered this</button>            
+                    </div>
+                </div>
+                <div class="flex text-gray-600 text-center">
+                    <div class="flex-1 p-2 border-r-2 active:bg-gray-100 cursor-pointer">
+                        <i class="fa fa-sack-dollar"></i>
+                        <p class="text-xs" x-text="totalOrd()">10,000</p>
+                    </div>
+                    <div class="flex-1 p-2 active:bg-gray-100 cursor-pointer" @click="copyNumb(ord.p_phone)">
+                        <i class="fa fa-phone"></i>
+                        <p class="text-xs">copy contact</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+
+    <!-- card for delivered items -->
+    <p class="p-3 font-bold text-2xl">Delivered (<span x-text="delivered.length" class="text-green-600"></span>)</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-green-100 mx-3 rounded">
+        <template x-for="dlv in delivered" :key="dlv.id + + Math.floor((Math.random() * 1000000000) + 1)">
+            <div class="flex flex-col p-3 bg-white rounded shadow">
+                <div class="p-6 relative rounded border-b-2">
+                    <!-- customer details -->
+                    <img :src="dlv.p_img" class="absolute top-2 right-5 w-12 h-12 rounded-full bg-gray-300 shadow-sm border"/>
+                    <h1 class="font-bold" x-text="dlv.p_name">Name</h1>   
+                    <p class="pt-2" x-text="dlv.address"></p>                 
+                    <div class="w-full flex justify-between py-5 text-xs font-medium"><p x-text="shCount(dlv.count)"></p><p x-text="currentPrice(dlv.itm_price)"></p></div>
+                    <div>
+                        <h1 class="font-bold text-green-500 text-xl" x-text="dlv.itm_name">Mac book 17inch</h1>
+                        <p class="pt-2" x-text="dlv.letter"></p>
+                        <img :src="dlv.img" class="w-32 rounded-lg shadow-lg my-3"/>
+                        <button class="hidden btn btn-active btn-error w-full" @click="dlvFunx()">Move to Orders</button>            
+                    </div>
+                </div>
+                <div class="flex text-gray-600 text-center">
+                    <div class="flex-1 p-2 border-r-2 active:bg-gray-100 cursor-pointer">
+                        <i class="fa fa-sack-dollar"></i>
+                        <p class="text-xs" x-text="totalDlv()">10,000</p>
+                    </div>
+                    <div class="flex-1 p-2 active:bg-gray-100 cursor-pointer" @click="copyNumb(dlv.p_phone)">
+                        <i class="fa fa-phone"></i>
+                        <p class="text-xs">copy contact</p>
+                    </div>
+                </div>
+            </div>
+        </template>
+    </div>
+    <div class="flex justify-center py-6">
+        <button id="allDlvbtn" class="btn btn-primary">See all Delivered</button>
+    </div>
+    
+    
+    
+    <!-- updaters/ triggers -->
+    <div class="hidden">
+        <p id="orderValUpdater" @click="getOrder()"></p>
+        <p id="dlValUpdater" @click="getDl()"></p>
+        <p id="allDlv" @click="allDlv()"></p>
+    </div>
+    
+    
+    <!-- Upload pop and poper -->
+    <div class="hidden w-max fixed top-5 right-10 transition" id="copyPop">
+        <div class="bg-white rounded p-3 shadow-lg">
+          <div class="flex flex-row">
+            <div class="px-2">
+              <svg width="24" height="24" viewBox="0 0 1792 1792" fill="#44C997" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1299 813l-422 422q-19 19-45 19t-45-19l-294-294q-19-19-19-45t19-45l102-102q19-19 45-19t45 19l147 147 275-275q19-19 45-19t45 19l102 102q19 19 19 45t-19 45zm141 83q0-148-73-273t-198-198-273-73-273 73-198 198-73 273 73 273 198 198 273 73 273-73 198-198 73-273zm224 0q0 209-103 385.5t-279.5 279.5-385.5 103-385.5-103-279.5-279.5-103-385.5 103-385.5 279.5-279.5 385.5-103 385.5 103 279.5 279.5 103 385.5z"/>
+                </svg>
+            </div>
+            <div class="mr-4">
+              <span class="text-sm">Phone Number Copied to clipboard</span>
+              <span class="block text-gray-500 hidden">Anyone with a link can now view this file</span>
+            </div>
+          </div>
+        </div>        
+    </div>
+</div>
+
+
+
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+    <script src="../../auths.js"></script>
+
+
+<script src="sales.js"></script>
+</body>
+</html>

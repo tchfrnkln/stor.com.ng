@@ -241,6 +241,7 @@ const snap = (id, key, bool) => {
     } else {
         // user not in db
       console.log('User not in db, should log you out');
+      return alert("Not in db check SnapaData file");
     }
   })
 }
@@ -369,6 +370,7 @@ var removeProducts = (ref) => {
 
 // delete from cart
 var removeCartItm = (ref) => {
+  inCartPay = []
   var remover = firebase.database().ref(`cart/${userP.uid}/${ref}`);
   remover.remove(() => {
     getcartVals(userP.uid);
@@ -414,3 +416,96 @@ const getAllSub = (shopId) => {
 getAllSub(owner)
 
 
+
+
+
+
+
+// pay with paystack
+var inCartPay = []
+var payBtnForm = document.querySelector('#payBtnForm');
+var payAdCont = document.querySelector('#payAdCont');
+var payAdContInput = payAdCont.querySelectorAll('input');
+var payAdContSelect = payAdCont.querySelector('select');
+
+
+
+payBtnForm.addEventListener('submit', (e) => {
+  e.preventDefault()  
+  var address =   `${payAdContInput[0].value}, ${payAdContSelect.value} State. ${payAdContInput[1].value}`
+  var phone = payAdContInput[2].value
+  
+  var p_img;
+  
+  const getImg = () => {
+    
+    firebase.database().ref(`users/${userP.uid}/`).on('value', (snapshot) => {
+      let snapData = snapshot.val(); //an object
+      
+       p_img = snapData.profile_img.substring(0, 76) + snapData.profile_img.substring(76).replaceAll("/", "%2F");
+    })
+    
+    return Promise.resolve("success")
+  }
+  getImg().then(() => {
+    inCartPay.forEach(i => {
+      i["p_name"] = userP.displayName;
+      i["email"] = userP.email;  
+      i["address"] = address;
+      i["p_phone"] = phone;  
+      i["p_img"] = p_img;  
+    });
+    
+      var currentTotal = 0;
+    inCartPay.forEach(i => {
+      currentTotal += (parseInt(i.itm_price) * parseInt(i.count))
+    });  
+  
+    payWithPaystack(currentTotal)  
+  })
+  
+  
+    
+  
+  
+  function payWithPaystack(amt) {
+  
+    let handler = PaystackPop.setup({
+      key: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076', // Replace with your public key
+      email: userP.email,
+      amount: amt * 100,
+      ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+      onClose: function () {        
+        inCartPay.forEach(i => {
+          writeOnPayComplete(i.store_uid, i.id, i, "orders")
+          
+          // to buyer paid
+          writeOnPayComplete(userP.uid, i.id, i, "paid")
+        })
+      },
+      callback: function(response){
+        let message = 'Payment complete! Reference: ' + response.reference;
+        alert(message, "An invitation Mail will to sent to Your Email Address");
+      }
+    });
+  
+    handler.openIframe();
+  }
+  
+})
+
+
+
+
+
+// add to dashboard/orders/id/key -- sellers orders
+// add to dashboard/paid/id/key -- buyers paid
+
+
+// write user to database editable to scale
+const writeOnPayComplete = (shopId, key, data, ref) => {
+  key += ("_" + Math.floor((Math.random() * 100000) + 1))
+  firebase.database().ref(`dashboard/${ref}/${shopId}/${key}`).set(data).then(res => {
+    console.log(`Written ${data} to Shop with id ${shopId}`);
+  })
+}

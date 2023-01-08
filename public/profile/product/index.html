@@ -28,6 +28,7 @@
             store_uid:"",
             currency:"NGN",
             showcart:false,
+            shopper:"",
             deduce(a){
                 if(a){
                     this.detail.count++
@@ -52,9 +53,10 @@
                 for(var i=0;i<this.cart.length;i++){
                     total += (this.cart[i].itm_price * this.cart[i].count)
                 }
-                return `${this.currency} ${total.toLocaleString()}`
+                return ` ${this.currency} ${total.toLocaleString()}`
             },
             priceLocale(x){
+                x = parseInt(x) 
                 return x.toLocaleString()
             },
             removeItm(key){
@@ -88,7 +90,8 @@
             },
             getData(){
                 this.store_name = getCookie("store_name");
-                this.store_uid = getCookie("uid");
+                // this.store_uid = getCookie("uid");
+                this.store_uid = location.search.substring(1);
             },
             updIf:false,
             toggleUpd(){
@@ -208,33 +211,39 @@
             isOwnerfunx(){
                 if(userP.uid == owner) this.isOwner = true
             },
-            
+            showCheckoutbtn:"true",
             showCheckoutMain(){
-                alert(`Total amount of items ${this.totalPrice()}, you can start checking out when this store Upgrades`)
+                this.showCheckoutbtn = !this.showCheckoutbtn
+                this.shopper = userP.displayName
+                // inCartPay from script
+                inCartPay = []
+                this.cart.forEach(i => {
+                    inCartPay.push(i)
+                })
             },
-            takePaymentPre(){
-                const paymentForm = document.getElementById('paymentForm');
-                paymentForm.addEventListener("submit", payWithPaystack, false);
-                function payWithPaystack(e) {
-                e.preventDefault();
+            // takePaymentPre(){
+            //     const paymentForm = document.getElementById('paymentForm');
+            //     paymentForm.addEventListener("submit", payWithPaystack, false);
+            //     function payWithPaystack(e) {
+            //     e.preventDefault();
 
-                let handler = PaystackPop.setup({
-                    key: 'pk_test_xxxxxxxxxx', // Replace with your public key
-                    email: document.getElementById("email-address").value,
-                    amount: document.getElementById("amount").value * 100,
-                    ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
-                    onClose: function(){
-                    alert('Window closed.');
-                    },
-                    callback: function(response){
-                    let message = 'Payment complete! Reference: ' + response.reference;
-                    alert(message);
-                    }
-                });
+            //     let handler = PaystackPop.setup({
+            //         key: 'pk_test_xxxxxxxxxx', // Replace with your public key
+            //         email: document.getElementById("email-address").value,
+            //         amount: document.getElementById("amount").value * 100,
+            //         ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+            //         onClose: function(){
+            //         alert('Window closed.');
+            //         },
+            //         callback: function(response){
+            //         let message = 'Payment complete! Reference: ' + response.reference;
+            //         alert(message);
+            //         }
+            //     });
 
-                handler.openIframe();
-                }
-            }
+            //     handler.openIframe();
+            //     }
+            // }
         }))
     })
     </script>
@@ -322,7 +331,7 @@
                                                                         <!-- Price and name -->
                                                                         <div class="flex justify-between text-base font-medium text-gray-900">
                                                                             <h3>
-                                                                            <a href="#" x-text="li.itm_name"></a>
+                                                                            <a x-text="li.itm_name"></a>
                                                                             </h3>
                                                                             <p class="ml-4 text-xs" x-text="currency+' '+priceLocale(li.itm_price)"></p>
                                                                         </div>
@@ -347,14 +356,28 @@
                                         <!-- foot -->
                                         <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
                                             <div class="flex justify-between text-base font-medium text-gray-900">
-                                                <p>Subtotal</p>
+                                                <p>Sub Total</p>
                                                 <p x-text="totalPrice()"></p>
                                             </div>
-                                            <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
                                             <!-- checkout button -->
-                                            <div class="mt-6">
-                                                <a href="#" class="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700" @click="showCheckoutMain()">Checkout</a>
+                                            <div x-show="showCheckoutbtn">
+                                                <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                                                <a class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 cursor-pointer" @click="showCheckoutMain()">Checkout</a>
                                             </div>
+                                            <!-- shipping details -->
+                                            <form id="payBtnForm" class="mt-6 relative" x-show="!showCheckoutbtn">
+                                                <i @click="showCheckoutMain()" class="absolute top-0 right-2 bg-red-200 active:bg-red-500 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
+                                                <h1 class="text-base font-medium text-gray-900 mb-6">Delivered To: <b x-text="shopper" class="capitalize"></b></h1>
+                                                <div id="payAdCont" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                    <input id="cont" class="border-2 w-full max-w-xs p-3 rounded-lg" value="Nigeria" readonly>
+                                                    <select id="states" class="input input-bordered w-full max-w-xs" required></select>
+                                                    <input id="cont" type="text" placeholder="Street" class="input input-bordered w-full max-w-xs" required/>
+                                                    <input id="cont" type="number" placeholder="Phone Number" class="input input-bordered w-full max-w-xs" required/>
+                                                </div>
+                                                <div class="mt-6">
+                                                    <button type="submit" class="flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 cursor-pointer w-full" x-text="'Pay '+totalPrice()"></button>
+                                                </div>
+                                            </form>
                                             <!-- contine shoping -->
                                             <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
                                                 <p>
@@ -805,6 +828,22 @@
     
     <!-- paysatck -->
     <script src="https://js.paystack.co/v1/inline.js"></script> 
+    
+    
+    <!-- states Selects -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function(){
+      var states = ["Abia","Adamawa","Akwa Ibom","Anambra","Bauchi","Bayelsa","Benue","Borno","Cross River","Delta","Ebonyi","Edo","Ekiti","Enugu","Gombe","Imo","Jigawa","Kaduna","Kano","Katsina","Kebbi","Kogi","Kwara","Lagos","Nasarawa","Niger","Ogun","Ondo","Osun","Oyo","Plateau","Rivers","Sokoto","Taraba","Yobe","Zamfara"];
+      $.each(states, function(i, state){
+        $("#states").append("<option value='"+state+"'>"+state+"</option>");
+      });
+    });
+  </script>
+
+
+    
+    
     
     <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
