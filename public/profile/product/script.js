@@ -6,6 +6,7 @@ if (link.length >= 2) {
 } else {
   owner = link[0];
 }  
+
 auth.onAuthStateChanged(user => {
     if (user) {
       userP = user;
@@ -13,6 +14,7 @@ auth.onAuthStateChanged(user => {
       checkUserProd()
       getKeyVals(owner)
       getcartVals(userP.uid);
+      snapLoc(owner)
   } else {
       console.log('User is logged out!')
       location.assign(`../../auth?redirect=${location.href}`)
@@ -63,9 +65,50 @@ addToStore.addEventListener('click', (e) => {
     }
     newContent["alt"] = "stor.com.ng-" + profileImgInp.files[0].name
     newContent["count"] = 1
+    newContent["store_location"] = currentLoc.store_location
+  
+  
   // return console.log("newContent", newContent);
     uploadNew(file, uniq, newContent)
 })
+
+
+var currentLoc;
+const snapLoc = (id, bool) => {
+  var starCountRef = firebase.database().ref(`users/${id}`)
+  
+  starCountRef.on('value', (snapshot) => {
+      snapData = snapshot.val(); //an object
+      currentLoc = {};
+    if (!(snapData === null)) {
+      var addLogs = () => {
+        for (const i in snapData) {
+          if (Object.hasOwnProperty.call(snapData, i)) {
+              currentLoc[i] = snapData[i]
+          }
+        }
+        return Promise.resolve("Success");
+      }
+      addLogs().then(() => {
+          if (bool) {
+            return currentLoc
+          } else {
+            console.log("currentLoc", currentLoc.store_name)
+            
+            console.log("currentLoc", currentLoc.store_location)
+            
+            // update store name
+            document.querySelector('#getDataLoadEnd').click()
+          }
+      })
+    } else {
+        // user not in db
+      console.log('User not in db, should log you out');
+    }
+  })
+  
+  return Promise.resolve("success")
+}
 
 
 

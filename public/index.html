@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SToR - Retire Rich Selling Online</title>
+    <title>Home - stor.com.ng</title>
     <!-- favi -->
     <link rel="apple-touch-icon" sizes="180x180" href="./img/ico/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./img/ico/favicon-32x32.png">
@@ -15,74 +15,449 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/index.min.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="./tailwind.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('content', () => ({
+        scrl(){
+          location.assign('./learn_more.html')
+          scrollTo(0, 500)
+        },
+        features:[{ftr:"Support 24/7", data:"This support team is available 24/7 to answer your questions, and help you troubleshoot any issues your may encounter."}, {ftr:"Reporting", data:"Reporting is a powerful tool and we're committed to helping you get the most from it. Our reporting dashboard gives you visibility into your weekly, monthly and quarterly performance, so you can make accurate decisions on how you can improve."}, {ftr:"Growing community", data:"We are growing a community of people that create the best ideas and grow their businesses to peek"}, {ftr:"Frequent Updates", data:"We’re constantly developing our app so that we can give you new features and improve the service. You will receive notifications about updates to improve your experience."}, {ftr:"Tracking", data:"Pellentesque mollis, metus nec fringilla aliquam. Donec consequat orci quis volutpat imperdiet."},{ftr:"Analytics", data:"Analytics are one of the most important steps to take. Analytics help you understand what customers want and how users experience your product. You can track user behavior and optimize your product to bring in more users and keep them engaged."},{ftr:"Easy to use", data:"100% of our Software are built with Responsivity in mind to make it easy to set up, and easy to use."}]
+        }))
+    })
+    </script>
 </head>
-<body>
-    <!-- Container for demo purpose -->
-<div class="container my-16 px-6 mx-auto">
+<body class="scroll-smooth"> 
   
-  <!-- Section: Design Block -->
-  <section class="mb-32 text-gray-800 text-center lg:text-left">
-    <div class="px-6 py-12 md:px-12">
-      <div class="grid lg:grid-cols-2 lg:gap-x-12 items-center">
-        <div class="mb-12 lg:mb-0">
-          <h2 class="my-12 text-5xl font-bold tracking-tight leading-tight text-left">
-            Are you ready <br />
-            <span class="text-green-600">for an adventure?</span>
-          </h2>
-          <p class="my-12 text-4xl font-bold tracking-tight leading-tight uppercase text-left md:text-center">The First step to More sales and a working online business</p>
-          <div class="my-6">
-            <p class="mt-12 mb-3 text-3xl font-bold tracking-tight leading-tight capitalize text-left md:text-center">An Ecommerce <span class="text-4xl uppercase">website</span> to help you <span class="text-blue-600">Get Noticed Online</span>, <span class="text-green-600">Build Email Lists</span>, and <span class="text-red-600">Retain Existing customers</span></p>
-            <ul class="text-left list-disc p-6">
-                <li class="p-3">Collect customers Emails and grow your margin of possible buyers daily with less than 20% the work your competitors put in</li>
-                <li class="p-3">Put your business in the faces and at the heart of your customers so whenever they decide to buy, it’s you come straight to</li>
-                <li class="p-3">A separate page just for your business on the internet that can be accessed by anyone from anywhere</li>
-                <!-- <li class="p-3">Write a capturing about that can immediately rent your Brand a Space in the minds of Customers</li> -->
-                <!-- <li class="p-3">Tell customers your Location if they wish to patronize in-person</li>
-                <li class="p-3">Talk about your Products and what your business Stands for</li> -->
-                <!-- <li class="p-3">Elevate your brand by communicating its identity in the most direct way to your potential customers</li> -->
-                <li class="p-3">and a Whole Lot More ...</li>
-            </ul>
-          </div>
-          <a class="inline-block px-7 py-5 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out mb-2 md:mr-2 cursor-pointer"
-            id="googleAuthbtn" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">Continue with an Email</a>
-          <a class="hidden inline-block px-7 py-3 bg-transparent text-green-600 font-medium text-sm leading-snug uppercase rounded hover:text-green-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out mb-2"
-            data-mdb-ripple="true" data-mdb-ripple-color="success" href="#!" role="button">Learn more</a>
+  <!-- head -->
+  <section class="mb-30" x-data="content">
+    <nav class="navbar navbar-expand-lg shadow-md py-2 bg-white relative flex items-center w-full justify-between">
+      <div class="px-6 w-full flex flex-wrap items-center justify-between">
+        <div class="flex items-center">
+          <button
+            class="hidden navbar-toggler border-0 py-3 lg:hidden leading-none text-xl bg-transparent text-gray-600 hover:text-gray-700 focus:text-gray-700 transition-shadow duration-150 ease-in-out mr-2"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContentY"
+            aria-controls="navbarSupportedContentY"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+            <svg aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              class="w-5"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512">
+              <path
+                fill="currentColor"
+                d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+              ></path>
+            </svg>
+          </button>
+          <a class="navbar-brand flex justify-center align-middle text-blue-600" href="#!">
+            <svg class="w-5 h-5 ml-2 lg:ml-0 mr-2 hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+              <path fill="currentColor" d="M485.5 0L576 160H474.9L405.7 0h79.8zm-128 0l69.2 160H149.3L218.5 0h139zm-267 0h79.8l-69.2 160H0L90.5 0zM0 192h100.7l123 251.7c1.5 3.1-2.7 5.9-5 3.3L0 192zm148.2 0h279.6l-137 318.2c-1 2.4-4.5 2.4-5.5 0L148.2 192zm204.1 251.7l123-251.7H576L357.3 446.9c-2.3 2.7-6.5-.1-5-3.2z"></path>
+            </svg> <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+          </a>
         </div>
-
-        <div class="mb-12 lg:mb-0">
-          <img src="https://mdbootstrap.com/img/new/ecommerce/vertical/051.jpg" class="w-full rounded-lg sshadow-lg"
-            alt="" />
+        
+        <!-- <div class="hidden navbar-collapse collapse grow items-center" id="navbarSupportedContentY">
+          <ul class="navbar-nav mr-auto lg:flex lg:flex-row">
+            <li class="nav-item">
+              <a class="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">Team</a>
+            </li>
+            <li class="nav-item mb-2 lg:mb-0">
+              <a class="nav-link block pr-2 lg:px-2 py-2 text-gray-600 hover:text-gray-700 focus:text-gray-700 transition duration-150 ease-in-out" href="#!" data-mdb-ripple="true" data-mdb-ripple-color="light">Projects</a>
+            </li>
+          </ul>
+        </div> -->
+        <!-- login and signUp -->
+        <div class="flex items-center lg:ml-auto">
+          <a type="button" class="inline-block px-6 py-4 mr-2 bg-transparent text-blue-600 font-medium text-xs leading-tight uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="./auth">Login</a>
+          <a type="button" class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="./auth">Sign up</a>
         </div>
       </div>
-      <div class="py-12 p-5 lg:text-center">
-            <h2 class="my-12 text-4xl font-bold tracking-tight leading-tight uppercase">Total Value<br><span class="line-through text-2xl text-red-600">NGN 20,000</span><br> Get Now for absolutely <br><span class="text-green-600 underline">Free</span> </h2>
-            <a class="inline-block px-7 py-5 bg-green-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out mb-2 md:mr-2 cursor-pointer"
-            id="googleAuthbtn" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">Let's hand You a Bag-Pack</a>
-            
-            <p class="my-12 text-2xl font-bold tracking-tight leading-tight uppercase">Less than <span class="text-red-600 text-3xl">99</span> spots Left!</p>
-          </div>
+    </nav>
+
+    <div class="text-center bg-gray-50 text-gray-800 py-24 px-6">
+      <h1 class="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight mb-12">The best offer on the market <br /><span class="text-blue-600">for your business</span></h1>
+      <a class="inline-block px-7 py-3 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light" href="./auth" role="button">Get started</a>
+      <a class="inline-block px-7 py-3 bg-transparent text-blue-600 font-medium text-sm leading-snug uppercase rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-200 transition duration-150 ease-in-out" data-mdb-ripple="true" data-mdb-ripple-color="light"  role="button" @click="scrl()">Learn more</a>
     </div>
   </section>
-  <!-- Section: Design Block -->
   
-  <!-- absolute maqur -->
-  <div class="hidden absolute inset-0 w-100 bg-green-600 py-6 h-max cursor-pointer p-2">
-    <marquee behavior="scroll" direction="left" class="text-sm font-medium tracking-tight leading-tight text-white">Improve Your online Business with An Ecommerce Website;      Can be fully edited right from the comfort of your Mobile phone;     start Geting Noticed, Building Email Lists and Ratianing Customers;      Valued at Over <b class="line-through text-xl">NGN 20,000</b> for absolutely <b class="text-xl">Free</b>; Less than <b class="text-xl">99</b>spots left!</marquee>
+  <!-- sales letter and mad offer -->
+  <div class="mt-12">
+    <div class="text-center bg-gray-50 text-gray-800 p-6">
+      <h1 class="text-3xl md:text-4xl xl:text-5xl font-bold tracking-tight mb-12">Perfect Online Store to <br /><span class="text-blue-600">Scale your brand</span> </h1>
+      <div class="hidden text-left flex justify-center flex-col align-middle p-6 md:flex-row">
+        <div class="p-4 max-w-sm">
+          <p>Stor is an all-in-one Internet marketing solution for businesses selling online. Stor enables businesses to increase sales and reach customers across any device, on any device.</p>
+          <ul class="list-decimal p-6">
+            <li>Only professionals are doing this</li>
+            <li>Start selling like big companies</li>
+            <li>Don’t miss customers</li>
+            <li>Remain in your customers minds</li>
+            <li>Maintain growth as you scale</li>
+          </ul>
+        </div>
+        
+        <!-- image gallery -->
+        <div class="w-100 md:h-96 h-56 bg-gray-500 rounded m-4 bg-cover bg-no-repeat"  style="background-position: center; background-image: url('img/drb1.webp')">
+        </div>
+      </div>
+      <div class="flex justify-center p-6">
+        <a href="./auth" class="inline-block px-7 py-6 mt-12 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out font-bold cursor-pointer" data-mdb-ripple="true" data-mdb-ripple-color="light">Discover the Capacity of a marketing software That Scales</a>
+      </div>
+    </div>
+    <div class="bg-gray-50 text-gray-800 pt-12 px-6">
+      <h1 class="text-xl md:text-xl xl:text-2xl font-bold tracking-tight p-4 mt-6 md:w-90">Ecommerce Done Right</h1>
+      <div class="text-left flex justify-center flex-col align-middle p-6 md:flex-row">
+        <div class="p-4 max-w-sm">
+          <p>A strong and easy-to-use marketing tools to help you run your business better</p>
+          <ul class="list-decimal p-6">
+            <li>Take payments online</li>
+            <li>Showcase products with pictures and contents</li>
+            <li>Sale physical products virtually to anyone from anywhere</li>
+            <li>Collect delivery addresses</li>
+            <li>Build email lists</li>
+            <li>Sale with email marketing</li>
+            <li>Create and write sales letters</li>
+            <li>Collect customers reviews</li>
+          </ul>
+        </div>
+        
+        <!-- image gallery -->
+        <div class="w-100 md:w-90 h-56 bg-gray-500 rounded m-4 bg-cover bg-no-repeat"  style="background-position: center;background-image: url('img/drb2.webp')">
+        </div>
+      </div>
+      <div class="p-6 flex justify-center">
+        <a href="./auth" class="inline-block px-7 py-6 my-4 mr-2 bg-blue-600 text-white text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out font-bold cursor-pointer text-center" data-mdb-ripple="true" data-mdb-ripple-color="light">The industry's best marketing software</a>
+      </div>
+    </div>
   </div>
   
-  <!-- hidden auth btn -->
-  <div class="hidden">
-    <button id="googleAuth"></button>
-  </div>
-</div>
-<!-- Container for demo purpose -->
-    
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+  <!-- Stats -->
+  <div class="container mt-12 px-6 mx-auto">
+    <section class="mb-32 text-gray-800 text-center">
+      <h2 class="text-3xl font-bold mb-20 capitalize">What Have i been missing?</h2>
 
-<script src="./auths.js"></script>
-<script src="script.js"></script>
+      <div class="grid lg:gap-x-12 lg:grid-cols-3">
+        <div class="mb-12 lg:mb-0">
+          <div class="rounded-lg shadow-lg h-full block bg-white">
+            <div class="flex justify-center">
+              <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block -mt-8">
+                <svg
+                  class="w-7 h-7 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M488.6 250.2L392 214V105.5c0-15-9.3-28.4-23.4-33.7l-100-37.5c-8.1-3.1-17.1-3.1-25.3 0l-100 37.5c-14.1 5.3-23.4 18.7-23.4 33.7V214l-96.6 36.2C9.3 255.5 0 268.9 0 283.9V394c0 13.6 7.7 26.1 19.9 32.2l100 50c10.1 5.1 22.1 5.1 32.2 0l103.9-52 103.9 52c10.1 5.1 22.1 5.1 32.2 0l100-50c12.2-6.1 19.9-18.6 19.9-32.2V283.9c0-15-9.3-28.4-23.4-33.7zM358 214.8l-85 31.9v-68.2l85-37v73.3zM154 104.1l102-38.2 102 38.2v.6l-102 41.4-102-41.4v-.6zm84 291.1l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6zm240 112l-85 42.5v-79.1l85-38.8v75.4zm0-112l-102 41.4-102-41.4v-.6l102-38.2 102 38.2v.6z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-2xl font-bold text-blue-600 mb-4">1000</h3>
+              <h5 class="text-lg font-medium mb-4">Components</h5>
+              <p class="text-gray-500">
+                You have to have the right software to sell online. We don't think you can do it without the right tools. That's why we created just what is needed with Over 1,000 required components
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-12 lg:mb-0">
+          <div class="rounded-lg shadow-lg h-full block bg-white">
+            <div class="flex justify-center">
+              <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block -mt-8">
+                <svg
+                  class="w-7 h-7 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 544 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M527.79 288H290.5l158.03 158.03c6.04 6.04 15.98 6.53 22.19.68 38.7-36.46 65.32-85.61 73.13-140.86 1.34-9.46-6.51-17.85-16.06-17.85zm-15.83-64.8C503.72 103.74 408.26 8.28 288.8.04 279.68-.59 272 7.1 272 16.24V240h223.77c9.14 0 16.82-7.68 16.19-16.8zM224 288V50.71c0-9.55-8.39-17.4-17.84-16.06C86.99 51.49-4.1 155.6.14 280.37 4.5 408.51 114.83 513.59 243.03 511.98c50.4-.63 96.97-16.87 135.26-44.03 7.9-5.6 8.42-17.23 1.57-24.08L224 288z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-2xl font-bold text-blue-600 mb-4">999%</h3>
+              <h5 class="text-lg font-medium mb-4">Growth</h5>
+              <p class="text-gray-500">
+                Our software helps you manage your business, from inventory to sales and marketing. We have the tools for you to get your business to the next level.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="">
+          <div class="rounded-lg shadow-lg h-full block bg-white">
+            <div class="flex justify-center">
+              <div class="p-4 bg-blue-600 rounded-full shadow-lg inline-block -mt-8">
+                <svg
+                  class="w-7 h-7 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 640 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M512.1 191l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0L552 6.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zm-10.5-58.8c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.7-82.4 14.3-52.8 52.8zM386.3 286.1l33.7 16.8c10.1 5.8 14.5 18.1 10.5 29.1-8.9 24.2-26.4 46.4-42.6 65.8-7.4 8.9-20.2 11.1-30.3 5.3l-29.1-16.8c-16 13.7-34.6 24.6-54.9 31.7v33.6c0 11.6-8.3 21.6-19.7 23.6-24.6 4.2-50.4 4.4-75.9 0-11.5-2-20-11.9-20-23.6V418c-20.3-7.2-38.9-18-54.9-31.7L74 403c-10 5.8-22.9 3.6-30.3-5.3-16.2-19.4-33.3-41.6-42.2-65.7-4-10.9.4-23.2 10.5-29.1l33.3-16.8c-3.9-20.9-3.9-42.4 0-63.4L12 205.8c-10.1-5.8-14.6-18.1-10.5-29 8.9-24.2 26-46.4 42.2-65.8 7.4-8.9 20.2-11.1 30.3-5.3l29.1 16.8c16-13.7 34.6-24.6 54.9-31.7V57.1c0-11.5 8.2-21.5 19.6-23.5 24.6-4.2 50.5-4.4 76-.1 11.5 2 20 11.9 20 23.6v33.6c20.3 7.2 38.9 18 54.9 31.7l29.1-16.8c10-5.8 22.9-3.6 30.3 5.3 16.2 19.4 33.2 41.6 42.1 65.8 4 10.9.1 23.2-10 29.1l-33.7 16.8c3.9 21 3.9 42.5 0 63.5zm-117.6 21.1c59.2-77-28.7-164.9-105.7-105.7-59.2 77 28.7 164.9 105.7 105.7zm243.4 182.7l-8.2 14.3c-3 5.3-9.4 7.5-15.1 5.4-11.8-4.4-22.6-10.7-32.1-18.6-4.6-3.8-5.8-10.5-2.8-15.7l8.2-14.3c-6.9-8-12.3-17.3-15.9-27.4h-16.5c-6 0-11.2-4.3-12.2-10.3-2-12-2.1-24.6 0-37.1 1-6 6.2-10.4 12.2-10.4h16.5c3.6-10.1 9-19.4 15.9-27.4l-8.2-14.3c-3-5.2-1.9-11.9 2.8-15.7 9.5-7.9 20.4-14.2 32.1-18.6 5.7-2.1 12.1.1 15.1 5.4l8.2 14.3c10.5-1.9 21.2-1.9 31.7 0l8.2-14.3c3-5.3 9.4-7.5 15.1-5.4 11.8 4.4 22.6 10.7 32.1 18.6 4.6 3.8 5.8 10.5 2.8 15.7l-8.2 14.3c6.9 8 12.3 17.3 15.9 27.4h16.5c6 0 11.2 4.3 12.2 10.3 2 12 2.1 24.6 0 37.1-1 6-6.2 10.4-12.2 10.4h-16.5c-3.6 10.1-9 19.4-15.9 27.4l8.2 14.3c3 5.2 1.9 11.9-2.8 15.7-9.5 7.9-20.4 14.2-32.1 18.6-5.7 2.1-12.1-.1-15.1-5.4l-8.2-14.3c-10.4 1.9-21.2 1.9-31.7 0zM501.6 431c38.5 29.6 82.4-14.3 52.8-52.8-38.5-29.6-82.4 14.3-52.8 52.8z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-2xl font-bold text-blue-600 mb-4">You're in Control</h3>
+              <h5 class="text-lg font-medium mb-4">Flexibility</h5>
+              <p class="text-gray-500">
+                Wouldn't it be great if you could change, add and modify every aspect of your store? Well now you can with You're in control.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="p-6 flex justify-center">
+        <a href="./auth" class="inline-block px-7 py-6 mt-6 mr-2 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out font-bold cursor-pointer" data-mdb-ripple="true" data-mdb-ripple-color="light">Get Started</a>
+      </div>
+  </div>
+
+  <!-- Top Features -->
+  <div class="container mt-12 px-6 mx-auto">
+    <section class="mb-32 text-gray-800">
+      <div class="flex flex-wrap items-center">
+        <div class="grow-0 shrink-0 basis-auto w-full lg:w-4/12 mb-6 md:mb-0 px-3">
+          <h2 class="text-3xl font-bold mb-6">
+            Why is it so<u class="text-blue-600"> great?</u>
+          </h2>
+
+          <p class="text-gray-500 mb-12">
+            The most important thing is to make sure the software is easy to use. The last thing you want to do is overwhelm your customers with a complicated interface.
+          </p>
+        </div>
+
+        <div class="grow-0 shrink-0 basis-auto w-full lg:w-8/12 mb-6 mb-md-0 px-3">
+          <div class="flex flex-wrap" x-data="content">
+            <template x-for="tf in features" key="tf.ftr">
+              <div class="grow-0 shrink-0 basis-auto w-full lg:w-6/12 mb-12">
+                <div class="flex">
+                  <div class="shrink-0 mt-1">
+                    <svg class="w-4 h-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                      <path fill="currentColor"
+                        d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zM227.314 387.314l184-184c6.248-6.248 6.248-16.379 0-22.627l-22.627-22.627c-6.248-6.249-16.379-6.249-22.628 0L216 308.118l-70.059-70.059c-6.248-6.248-16.379-6.248-22.628 0l-22.627 22.627c-6.248 6.248-6.248 16.379 0 22.627l104 104c6.249 6.249 16.379 6.249 22.628.001z">
+                      </path>
+                    </svg>
+                  </div>
+                  <div class="grow ml-4">
+                    <p class="font-bold mb-1" x-text="tf.ftr">Support 24/7</p>
+                    <p class="text-gray-500" x-text="tf.data">
+                      Pellentesque mollis, metus nec fringilla aliquam. Donec consequat orci quis
+                      volutpat imperdiet.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Faqs -->
+  <div class="hidden container mt-12 px-6 mx-auto">
+    <section class="mb-32 text-gray-800">
+      <div class="grid lg:grid-cols-2 gap-4 lg:gap-x-12 lg:mb-0">
+        <div class="mb-6 md:mb-0">
+          <h2 class="text-3xl font-bold mb-6">
+            Frequently asked<u class="text-blue-600"> Questions!</u>
+          </h2>
+          
+          <p class="font-bold mb-4">Anim pariatur cliche reprehenderit?</p>
+          <p class="text-gray-500 mb-12">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt autem numquam dolore
+            molestias aperiam culpa alias veritatis architecto eos, molestiae vitae ex eligendi
+            libero eveniet dolorem, doloremque rem aliquid perferendis.
+          </p>
+
+          <p class="font-bold mb-4">Non cupidatat skateboard dolor brunch?</p>
+          <p class="text-gray-500 mb-12">
+            Distinctio corporis, iure facere ducimus quos consectetur ipsa ut magnam autem
+            doloremque ex! Id, sequi. Voluptatum magnam sed fugit iusto minus et suscipit? Minima
+            sunt at nulla tenetur, numquam unde quod modi magnam ab deserunt ipsam sint aliquid
+            dolores libero repellendus cupiditate mollitia quidem dolorem odit
+          </p>
+
+          <p class="font-bold mb-4">
+            Praesentium voluptatibus temporibus consequatur non aspernatur?
+          </p>
+          <p class="text-gray-500 mb-12">
+            Minima sunt at nulla tenetur, numquam unde quod modi magnam ab deserunt ipsam sint
+            aliquid dolores libero repellendus cupiditate mollitia quidem dolorem.
+          </p>
+
+          <p class="font-bold mb-4">Voluptatum magnam sed fugit iusto minus et suscipit?</p>
+          <p class="text-gray-500 mb-12">
+            Laudantium perferendis, est alias iure ut veniam suscipit dolorem fugit. Et ipsam
+            corporis earum ea ut quae cum non iusto blanditiis ipsum dolor eius reiciendis, velit
+            adipisci quas.
+          </p>
+        </div>
+        
+        <div class="mb-12 lg:mb-0 hidden">
+          <h2 class="text-3xl font-bold mb-6 capitalize">I have a different Question</h2>
+          <p class="text-gray-500 mb-12">
+            Didn't find your answer in the FAQ? Contact our sales team.
+          </p>
+          <form>
+            <div class="form-group mb-6">
+              <input type="text"
+                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="exampleInput7" placeholder="Name" />
+            </div>
+            <div class="form-group mb-6">
+              <input type="email"
+                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="exampleInput8" placeholder="Email address" />
+            </div>
+            <div class="form-group mb-6">
+              <textarea
+                class="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                id="exampleFormControlTextarea13" rows="3" placeholder="Message"></textarea>
+            </div>
+            <div class="form-group form-check text-center mb-6">
+              <input type="checkbox"
+                class="form-check-input appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+                id="exampleCheck87" checked />
+              <label class="form-check-label inline-block text-gray-800" for="exampleCheck87">Send me a copy of this
+                message</label>
+            </div>
+            <button type="submit"
+              class="w-full px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out">
+              Send
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  <!-- news letter -->
+  <div class="container my-6 px-1 md:px-6 mx-auto">
+    <h1 class="text-blue-600 p-6 font-bold uppercase text-xl text-center md:text-left">Subscribe to our List</h1>
+    <section class="text-gray-800">
+      <div class="relative overflow-hidden bg-no-repeat bg-cover rounded h-56"
+        style="background-position: top;
+          background-image: url('./img/me.jpeg');">
+      </div>
+      <div class="container text-gray-800 px-4 md:px-12">
+        <div class="block rounded-lg shadow-lg py-10 md:py-12 px-1 md:px-6"
+          style="margin-top: -100px;
+            background: hsla(0, 0%, 100%, 0.8);
+            backdrop-filter: blur(30px);">
+          <div class="flex flex-wrap justify-center text-center lg:text-left">
+            <div class="grow-0 shrink-0 basis-auto w-full xl:w-10/12 px-2 md:px-6">
+              <div class="grid lg:grid-cols-2 gap-x-6 items-center">
+                <div class="mb-10 lg:mb-0">
+                  <h2 class="text-2xl font-bold">
+                    Find out first when there's
+                    <br />
+                    <span class=" text-blue-600">an Update</span>
+                  </h2>
+                </div>
+
+                <div class="mb-6 md:mb-0">
+                  <form class="md:flex flex-row">
+                    <input id="homeSub"
+                      type="email"
+                      class="form-control block w-full px-4 py-2 mb-2 md:mb-0 md:mr-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                      placeholder="Enter your email" required/>
+                    <input type="submit" id="subBtn"
+                      class="inline-block w-full p-4 md:px-7  md:py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer"
+                      data-mdb-ripple="true"
+                      data-mdb-ripple-color="light" value="Subscribe">
+                    </input>
+                  </form>
+                  <div class="p-4">
+                    <p id="errEcp" class="hidden p-6 font-meduim text-sm rounded bg-red-300 m-12">Enter a valid Email</p>
+                    <p id="successEcp" class="hidden p-6 font-meduim text-sm rounded bg-green-300 m-12">Successfully Added to our List,<br> sit tight as updates rolls in</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+  
+  
+  <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+    <script src="auths.js"></script>
+    <script>
+      var homeSub = document.querySelector("#homeSub");
+      var subBtn = document.querySelector("#subBtn");
+      var errEcp = document.querySelector("#errEcp");
+      var successEcp = document.querySelector("#successEcp");
+      
+      var scEnd=()=>{
+        scrollTo(0,document.scrollingElement.offsetHeight)
+      }
+      
+      subBtn.addEventListener("click",(e)=>{
+        e.preventDefault()
+        if(homeSub.value.includes("@")){
+          homeSub.value = escapeInput(homeSub.value)
+          var subsValCount = 0;
+          const getAllSub = () => {
+            var itemsKeys = firebase.database().ref(`subs`);
+            itemsKeys.on('value', (snapshot, prevChildKey) => {
+              subs = snapshot.val()
+              subsVal = []
+              if (!subs) {
+                console.log("No subscribers");
+              } else {
+                subsKeys = Object.keys(subs)
+                subsValCount = subsKeys.length  
+                subsVal = Object.values(subs)
+              }
+              if(subsVal.includes(homeSub.value)){
+                errEcp.innerHTML = "Email already Exists, You can add a different one"
+                popInOut(errEcp)
+                scEnd();
+              }else{
+                firebase.database().ref(`subs/${parseInt(subsValCount) + 1}`).set(homeSub.value).then(res => {
+                  errEcp.classList.add("hidden")
+                  popInOut(successEcp)
+                  scEnd();
+                })
+              }
+            });
+          }
+          getAllSub()
+          
+        }else{
+          errEcp.innerHTML = "Enter a valid Email";
+          popInOut(errEcp)
+          scEnd();
+        }
+      })
+      
+    </script>
 </body>
 </html>
