@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat bot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../../tailwind.js"></script>
+    <!-- daisy -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <!-- /daisy -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer>
+        document.addEventListener('alpine:init', () => {
+            Alpine.data('content', () => ({      
+                messages:[{msg:"Lorem ispum dolla Lorem ispum dollaLorem ispum dolla Lorem ispum dolla Lorem", time:2, userID:"a"},{msg:"Lorem ispum dolla Lorem ispum dollaLorem ispum dolla Lorem ispum dolla Lorem", time:3, userID:"Imzz36cMw5WQtd0DRl0fdjFLqrb2"},{msg:"Lorem ispum dolla Lorem ispum dollaLorem ispum dolla Lorem ispum dolla Lorem", time:5, userID:"c"}, {msg:"Lorem ispum dolla Lorem ispum dollaLorem ispum dolla Lorem ispum dolla Lorem", time:1, userID:'Imzz36cMw5WQtd0DRl0fdjFLqrb2'}, {msg:"Lorem ispum dolla Lorem ispum dollaLorem ispum dolla Lorem ispum dolla Lorem", time:0, userID:'Imzz36cMw5WQtd0DRl0fdjFLqrb2'}],
+                fromMe:[],
+                toMe:[],
+                msgMain:[],
+                sortMsg(){
+                    let arry = []
+                    for (let i = 0; i < this.messages.length; i++) {
+                        
+                        let obj = this.messages[i]
+                        
+                        
+                        arry.push(obj.time)
+                        // console.log(obj.time);
+                    }     
+                    
+                    arry = arry.sort()
+                    
+                    this.msgMain = []
+                    arry.forEach(i => {
+                        this.addToMainMsg(i)
+                    });
+                },
+                addToMainMsg(x){
+                    for (let i = 0; i < this.messages.length; i++) {
+                        if(this.messages[i].time == x) return this.msgMain.push(this.messages[i])              
+                    }
+                },
+                checkMe(x){
+                    // if(!userP.uid) return false
+                    if(x == sessionStorage.uid) return true
+                    
+                    return false
+                },
+                checkRply(x){
+                    
+                    if(x == sessionStorage.uid) return false
+                    
+                    return true
+                },
+                bdHeight(x){
+                    return x
+                },
+                addThisMsg(){
+                    let obj = {}
+                    obj.msg = sendFormInp.value
+                    obj.time = Date.now()
+                    obj.userID = userP.uid
+                    
+                    
+                    sendFormInp.value = ''
+                    console.log("obj", obj);
+                    // this.msgMain.push(obj)
+                    
+                    // setTimeout(() => {
+                    //     scrollTo(0, this.bdHeight(document.body.scrollHeight))
+                    // }, 100);
+                },
+                
+            })
+        )})
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body x-data="content" x-init="sortMsg()" class="scroll-smooth">
+    <!-- trigger -->
+    <div class="hidden">
+        <p id="sendNowTrig" @click="addThisMsg()"></p>
+    </div>
+    
+    <div class="max-w-sm relative">
+        <div class="p-4 mb-28">
+            <template x-for="m in msgMain" :key="Math.random()">
+                <div class="flex justify-center flex-col">
+                    <div>
+                        <p x-show="checkMe(m.userID)" x-text="m.msg" class="p-6 mb-6 float-right w-3/5 bg-blue-100 rounded-box p-4"></p>
+                    </div>
+                    <div>
+                        <p x-text="m.msg" x-show="checkRply(m.userID)" class="p-6 mb-6 w-3/5 bg-gray-100 rounded-box p-4"></p>
+                    </div>
+                </div>
+            </template>
+        </div>
+        <form id="SendForm" class="p-6 w-100 flex justify-center fixed right-0 bottom-0 bg-gray-900">
+            <input type="text" placeholder="Send a Message" class="p-4 rounded shadow w-4/5" required>
+            
+            <button type="submit" class="fa fa-paper-plane p-4 rounded text-blue-600 hover:bg-gray-300"></button>
+        </form>
+    </div>
+    <div id="scrollDown" class="hidden text-white font-bold rounded-full bg-green-400 fixed right-5 bottom-28 fa fa-angle-down p-4">
+    </div>
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+
+    <script src="../../../auths.js"></script>
+    <script src="app.js"></script>
+    
+</body>
+</html>

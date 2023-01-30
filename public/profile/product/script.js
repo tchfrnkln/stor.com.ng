@@ -473,9 +473,11 @@ payBtnForm.addEventListener('submit', (e) => {
     let handler = PaystackPop.setup({
       key: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076', // Replace with your public key
       email: userP.email,
-      amount: amt * 100,
+      amount: (amt + (amt*.03)) * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
       onClose: function () {        
+      },
+      callback: function(response){
         inCartPay.forEach(i => {
           // to shop orders
           writeOnPayComplete(i.store_uid, i.id, i, "orders")
@@ -489,10 +491,8 @@ payBtnForm.addEventListener('submit', (e) => {
         // assign to ordered and print completed
         location.assign("../ordered/?checkPaid&true")
         
-      },
-      callback: function(response){
         let message = 'Payment complete! Reference: ' + response.reference;
-        alert(message, "An invitation Mail will to sent to Your Email Address");
+        // alert(message, "An invitation Mail will to sent to Your Email Address");
       }
     });
   

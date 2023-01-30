@@ -307,7 +307,7 @@
                                                             <li class="flex py-6">
                                                                 <!-- image -->
                                                                 <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                                                    <img :src="validateCartImg(li.img, li.id)" :alt="li.alt" class="h-full w-full object-cover object-center">
+                                                                    <img loading="lazy" :src="validateCartImg(li.img, li.id)" :alt="li.alt" class="h-full w-full object-cover object-center">
                                                                 </div>
                                                                 <!-- texts -->
                                                                 <div class="ml-4 flex flex-1 flex-col">
@@ -392,7 +392,7 @@
                         <div class="w-sm md:w-80 bg-white shadow rounded p-4">
                             <!-- product image -->
                             <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
-                                <img :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                                <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                                 
                                 <!-- plus(+) and select svgs -->
                                 <div class="flex justify-between align-middle hidden">
@@ -509,7 +509,7 @@
                     <div class="w-80 bg-white shadow rounded p-6">
                         <!-- product image -->
                         <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded relative overflow-hidden">
-                            <img :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
+                            <img loading="lazy" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
                             <!-- plus(+) and delete svgs-->
                             <div class="absolute p-4 top-0 right-0 flex justify-between align-middle w-full">
                                 <button title="delete item" class="text-red-800" @click="selectedProductcheck(this)" x-show="isOwner">
@@ -624,7 +624,7 @@
             <div class="w-80 z-10 bg-white shadow rounded p-6">
                 <!-- product image upd -->
                 <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden" @click="updImgUpload()">
-                    <img :src="upd.img" :alt="upd.alt" class="h-full w-full object-cover object-center">
+                    <img loading="lazy" :src="upd.img" :alt="upd.alt" class="h-full w-full object-cover object-center">
                     <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="updImgPreview(event)">
                 </div>
                 <!-- product details -->
@@ -667,7 +667,7 @@
                 <div class="w-80 z-10 bg-white shadow rounded p-6">
                     <!-- product image upd -->
                     <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden" @click="updImgUploadEdt()">
-                        <img :src="edt.img" :alt="edt.alt" class="h-full w-full object-cover object-center">
+                        <img loading="lazy" :src="edt.img" :alt="edt.alt" class="h-full w-full object-cover object-center">
                         <input accept="image/*" type="file" name="image" id="profileImgInpEdt" class="hidden" @change="updImgPreviewEdt(event)">
                     </div>
                     
@@ -778,7 +778,7 @@
             </div>
             <!-- image and CTA -->
             <div class="flex justify-center align-middle flex-col">
-                <img class="w-48 h-48 mt-12 mx-auto rounded-full shadow-sm flex items-center justify-center" src="../../img/me.jpg" alt="SToR">
+                <img loading="lazy" class="w-48 h-48 mt-12 mx-auto rounded-full shadow-sm flex items-center justify-center" src="../../img/me.jpg" alt="SToR">
                 <div class="px-6 flex justify-center align-middle">
                     <a class="bg-green-600 btn btn-primary border-none my-6" href="../../pages/Ultimate_Tool/">
                         I want to start Selling more
