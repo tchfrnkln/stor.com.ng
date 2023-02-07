@@ -1,6 +1,10 @@
 // auth state change
 var userP, owner;
-var link = location.search.substring(1).split(",");
+const urlMain = location.search.substring(1)
+if (urlMain.includes('%2C')) link = urlMain.split("%2C");
+
+if (urlMain.includes(',')) link = urlMain.split(",");
+
 if (link.length >= 2) {
   owner = link[1]
 } else {
