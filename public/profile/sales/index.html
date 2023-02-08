@@ -149,10 +149,10 @@
         )})
     </script>
 </head>
-<body data-theme="light">
-
-<div x-data="content">    
+<body data-theme="light" x-data="content">
     
+    <!-- whole bdy -->
+<div>    
     <!-- left arrow go back -->
     <a class="absolute top-10 right-5">
         <i class="rounded-full bg-blue-200 p-4 cursor-pointer active:text-gray-900 active:bg-blue-100 hover:bg-blue-300 fa fa-arrow-left" @click="goBack()"></i>
@@ -161,6 +161,12 @@
     <div class="p-6 mb-12">
         <h1 x-text="store_name" class="text-3xl p-2 font-medium"></h1>
         <p class="px-3 text-xs" x-text="tag_line"></p>
+        <!-- top stor -->
+        <div class="mt-6">
+            <a class="flex justify-center align-middle text-blue-600 cursor-pointer" href="../../">
+            <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+            </a>
+        </div>
     </div>
     
 

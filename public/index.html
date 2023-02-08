@@ -125,7 +125,7 @@
 </head>
 <body x-data="content" class="p-6">
     
-    <div class="fixed w-screen inset-0 h-max bg-white">
+    <div class="fixed w-screen inset-0 h-max bg-white z-10">
         <!-- top level -->
         <div class="relative flex justify-between p-6 align-middle">
             
@@ -172,9 +172,7 @@
     <!-- Head -->
     <div class="flex justify-between">
         <h1 x-show="!searchFor && !Itemsfrom" class="text-xl font-medium flex justify-between">
-            <p>Trending today
-                <!-- <i class="text-green-600 fa-solid fa-fire"></i> -->
-            </p>
+            <p>Trending today</p>
         </h1>
         <div>
             <h1 x-text="searchFor" class="capitalize text-xl font-medium"></h1>
@@ -187,7 +185,7 @@
     
     <!-- Resulting products -->
     <div>
-        <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
+        <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
             <template x-for="p in product">
                     <a class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer" :href="prdClicked(p.id, p.store_uid)">
                         <div class="h-28 bg-blue-100"  :src="p.img">
@@ -203,7 +201,7 @@
         </div>
         
         <!-- loaders -->
-        <div id="spilt_loaders" class="h-screen/2 flex justify-center items-center space-x-2">
+        <div id="spilt_loaders" class="h-56 flex justify-center items-center space-x-2">
             <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600" role="status"></div>
             <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-purple-500" role="status"></div>
             <div class="animate-ping inline-block w-8 h-8 bg-current rounded-full opacity-75 text-green-500" role="status"></div>

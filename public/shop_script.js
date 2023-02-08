@@ -127,3 +127,13 @@ var chAllTd = setInterval(() => {
 
 
 document.querySelector('#midFlow').classList.remove("hidden")
+
+
+
+
+// show more products when scroll to bottom
+
+// if (window.scrollHeight - window.scrollTop() == window.height())
+//       {
+//           alert('Reached the bottom!');
+//       }
