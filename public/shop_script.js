@@ -109,14 +109,21 @@ const snapLoc = (id, bool) => {
 }
 
 
+var spilt_loaders = document.querySelector('#spilt_loaders')
+
 
 var chAllTd = setInterval(() => {
     if (allToday.length >= 1) {
-        console.log("working")
-        clearInterval(chAllTd)      
-        document.querySelector('#showAll').click()
-        
+      console.log("working")
+      spilt_loaders.classList.add("hidden")
+      clearInterval(chAllTd)      
+      document.querySelector('#showAll').click()
     } else {
         console.log("not yet")
     }
 }, 1000)
+
+
+
+
+document.querySelector('#midFlow').classList.remove("hidden")

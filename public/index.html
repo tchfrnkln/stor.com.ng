@@ -24,10 +24,12 @@
             searchFor:"",
             Itemsfrom:"",
             togSearchFunx(){
+                scrollTo(0,0)
                 this.togSearch = !this.togSearch
                 this.togType = true
             },
             togTypeFunx(){
+                scrollTo(0,0)
                 this.togSearch = true
                 this.togType = !this.togType
             },
@@ -123,20 +125,28 @@
 </head>
 <body x-data="content" class="p-6">
     
-    <!-- top level -->
-    <div class="relative flex justify-between mb-10 align-middle">
-        <!-- <p x-show="togType" class="w-5 h-5 rounded-full bg-gray-500 cursor-pointer" @click="togTypeFunx()"></p> -->
-        
-        <i class="fa-solid fa-location-dot p-3 rounded-full bg-gray-200 cursor-pointer" @click="togTypeFunx()"></i>
-        
-        <i class="fa-solid fa-magnifying-glass p-3 rounded-full bg-blue-100 cursor-pointer" @click="togSearchFunx()"></i>
-        
-        <!-- <p x-show="togSearch" @click="togSearchFunx()" class="w-5 h-5 rounded-full bg-blue-500 cursor-pointer"></p> -->
-        
+    <div class="fixed w-screen inset-0 h-max bg-white">
+        <!-- top level -->
+        <div class="relative flex justify-between p-6 align-middle">
+            
+            <div class="absolute inset-0 py-4 -z-10">
+                <a class="flex justify-center align-middle text-blue-600 cursor-pointer">
+                <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+              </a>
+            </div>
+            
+            <!-- <p x-show="togType" class="w-5 h-5 rounded-full bg-gray-500 cursor-pointer" @click="togTypeFunx()"></p> -->
+            
+            <i x-show="togType" class="fa-solid fa-location-dot p-3 rounded-full bg-gray-200 cursor-pointer" @click="togTypeFunx()"></i>
+            
+            <i x-show="togSearch" class="fa-solid fa-magnifying-glass p-3 rounded-full bg-blue-100 cursor-pointer" @click="togSearchFunx()"></i>
+            
+            <!-- <p  @click="togSearchFunx()" class="w-5 h-5 rounded-full bg-blue-500 cursor-pointer"></p> -->
+        </div>
     </div>
     
     <!-- mid search and location -->
-    <div class="my-10 transition flex justify-center align-middle">
+    <div id="midFlow" class="hidden my-10 mt-16 transition flex justify-center align-middle">
         <div class="w-max relative" x-show="!togType">
             
             <form x-init="typeSubmit()" id="typeForm" class="w-100 md:w-max">
@@ -171,24 +181,35 @@
             <h1 x-text="Itemsfrom" class="text-sm"></h1>
         </div>
         <div class="h-max">
-            <i class="fa-solid fa-sort p-2 px-3 bg-blue-300 rounded-full cursor-pointer" @click="sortByPrice()"></i>
+            <i class="fa-solid fa-sort p-2 px-3 bg-green-600 text-white rounded cursor-pointer active:bg-green-500" @click="sortByPrice()"></i>
         </div>
     </div>
     
     <!-- Resulting products -->
-    <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
-        <template x-for="p in product">
-                <a class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer" :href="prdClicked(p.id, p.store_uid)">
-                    <div class="h-28 bg-blue-100"  :src="p.img">
-                        <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
-                    </div>
-                    <div class="p-4">
-                        <h1 class="text-sm font-medium" x-text="p.itm_name"></h1>
-                        <p class="text-xs font-medium" x-text="localeStr(p.itm_price)"></p>
-                        <p class="text-xs" x-text="p.store_location"></p>
-                    </div>
-                </a>
-        </template>
+    <div>
+        <div class="grid grid-cols-3 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
+            <template x-for="p in product">
+                    <a class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer" :href="prdClicked(p.id, p.store_uid)">
+                        <div class="h-28 bg-blue-100"  :src="p.img">
+                            <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                        </div>
+                        <div class="p-4">
+                            <h1 class="text-sm font-medium" x-text="p.itm_name"></h1>
+                            <p class="text-xs font-medium" x-text="localeStr(p.itm_price)"></p>
+                            <p class="text-xs" x-text="p.store_location"></p>
+                        </div>
+                    </a>
+            </template>
+        </div>
+        
+        <!-- loaders -->
+        <div id="spilt_loaders" class="h-screen/2 flex justify-center items-center space-x-2">
+            <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-blue-600" role="status"></div>
+            <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-purple-500" role="status"></div>
+            <div class="animate-ping inline-block w-8 h-8 bg-current rounded-full opacity-75 text-green-500" role="status"></div>
+            <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-yellow-500" role="status"></div>
+            <div class="spinner-grow inline-block w-8 h-8 bg-current rounded-full opacity-0 text-red-500" role="status"></div>
+        </div>
     </div>
 
     
