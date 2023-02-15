@@ -12,8 +12,16 @@ if (urlMain.includes('%2C')){
 if (link.length >= 2) {
   owner = link[1]
 } else {
-  owner = link[0];
+  owner = link[0]
 }  
+
+var refferer;
+if (link[2]) {
+  refferer = link[2]
+} else {
+  refferer = link[1]
+}
+console.log("refferer", refferer);
 
 auth.onAuthStateChanged(user => {
     if (user) {
@@ -65,12 +73,20 @@ var totalProductSelling;
 addToStore.addEventListener('click', (e) => {
     e.preventDefault();
     var file = profileImgInp.files[0];
-    var uniq = `id${parseInt(totalProductSelling)+1}` + Math.random((new Date()).getTime()).toString(16).slice(2);
+    var uniq = `id${parseInt(totalProductSelling)+1}` + Math.random((new Date()).getTime()).toString(16).slice(2)
     
-    if(!file) return alert("Cannot continue without an image upload")
+  if (!file) return alert("Cannot continue without an image upload")
+  
     for (const i of updEditable) {
       newContent[i.title] = escapeInput(i.innerText);
     }
+  
+    if(newContent["itm_name"] == "Product Name") return alert("Add the Name of the Products you're Selling")
+    if (newContent["itm_price"] == 5000) return alert("How much are you willing to sale this item for")
+    if (newContent["letter"] == "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere") return alert("Add a Little description about what you sale")
+  
+  
+    return console.log("finished")
     newContent["alt"] = "stor.com.ng-" + profileImgInp.files[0].name
     newContent["count"] = 1
     newContent["store_location"] = currentLoc.store_location
@@ -504,10 +520,11 @@ payBtnForm.addEventListener('submit', (e) => {
       i["address"] = address;
       i["p_phone"] = phone;  
       i["p_img"] = p_img;  
+      i["refferer"] = refferer  
       i["date"] = Date.now();  
-    });
+    })
     
-      var currentTotal = 0;
+    var currentTotal = 0;
     inCartPay.forEach(i => {
       currentTotal += (parseInt(i.itm_price) * parseInt(i.count))
     });  
@@ -540,7 +557,7 @@ payBtnForm.addEventListener('submit', (e) => {
           removeCartItm(i.id)
         })
         // assign to ordered and print completed
-        location.assign("../ordered/?checkPaid&true")
+        location.assign(`https://ipods.stor.com.ng/sold?${userP.email}`)
         
         let message = 'Payment complete! Reference: ' + response.reference;
         // alert(message, "An invitation Mail will to sent to Your Email Address");

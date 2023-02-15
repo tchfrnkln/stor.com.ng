@@ -1,40 +1,74 @@
-// const https = require('https')
+const nodemailer = require('nodemailer')
 
-// const options = {
-//   hostname: 'api.paystack.co',
-//   port: 443,
-//   path: '/bank/resolve?account_number=0001234567&bank_code=058',
-//   method: 'GET',
-//   headers: {
-//     Authorization: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076'
-//   }
-// }
+const express = require('express')
+const app = express()
 
-// https.request(options, res => {
-//   let data = ''
+app.get('/', function (req, res) {
+  res.send('Hello World')
+})
 
-//   res.on('data', (chunk) => {
-//     data += chunk
-//   });
+app.get('/sold', function (req, res) {
+  var loc = req.originalUrl.substring(6)
+  
+  locArr = loc.split(",")
+  
+  if(locArr[0]) recipients[0].email = locArr[0]
+  
+  sndMail().then(()=>{
+    res.redirect("https://stor.com.ng/profile/ordered?checkPaid&true")
+  })
+  
+})
 
-//   res.on('end', () => {
-//     console.log(JSON.parse(data))
-//   })
-// }).on('error', error => {
-//   console.error(error)
-// })
+app.listen(3000)
 
 
+const { MailtrapClient } = require("mailtrap");
 
-const accountSid = 'AC464962af4d566c1791e473d214226427'; 
-const authToken = '05926396c9a9ef527d11cd19b6e46f67'; 
-const client = require('twilio')(accountSid, authToken); 
- 
-client.messages 
-      .create({ 
-         body: 'Hello! This is an editable text message. You are free to change it and write whatever you like.', 
-         from: 'whatsapp:+14155238886',       
-         to: 'whatsapp:+2348153244501' 
-       }) 
-      .then(message => console.log(message.sid)) 
-      // .done();
+const TOKEN = "636c2b09e6213148c8df0d6fe13db770";
+const ENDPOINT = "https://send.api.mailtrap.io/";
+
+const client = new MailtrapClient({ endpoint: ENDPOINT, token: TOKEN });
+
+const sender = {
+  email: "mailtrap@stor.com.ng",
+  name: "SToR.com.ng",
+};
+
+const recipients = [
+  {
+    email: "zmfrankoo@gmail.com",
+  }
+];
+
+
+const sndMail = () => {
+  // return console.log(`Mail pushed successfully to ${recipients[0].email}`);
+
+  
+  client
+  .send({
+    from: sender,
+    to: recipients,
+    subject: "You've Just Made a Sale",
+    html: htmlVals,
+    category: "Sales Notification",
+  })
+  .then(console.log, console.error);
+  
+  return Promise.resolve("successfull")
+} 
+
+
+const htmlVals = `
+              <div>
+                <h3>You've Just Sold an Item</h3>
+                <br><br>
+                <p>Congratulations on making a sale! This is fantastic news and I am absolutely thrilled for you!<br><br> Your hard work and dedication have paid off, and you should be proud of yourself for achieving this success.<br><br>Your sale is a testament to your outstanding abilities as a seller, and I have no doubt that this is just the beginning of many more great things to come for you. Keep up the amazing work and enjoy this moment of triumph!</p>
+                <br><br>
+                <b>You can See all the Items that was sold on your Dashboard</b>
+                <br><br>
+                <a href="https://stor.com.ng/profile/ordered">
+                  See All Orders
+                </a>
+              </div>`;

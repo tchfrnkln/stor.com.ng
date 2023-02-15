@@ -84,7 +84,7 @@
                 
                 // side change subscribe btn
                 if(subsVal.includes(userP.email)){
-                    this.subText = "Thanks for Being a Subscriber"
+                    this.subText = "Subscribed"
                 }
                 
             },
@@ -185,7 +185,11 @@
                 popInOut(copyUrlcomplt)
             },
             copyPrevUrl(){
-                copiableLink = location.origin+location.pathname+'?'+this.p.id+','+owner;
+                if(owner != userP.uid){   
+                    copiableLink = location.origin+location.pathname+'?'+this.p.id+','+owner+","+userP.uid;
+                }else{
+                    copiableLink = location.origin+location.pathname+'?'+this.p.id+','+owner;    
+                }
                 console.log(copiableLink);
                 navigator.clipboard.writeText(copiableLink)
                 popInOut(copyUrlcomplt)
