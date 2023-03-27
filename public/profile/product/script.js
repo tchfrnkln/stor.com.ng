@@ -508,53 +508,65 @@ var payAdContSelect = payAdCont.querySelector('select');
 
 
 payBtnForm.addEventListener('submit', (e) => {
-  e.preventDefault()  
+  e.preventDefault()
   var address =   `${payAdContInput[0].value}, ${payAdContSelect.value} State. ${payAdContInput[1].value}`
   var phone = payAdContInput[2].value
   
-  var p_img;
-  
-  const getImg = () => {
-    
+  const getOtherData = () => {
     firebase.database().ref(`users/${userP.uid}/`).on('value', (snapshot) => {
       let snapData = snapshot.val(); //an object
       
-       p_img = snapData.profile_img.substring(0, 76) + snapData.profile_img.substring(76).replaceAll("/", "%2F");
+      p_img = snapData.profile_img.substring(0, 76) + snapData.profile_img.substring(76).replaceAll("/", "%2F");
+      
+      upline = snapData.upLine
+      
+      callTogether(p_img, upline)
     })
-    
-    return Promise.resolve("success")
   }
-  getImg().then(() => {
+  
+  const callTogether = (p_img, upline) => {
     inCartPay.forEach(i => {
       i["p_name"] = userP.displayName;
       i["email"] = userP.email;  
       i["address"] = address;
       i["p_phone"] = phone;  
       i["p_img"] = p_img;  
+      i["upline"] = upline;  
       i["refferer"] = refferer  
       i["date"] = Date.now();  
     })
-    
     var currentTotal = 0;
     inCartPay.forEach(i => {
       currentTotal += (parseInt(i.itm_price) * parseInt(i.count))
-    });  
-  
+    })
     payWithPaystack(currentTotal)  
-  })
+  }
   
-  
-    
-  
+  getOtherData()
   
   function payWithPaystack(amt) {
-  
     let handler = PaystackPop.setup({
       key: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076', // Replace with your public key
       email: userP.email,
       amount: (amt + (amt*.03)) * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
       onClose: function () {        
+        inCartPay.forEach(i => {
+          // to shop orders
+          // writeOnPayComplete(i.store_uid, i.id, i, "orders")
+          
+          // to buyer paid
+          // writeOnPayComplete(userP.uid, i.id, i, "paid")
+          
+          
+          let prcnt = ((i.itm_price * i.count) * 10) / 100;
+          
+          console.log("i.upline", i.upline);
+          
+          if (i.upline) {
+            toAffiliate(i.upline, prcnt, "sales")
+          }
+        })
       },
       callback: function(response){
         inCartPay.forEach(i => {
@@ -577,12 +589,10 @@ payBtnForm.addEventListener('submit', (e) => {
   
     handler.openIframe();
   }
-  
 })
 
 
 // add to dashboard/paid/id/key -- buyers paid
-
 function payForLife(amt) {
     let handler = PaystackPop.setup({
       key: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076', // Replace with your public key
@@ -622,9 +632,32 @@ const writeOnPayComplete = (shopId, key, data, ref) => {
   firebase.database().ref(`dashboard/${ref}/${shopId}/${key}`).set(data).then(res => {
     console.log(`Written ${data} to Shop with id ${shopId}`);
   })
+} 
+
+
+// sales
+// count on auth file
+
+// write to affiliate "sales"
+const toAffiliate = (upline, data, ref) => {
+  var affsValCount
+  
+  firebase.database().ref(`affiliate/${ref}/${upline}`).once('value').then((snapshot) => {
+    affs = snapshot.val()
+    
+    if (!affs) {
+      affsValCount = 0
+    } else {
+      affsKeys = Object.keys(affs)
+      affsValCount = affsKeys.length  
+    }
+    
+    
+    firebase.database().ref(`affiliate/${ref}/${upline}/${parseInt(affsValCount) + 1}`).set(data).then(res => {
+      console.log(`Written ${data} to Shop with id ${upline}`);
+    })
+  }) 
 }
-
-
 
 
 // check if image is Valid

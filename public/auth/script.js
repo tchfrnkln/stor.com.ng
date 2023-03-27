@@ -93,39 +93,57 @@ const redirectUser = () => {
 // get user function
 const snap = (x) => {
     var starCountRef = firebase.database().ref(`users/${x}`);
-        starCountRef.on('value', (snapshot) => {
-            snapData = snapshot.val(); //an object
-            if (!(snapData === null)) {
-                setCookie("was_updated", true)
-                
-                var addLogCookies = () => {
-                    for (const key in snapData) {
-                        if (Object.hasOwnProperty.call(snapData, key)) {
-                            setCookie(key, snapData[key])
-                        }
+    starCountRef.on('value', (snapshot) => {
+        snapData = snapshot.val(); //an object
+        if (!(snapData === null)) {
+            setCookie("was_updated", true)
+            
+            var addLogCookies = () => {
+                for (const key in snapData) {
+                    if (Object.hasOwnProperty.call(snapData, key)) {
+                        setCookie(key, snapData[key])
                     }
-                    return Promise.resolve("Success");
                 }
-                addLogCookies().then(() => {
-                        // console.log(document.cookie);
-                    redirectUser();
-                    }
-                )
-            } else {
-                // user not in db
-                nUser = {}
-                nUser['store_name'] = userP.displayName;
-                nUser['profile_img'] = userP.photoURL;
-                nUser['store_about'] = "Short About on your niche, products and experiences";
-                nUser['store_desc'] = "A more Detailed and description of your SToR";
-                nUser['store_location'] = "Valid Location of a Physical Store";
-                nUser['tag_line'] = "Tag Line";
-                firebase.database().ref(`users/${x}`).set(nUser)
-                // setCookie("store_name", userP.displayName)
-                // setCookie("profile_img_pre", userP.photoURL)
-                redirectUser();
+                return Promise.resolve("Success");
             }
-        })        
+            addLogCookies().then(() => {
+                setTimeout(() => {
+                    redirectUser()
+                }, 2000)
+                }
+            )
+        } else {
+            // user not in db
+            nUser = {}
+            nUser['store_name'] = userP.displayName;
+            nUser['profile_img'] = userP.photoURL;
+            nUser['store_about'] = "Short About on your niche, products and experiences";
+            nUser['store_desc'] = "A more Detailed and description of your SToR";
+            nUser['store_location'] = "Valid Location of a Physical Store";
+            nUser['tag_line'] = "Tag Line";
+            nUser["upLine"] = upLine;
+            firebase.database().ref(`users/${x}`).set(nUser)
+            
+            // set affiliate amount on affiliate/count
+            
+            var affcValCount
+            
+            firebase.database().ref(`affiliate/count/${upLine}`).once('value').then((snapshot) => {
+                affc = snapshot.val()
+                
+                if (!affc) {
+                  affcValCount = 0
+                } else {
+                    affcKeys = Object.keys(affc)
+                    affcValCount = affcKeys.length      
+                }
+                
+                firebase.database().ref(`affiliate/count/${upLine}/${parseInt(affcValCount) + 1}`).set(x).then(() => {
+                    redirectUser()
+                })
+            })
+        }
+    })        
 }
 
 
@@ -216,8 +234,27 @@ const getAllSub = (email) => {
 //     var domReady = setInterval(() => {
 //         if (document.readyState == 'complete') {
 //             console.log("Load completed");
-//             googleAuth.click()           
+//             googleAuth.click()
 //             clearInterval(domReady)
 //         }
 //     }, 500);
 // }
+
+
+
+var upLineLink = location.search.split("?")
+
+
+upLine = upLineLink[upLineLink.length - 1]
+
+if (upLine.includes(",")) {
+    nLink = upLine.split(",")
+    upLine = nLink[nLink.length - 1]
+}
+
+
+if (upLine == "") {
+    upLine = "tPXhbp1DaPU5YWtChEOMEpNaFVH2"
+}
+
+console.log("upLine", upLine);

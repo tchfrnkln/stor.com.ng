@@ -48,11 +48,12 @@
             upd:{
                 img:"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",itm_name:"Product Name", price:5000, letter:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere"
             },
-            totalPrice(){
+            totalPrice(x){
                 let total = 0
                 for(var i=0;i<this.cart.length;i++){
                     total += (this.cart[i].itm_price * this.cart[i].count)
                 }
+                if(x == "3%") return ` ${this.currency.toLocaleUpperCase()} ${((total * 3)/100).toLocaleString()}`
                 return ` ${this.currency} ${total.toLocaleString()}`
             },
             priceLocale(x){
@@ -263,8 +264,6 @@
 </head>
 <body data-theme="light" x-data="content" x-init="getData()" class="overflow-x-hidden">
     
-    
-    
     <div class="w-100 flex justify-center align-middle p-6 flex-col pt-24">
         <!-- updaters/ triggers -->
         <div class="hidden">
@@ -372,13 +371,19 @@
                                         </div>
                                         <!-- foot -->
                                         <div class="border-t border-gray-200 py-6 px-4 sm:px-6">
-                                            <div class="flex justify-between text-base font-medium text-gray-900">
-                                                <p>Sub Total</p>
-                                                <p x-text="totalPrice()"></p>
+                                            <div class="flex font-medium text-gray-900 flex flex-col">
+                                                <div class="flex justify-between pb-4">
+                                                    <p>Sub Total</p>
+                                                    <p x-text="totalPrice()"></p>
+                                                </div>
+                                                <div class="text-sm flex justify-between">
+                                                    <p>VAT</p>
+                                                    <p x-text="totalPrice('3%')"></p>
+                                                </div>
                                             </div>
                                             <!-- checkout button -->
                                             <div x-show="showCheckoutbtn">
-                                                <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                                                <!-- <p class="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p> -->
                                                 <a class="mt-6 flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-blue-700 cursor-pointer" @click="showCheckoutMain()">Checkout</a>
                                             </div>
                                             <!-- shipping details -->

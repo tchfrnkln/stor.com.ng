@@ -126,9 +126,44 @@ var chAllTd = setInterval(() => {
 
 
 
-document.querySelector('#midFlow').classList.remove("hidden")
+// big bg highlight on click
+
+// var allSales;
+// const SellingNow = () => {
+//   setTimeout(() => {
+//     allSales = document.querySelectorAll('.SellingNow')
+//     console.log(allSales);
+//     allSales.forEach(i => {
+//       i.addEventListener("dblclick", () => {
+//           console.log(i.src);
+//         })
+//     })
+//   }, 1000);
+  
+//   // i.mouseup(()=>{
+//   //   clearTimeout(pressTimer);
+//   //   return false;
+//   // }).mousedown(()=>{
+//   // pressTimer = window.setTimeout(() => {
+//   //   console.log(i.childNodes[1].childNodes[1].src)
+//   // }, 1000);
+//   // return false;
+//   // })
+// }
 
 
+
+
+      var counter = document.getElementById("counter");
+      var count = 0;
+      var timer = setInterval(function() {
+        count++;
+        counter.innerHTML = count;
+        if (count === 100) {
+          clearInterval(timer)
+          counter.parentElement.classList.add("hidden")
+        }
+      }, 5);
 
 
 // show more products when scroll to bottom

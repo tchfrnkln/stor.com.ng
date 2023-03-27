@@ -78,10 +78,11 @@
                 })
             },
             showAll(){
+                document.querySelector('#midFlow').classList.remove("hidden")
                 this.product = []
                 allToday.forEach(i =>{
                     this.product.push(i)
-                })  
+                })
             },
             sortAllToday(x){
                 this.product = []
@@ -118,7 +119,16 @@
                 // return console.log(x);
                 // location.assign(`profile/product/?${x},${y}`)
                 return `profile/product/?${x},${y}`
-            }
+            },
+            bgFullScreenImg:"",
+            bgFullScreen(){
+                document.querySelector('#bgFullScreen').classList.toggle("hidden")
+            },
+            bigBg(a){
+                this.bgFullScreenImg = a
+                this.bgFullScreen()
+            },
+            midflowHide: false
         }))
     })
     </script>
@@ -130,7 +140,7 @@
         <div class="relative flex justify-between p-6 align-middle">
             
             <div class="absolute inset-0 py-4 -z-10">
-                <a class="flex justify-center align-middle text-blue-600 cursor-pointer">
+                <a class="flex justify-center align-middle text-blue-600 cursor-pointer" href="../">
                 <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
               </a>
             </div>
@@ -148,7 +158,6 @@
     <!-- mid search and location -->
     <div id="midFlow" class="hidden my-10 mt-16 transition flex justify-center align-middle">
         <div class="w-max relative" x-show="!togType">
-            
             <form x-init="typeSubmit()" id="typeForm" class="w-100 md:w-max">
                 <div class="flex justify-center">
                     <input class="w-full border p-4 rounded mb-4" type="text" placeholder="Nigeria" readonly>
@@ -187,16 +196,18 @@
     <div>
         <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
             <template x-for="p in product">
-                    <a class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer" :href="prdClicked(p.id, p.store_uid)">
-                        <div class="h-28 bg-blue-100"  :src="p.img">
+                    <div class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer">
+                        <div class="h-28 bg-blue-100"  :src="p.img" @click="bigBg(p.img)">
                             <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                         </div>
-                        <div class="p-4">
-                            <h1 class="text-sm font-medium" x-text="p.itm_name"></h1>
-                            <p class="text-xs font-medium" x-text="localeStr(p.itm_price)"></p>
-                            <p class="text-xs" x-text="p.store_location"></p>
-                        </div>
-                    </a>
+                        <a :href="prdClicked(p.id, p.store_uid)">
+                            <div class="p-4">
+                                <h1 class="text-sm font-medium" x-text="p.itm_name"></h1>
+                                <p class="text-xs font-medium" x-text="localeStr(p.itm_price)"></p>
+                                <p class="text-xs" x-text="p.store_location"></p>
+                            </div>
+                        </a>
+                    </div>
             </template>
         </div>
         
@@ -210,6 +221,13 @@
         </div>
     </div>
 
+    <!-- bg with images -->
+    <div class="hidden flex justify-center z-100 fixed inset-0" id="bgFullScreen" @click="bgFullScreen()">
+        <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
+        </img>
+    </div>
+    
+    <div class="text-center font-medium text-green-700"><span id="counter">0</span>%</div>
     
     
     <!-- trigger -->

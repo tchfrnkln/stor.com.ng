@@ -3,7 +3,7 @@ var userP
 auth.onAuthStateChanged(user => {
   if (user) {
     userP = user;
-    console.log(user.email + " is logged in!");
+    console.log(user.email + " is logged in!")
     checkUser()
   } else {
     if (sessionStorage.getItem("loggedOutANaccount") != "true") {
@@ -301,8 +301,14 @@ getAllSub(location.search.substring(1), true)
 
 
 var genVal = []
-const genMainStat = (x, y) => {
-  var itemsKeys = firebase.database().ref(`${x}/${location.search.substring(1)}`)
+const genMainStat = (x, y, z, onlyCount) => {
+  var itemsKeys
+  if (z) {
+    itemsKeys = firebase.database().ref(`${x}/${z}/${location.search.substring(1)}`)
+  } else {
+    itemsKeys = firebase.database().ref(`${x}/${location.search.substring(1)}`)
+  }
+  
   var count = 0
   itemsKeys.on('value', (snapshot, prevChildKey) => {
     gen = snapshot.val()
@@ -326,8 +332,20 @@ const genMainStat = (x, y) => {
       genobj.name = y
     } else {
       genKeys = Object.keys(gen)
-      genobj.num = genKeys.length
-      genobj.name = y
+      if (z) {
+        var vl = 0;
+        for (const i in Object.values(gen)) {
+          if (Object.hasOwnProperty.call(Object.values(gen), i)) {
+            vl += Object.values(gen)[i]
+          }
+        } 
+        genobj.num = "N "+ vl.toLocaleString().replace(",000", "k")
+        if(onlyCount == "onlyCount") genobj.num = genKeys.length
+        genobj.name = y
+      } else { 
+        genobj.num = genKeys.length
+        genobj.name = y
+      }
     }
     genVal.push(genobj);
     subStat.click()
@@ -337,6 +355,9 @@ const genMainStat = (x, y) => {
 genMainStat("store", "Product")
 genMainStat("reviews", "Reviews")
 genMainStat("stor_subs", "Subscribed")
+
+genMainStat("affiliate", "Marketer", "count", "onlyCount")
+genMainStat("affiliate", "commision", "sales")
 
 
 
