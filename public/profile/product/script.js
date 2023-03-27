@@ -19,7 +19,7 @@ var refferer;
 if (link[2]) {
   refferer = link[2]
 } else {
-  refferer = link[1]
+  refferer = owner
 }
 console.log("refferer", refferer);
 
@@ -71,9 +71,16 @@ for (const i of updEditable) {
 var newContent = {};
 var totalProductSelling;
 addToStore.addEventListener('click', (e) => {
-    e.preventDefault();
-    var file = profileImgInp.files[0];
-    var uniq = `id${parseInt(totalProductSelling)+1}` + Math.random((new Date()).getTime()).toString(16).slice(2)
+  
+  e.preventDefault();
+  var file = profileImgInp.files[0];
+  var plan_life;
+  var uniq = `id${parseInt(totalProductSelling) + 1}` + Math.random((new Date()).getTime()).toString(16).slice(2)
+
+  firebase.database().ref(`users/${userP.uid}/`).on('value', (snapshot) => {
+    let snapData = snapshot.val();
+    plan_life = snapData.life
+  })
     
   if (!file) return alert("Cannot continue without an image upload")
   
@@ -82,18 +89,21 @@ addToStore.addEventListener('click', (e) => {
     }
   
     if(newContent["itm_name"] == "Product Name") return alert("Add the Name of the Products you're Selling")
-    if (newContent["itm_price"] == 5000) return alert("How much are you willing to sale this item for")
+    // if (newContent["itm_price"] == 5000) return alert("How much are you willing to sale this item for")
     if (newContent["letter"] == "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere") return alert("Add a Little description about what you sale")
   
-  
-    return console.log("finished")
     newContent["alt"] = "stor.com.ng-" + profileImgInp.files[0].name
     newContent["count"] = 1
     newContent["store_location"] = currentLoc.store_location
   
   
-  // return console.log("newContent", newContent);
+  if ((totalProductSelling == 5) && (plan_life != true)) {
+    document.querySelector("#updMainID").classList.add("hidden")
+    document.querySelector("#updPriceOffer").classList.remove("hidden")
+    alert("Buy a LifeTime Plan To add More Products to your Dashboard, Refresh Page if this won't be the best Time to Buy")
+  } else {
     uploadNew(file, uniq, newContent)
+  }
 })
 
 
@@ -289,6 +299,7 @@ const snap = (id, key, bool) => {
   starCountRef.on('value', (snapshot) => {
       snapData = snapshot.val(); //an object
       current = {};
+    
     if (!(snapData === null)) {
       var addLogs = () => {
         for (const i in snapData) {
@@ -421,7 +432,7 @@ const getcartVals = (x) => {
 
 // delete products from store
 var removeProducts = (ref) => {
-  if (location.search.substring(1) == userP.uid) { 
+  if (location.search.substring(1).includes(userP.uid)) { 
     var remover = firebase.database().ref(`store/${userP.uid}/${ref}`);
     // remove file from storage
     preDel(ref)
@@ -570,6 +581,34 @@ payBtnForm.addEventListener('submit', (e) => {
 })
 
 
+// add to dashboard/paid/id/key -- buyers paid
+
+function payForLife(amt) {
+    let handler = PaystackPop.setup({
+      key: 'pk_live_bdaedf9d29d5f6fbc1af4b369cf705b9b10a4076', // Replace with your public key
+      email: userP.email,
+      amount: (amt) * 100,
+      ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
+      onClose: function () {
+      },
+      callback: function (response) {
+        myPlan = {}
+        myPlan["life"] = true
+        
+        // to plans
+        firebase.database().ref(`users/${userP.uid}/`).update(myPlan)
+          
+        
+        let message = 'Payment complete! Reference: ' + response.reference;
+        
+        
+        alert(message, "Payment Succesfull, reload Page and Start adding more Products");
+      }
+    });
+  
+    handler.openIframe();
+}
+
 
 
 
@@ -591,6 +630,7 @@ const writeOnPayComplete = (shopId, key, data, ref) => {
 // check if image is Valid
 
 function imageExists(imgMain, id) {
+  
   var img = new Image();
   img.onload = function() { console.log("this image exists", true); };
   img.onerror = function () {

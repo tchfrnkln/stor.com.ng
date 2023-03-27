@@ -91,10 +91,24 @@
             getData(){
                 this.store_name = getCookie("store_name");
                 // this.store_uid = getCookie("uid");
-                this.store_uid = location.search.substring(1);
+                let urlMain = location.search.substring(1)
+                if (urlMain.includes('%2C')){
+                    link = urlMain.split("%2C");
+                  }else if (urlMain.includes(',')){
+                    link = urlMain.split(",");
+                  }else{
+                    link = urlMain.split(",");
+                  }
+                  
+                  if (link.length >= 2) {
+                    this.store_uid = link[1]
+                  } else {
+                    this.store_uid = link[0]
+                  } 
             },
             getDataLoadEnd(){
                 this.store_name = currentLoc.store_name
+                console.log("Number of Products ", this.products.length)
             },
             updIf:false,
             toggleUpd(){
@@ -234,12 +248,21 @@
             },
             toOrdered(){
                 location.assign("../ordered")
+            },
+            bgFullScreenImg:"",
+            bgFullScreen(){
+                document.querySelector('#bgFullScreen').classList.toggle("hidden")
+            },
+            bigBg(a){
+                this.bgFullScreenImg = a
+                this.bgFullScreen()
             }
         }))
     })
     </script>
 </head>
 <body data-theme="light" x-data="content" x-init="getData()" class="overflow-x-hidden">
+    
     
     
     <div class="w-100 flex justify-center align-middle p-6 flex-col pt-24">
@@ -402,7 +425,7 @@
                         <div class="w-sm md:w-80 bg-white shadow rounded p-4">
                             <!-- product image -->
                             <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
-                                <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                                <img loading="lazy" @click="bigBg(p.img)" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                                 
                                 <!-- plus(+) and select svgs -->
                                 <div class="flex justify-between align-middle hidden">
@@ -519,7 +542,7 @@
                     <div class="w-80 bg-white shadow rounded p-6">
                         <!-- product image -->
                         <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded relative overflow-hidden">
-                            <img loading="lazy" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
+                            <img loading="lazy" @click="bigBg(detail.img)" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
                             <!-- plus(+) and delete svgs-->
                             <div class="absolute p-4 top-0 right-0 flex justify-between align-middle w-full">
                                 <button title="delete item" class="text-red-800" @click="selectedProductcheck(this)" x-show="isOwner">
@@ -636,7 +659,7 @@
     
     <!-- upd -->
     <div class="hidden w-full flex justify-center align-middle absolute z-50 top-0 right-0 transition overflow-x-hidden" id="updifID" x-show="updIf">
-        <div class="w-full flex justify-center align-middle p-6 fixed inset-0 bg-blue-500">
+        <div id="updMainID" class="w-full flex justify-center align-middle p-6 fixed inset-0 bg-blue-500">
             <div class="blur-2xl bg-gray-700 fixed w-full h-screen inset-0"></div>
             <div class="w-80 z-10 bg-white shadow rounded p-6">
                 <!-- product image upd -->
@@ -669,6 +692,83 @@
                 </button>
                 <!-- errors -->
                 <!-- uis for errors and messages comming soon -->
+            </div>
+        </div>
+        <!-- Pricing display  -->
+        <div id="updPriceOffer" class="hidden bg-white py-24 sm:py-32">      
+            <div class="mx-auto max-w-7xl px-6 lg:px-8">
+                <div class="mx-auto max-w-2xl sm:text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">SToR</h2>
+                    <p class="mt-6 text-lg leading-8 text-gray-600">The best offer on the market for your online business to help you Scale</p>
+                </div>
+                <div class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+                    <div class="p-8 sm:p-10 lg:flex-auto">
+                        <h3 class="text-2xl font-bold tracking-tight text-gray-900">Lifetime membership</h3>
+                        <p class="mt-6 text-base leading-7 text-gray-600">We are excited to offer you a once-in-a-lifetime opportunity to become a lifetime member of our exclusive community. By becoming a member, you will gain access to all of our current and future products and services for a one-time fee, without ever having to pay any additional costs.
+                        <br><br>
+                        As a lifetime member, you will be able to enjoy unlimited access to all of our premium content, including courses, workshops, webinars, and more. You will also have the chance to connect with other like-minded individuals who share your interests and goals.</p>
+                        <div class="mt-10 flex items-center gap-x-4">
+                        <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">What’s included</h4>
+                        <div class="h-px flex-auto bg-gray-100"></div>
+                        </div>
+                        <ul role="list" class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+                            </svg>
+                            Add unlimited Products to your Dashboard
+                        </li>
+                        
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+                            </svg>
+                            Early access to all new Products
+                        </li>
+                
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            Lifetime access to all SToR product
+                        </li>
+                
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            Premium Sales Mentorship
+                        </li>
+                
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            Official member t-shirt shipped to your door step
+                        </li>
+                        
+                        <li class="flex gap-x-3">
+                            <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                            </svg>
+                            Zero fees paid on tax when you make a sale
+                        </li>
+                        </ul>
+                    </div>
+                    <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+                        <div class="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+                        <div class="mx-auto max-w-xs px-8">
+                            <p class="text-base font-semibold text-gray-600">Pay once, own it forever</p>
+                            <p class="mt-6 flex items-baseline justify-center gap-x-2">
+                            <span class="text-2xl md:text-5xl font-bold tracking-tight text-gray-900">N 5,000</span>
+                            <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">Naira</span>
+                            </p>
+                            <a @click="payForLife(5000)" class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer">Get access</a>
+                            <p class="mt-6 text-xs leading-5 text-gray-600">Invoices and receipts available for easy company reimbursement</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -717,10 +817,6 @@
             </template>
         </div>
     </div>
-    
-    
-    
-        
     
     
     <!-- go to orders after bought -->
@@ -806,6 +902,13 @@
         <p class="text-center text-sm">Your customers don't see this ads</p>
     </div>
     
+    
+    <!-- bg with images -->
+    <div class="hidden flex justify-center z-100 fixed inset-0" id="bgFullScreen" @click="bgFullScreen()">
+        <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
+        </img>
+    </div>
+  
     
     <!-- paysatck -->
     <script src="https://js.paystack.co/v1/inline.js"></script> 

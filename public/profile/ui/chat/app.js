@@ -7,7 +7,7 @@ auth.onAuthStateChanged(user => {
   } else {
     if (sessionStorage.getItem("loggedOutANaccount") != "true") {
       console.log('User is logged out!')
-      location.assign('../../../../auth?redirect=' + location.href)
+      location.assign('../../../auth?redirect=' + location.href)
     } else {
       console.log("Just logging out! wait");
     }

@@ -25,338 +25,414 @@
     
 </head>
 <body>
-    
-  <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" />
   
-  
-  
-    <!-- ====== Pricing Section Start -->
-<section class="relative z-20 overflow-hidden bg-white pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
-  <div class="container mx-auto" x-data="content">
-    <!-- Top head -->
-    <div class="-mx-4 flex flex-wrap">
-      <div class="w-full px-4">
-        <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
-          <span class="text-primary mb-2 block text-lg font-semibold">
-            Pricing Table
-          </span>
-          <h2
-            class="text-dark mb-4 text-3xl font-bold sm:text-4xl md:text-[40px]"
-          >
-            Our Pricing Plan
-          </h2>
-          <p class="text-body-color text-base">
-            There are many variations of passages of Lorem Ipsum available but
-            the majority have suffered alteration in some form.
-          </p>
+  <!-- ====== Pricing Section Start -->
+  <section class="hidden relative z-20 overflow-hidden bg-white pt-20 pb-12 lg:pt-[120px] lg:pb-[90px]">
+    <div class="container mx-auto" x-data="content">
+      <!-- Top head -->
+      <div class="-mx-4 flex flex-wrap">
+        <div class="w-full px-4">
+          <div class="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
+            <span class="text-primary mb-2 block text-lg font-semibold">
+              Pricing Table
+            </span>
+            <h2
+              class="text-dark mb-4 text-3xl font-bold sm:text-4xl md:text-[40px]"
+            >
+              Our Pricing Plan
+            </h2>
+            <p class="text-body-color text-base">
+              There are many variations of passages of Lorem Ipsum available but
+              the majority have suffered alteration in some form.
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    
-    <div class="-mx-4 flex flex-wrap justify-center">
-        <template x-for="plan in pricing" key="plan.name">
-            <div class="w-full px-4 md:w-1/2 lg:w-1/3">
-              <div class="border-primary shadow-pricing relative z-10 mb-10 overflow-hidden rounded-xl border border-opacity-20 bg-white py-10 px-8 sm:p-12 lg:py-10 lg:px-6 xl:p-12">
-                <span class="text-primary mb-4 block text-lg font-semibold" x-text="plan.name">
-                  Personal
-                </span>
-                <h2 class="text-dark mb-5 text-[42px] font-bold" x-text="plan.price">
-                  $59
-                </h2>
-                <p class="text-body-color mb-8 border-b border-[#F2F2F2] pb-8 text-base" x-text="plan.intro">
-                  Perfect for using in a personal website or a client project.
-                </p>
-                <div class="mb-7">
-                  <p class="text-body-color mb-1 text-base leading-loose">1 User</p>
-                  <p class="text-body-color mb-1 text-base leading-loose">
-                    All UI components
-                  </p>
-                  <p class="text-body-color mb-1 text-base leading-loose">
-                    Lifetime access
-                  </p>
-                  <p class="text-body-color mb-1 text-base leading-loose">
-                    Free updates
-                  </p>
-                  <p class="text-body-color mb-1 text-base leading-loose">
-                    Use on 1 (one) project
-                  </p>
-                  <p class="text-body-color mb-1 text-base leading-loose">
-                    3 Months support
-                  </p>
-                </div>
-                <a
-                  href="javascript:void(0)"
-                  class="text-primary hover:bg-primary hover:border-primary block w-full rounded-md border border-[#D4DEFF] bg-transparent p-4 text-center text-base font-semibold transition hover:text-white"
-                >
-                  Choose Personal
-                </a>
-                <div>
-                  <span class="absolute right-0 top-7 z-[-1]">
-                    <svg
-                      width="77"
-                      height="172"
-                      viewBox="0 0 77 172"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
-                      <defs>
-                        <linearGradient
-                          id="paint0_linear"
-                          x1="86"
-                          y1="0"
-                          x2="86"
-                          y2="172"
-                          gradientUnits="userSpaceOnUse"
-                        >
-                          <stop stop-color="#3056D3" stop-opacity="0.09" />
-                          <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
-                        </linearGradient>
-                      </defs>
-                    </svg>
+      
+      <div class="-mx-4 flex flex-wrap justify-center">
+          <template x-for="plan in pricing" key="plan.name">
+              <div class="w-full px-4 md:w-1/2 lg:w-1/3">
+                <div class="border-primary shadow-pricing relative z-10 mb-10 overflow-hidden rounded-xl border border-opacity-20 bg-white py-10 px-8 sm:p-12 lg:py-10 lg:px-6 xl:p-12">
+                  <span class="text-primary mb-4 block text-lg font-semibold" x-text="plan.name">
+                    Personal
                   </span>
-                  <span class="absolute right-4 top-4 z-[-1]">
-                    <svg
-                      width="41"
-                      height="89"
-                      viewBox="0 0 41 89"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="38.9138"
-                        cy="87.4849"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 87.4849)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="74.9871"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 74.9871)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="62.4892"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 62.4892)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="38.3457"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 38.3457)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="13.634"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 13.634)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="50.2754"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 50.2754)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="26.1319"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 26.1319)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="38.9138"
-                        cy="1.42021"
-                        r="1.42021"
-                        transform="rotate(180 38.9138 1.42021)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="87.4849"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 87.4849)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="74.9871"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 74.9871)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="62.4892"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 62.4892)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="38.3457"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 38.3457)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="13.634"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 13.634)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="50.2754"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 50.2754)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="26.1319"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 26.1319)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="26.4157"
-                        cy="1.4202"
-                        r="1.42021"
-                        transform="rotate(180 26.4157 1.4202)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="87.4849"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 87.4849)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="74.9871"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 74.9871)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="62.4892"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 62.4892)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="38.3457"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 38.3457)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="13.634"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 13.634)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="50.2754"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 50.2754)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="26.1319"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 26.1319)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="13.9177"
-                        cy="1.42019"
-                        r="1.42021"
-                        transform="rotate(180 13.9177 1.42019)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="87.4849"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 87.4849)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="74.9871"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 74.9871)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="62.4892"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 62.4892)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="38.3457"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 38.3457)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="13.634"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 13.634)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="50.2754"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 50.2754)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="26.1319"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 26.1319)"
-                        fill="#3056D3"
-                      />
-                      <circle
-                        cx="1.41963"
-                        cy="1.4202"
-                        r="1.42021"
-                        transform="rotate(180 1.41963 1.4202)"
-                        fill="#3056D3"
-                      />
-                    </svg>
-                  </span>
+                  <h2 class="text-dark mb-5 text-[42px] font-bold" x-text="plan.price">
+                    $59
+                  </h2>
+                  <p class="text-body-color mb-8 border-b border-[#F2F2F2] pb-8 text-base" x-text="plan.intro">
+                    Perfect for using in a personal website or a client project.
+                  </p>
+                  <div class="mb-7">
+                    <p class="text-body-color mb-1 text-base leading-loose">1 User</p>
+                    <p class="text-body-color mb-1 text-base leading-loose">
+                      All UI components
+                    </p>
+                    <p class="text-body-color mb-1 text-base leading-loose">
+                      Lifetime access
+                    </p>
+                    <p class="text-body-color mb-1 text-base leading-loose">
+                      Free updates
+                    </p>
+                    <p class="text-body-color mb-1 text-base leading-loose">
+                      Use on 1 (one) project
+                    </p>
+                    <p class="text-body-color mb-1 text-base leading-loose">
+                      3 Months support
+                    </p>
+                  </div>
+                  <a
+                    href="javascript:void(0)"
+                    class="text-primary hover:bg-primary hover:border-primary block w-full rounded-md border border-[#D4DEFF] bg-transparent p-4 text-center text-base font-semibold transition hover:text-white"
+                  >
+                    Choose Personal
+                  </a>
+                  <div>
+                    <span class="absolute right-0 top-7 z-[-1]">
+                      <svg
+                        width="77"
+                        height="172"
+                        viewBox="0 0 77 172"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle cx="86" cy="86" r="86" fill="url(#paint0_linear)" />
+                        <defs>
+                          <linearGradient
+                            id="paint0_linear"
+                            x1="86"
+                            y1="0"
+                            x2="86"
+                            y2="172"
+                            gradientUnits="userSpaceOnUse"
+                          >
+                            <stop stop-color="#3056D3" stop-opacity="0.09" />
+                            <stop offset="1" stop-color="#C4C4C4" stop-opacity="0" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </span>
+                    <span class="absolute right-4 top-4 z-[-1]">
+                      <svg
+                        width="41"
+                        height="89"
+                        viewBox="0 0 41 89"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="38.9138"
+                          cy="87.4849"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 87.4849)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="74.9871"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 74.9871)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="62.4892"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 62.4892)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="38.3457"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 38.3457)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="13.634"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 13.634)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="50.2754"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 50.2754)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="26.1319"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 26.1319)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="38.9138"
+                          cy="1.42021"
+                          r="1.42021"
+                          transform="rotate(180 38.9138 1.42021)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="87.4849"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 87.4849)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="74.9871"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 74.9871)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="62.4892"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 62.4892)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="38.3457"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 38.3457)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="13.634"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 13.634)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="50.2754"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 50.2754)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="26.1319"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 26.1319)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="26.4157"
+                          cy="1.4202"
+                          r="1.42021"
+                          transform="rotate(180 26.4157 1.4202)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="87.4849"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 87.4849)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="74.9871"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 74.9871)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="62.4892"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 62.4892)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="38.3457"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 38.3457)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="13.634"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 13.634)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="50.2754"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 50.2754)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="26.1319"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 26.1319)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="13.9177"
+                          cy="1.42019"
+                          r="1.42021"
+                          transform="rotate(180 13.9177 1.42019)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="87.4849"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 87.4849)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="74.9871"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 74.9871)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="62.4892"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 62.4892)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="38.3457"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 38.3457)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="13.634"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 13.634)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="50.2754"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 50.2754)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="26.1319"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 26.1319)"
+                          fill="#3056D3"
+                        />
+                        <circle
+                          cx="1.41963"
+                          cy="1.4202"
+                          r="1.42021"
+                          transform="rotate(180 1.41963 1.4202)"
+                          fill="#3056D3"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-        </template>
+          </template>
+      </div>
     </div>
+  </section>
+  <!-- ====== Pricing Section End -->
+  
+  
+  <div class="bg-white py-24 sm:py-32">      
+      <div class="mx-auto max-w-7xl px-6 lg:px-8">
+        <div class="mx-auto max-w-2xl sm:text-center">
+          <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">SToR</h2>
+          <p class="mt-6 text-lg leading-8 text-gray-600">The best offer on the market for your online business to help you Scale</p>
+        </div>
+        <div class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+          <div class="p-8 sm:p-10 lg:flex-auto">
+            <h3 class="text-2xl font-bold tracking-tight text-gray-900">Lifetime membership</h3>
+            <p class="mt-6 text-base leading-7 text-gray-600">We are excited to offer you a once-in-a-lifetime opportunity to become a lifetime member of our exclusive community. By becoming a member, you will gain access to all of our current and future products and services for a one-time fee, without ever having to pay any additional costs.
+            <br><br>
+            As a lifetime member, you will be able to enjoy unlimited access to all of our premium content, including courses, workshops, webinars, and more. You will also have the chance to connect with other like-minded individuals who share your interests and goals.</p>
+            <div class="mt-10 flex items-center gap-x-4">
+              <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">What’s included</h4>
+              <div class="h-px flex-auto bg-gray-100"></div>
+            </div>
+            <ul role="list" class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+                </svg>
+                Add unlimited Products to your Dashboard
+              </li>
+              
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd"/>
+                </svg>
+                Early access
+              </li>
+    
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+                Lifetime access to all SToR product
+              </li>
+    
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+                Premium Sales Mentorship
+              </li>
+    
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+                Official member t-shirt shipped to your door step
+              </li>
+              
+              <li class="flex gap-x-3">
+                <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                </svg>
+                Zero fees paid on tax when you make a sale
+              </li>
+            </ul>
+          </div>
+          <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
+            <div class="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+              <div class="mx-auto max-w-xs px-8">
+                <p class="text-base font-semibold text-gray-600">Pay once, own it forever</p>
+                <p class="mt-6 flex items-baseline justify-center gap-x-2">
+                  <span class="text-5xl font-bold tracking-tight text-gray-900">N 5,000</span>
+                  <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">Naira</span>
+                </p>
+                <a href="#" class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Get access</a>
+                <p class="mt-6 text-xs leading-5 text-gray-600">Invoices and receipts available for easy company reimbursement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
-</section>
-<!-- ====== Pricing Section End -->
+
+  
 
 </body>
 </html>
