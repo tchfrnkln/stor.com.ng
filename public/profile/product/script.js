@@ -551,22 +551,6 @@ payBtnForm.addEventListener('submit', (e) => {
       amount: (amt + (amt*.03)) * 100,
       ref: ''+Math.floor((Math.random() * 1000000000) + 1), 
       onClose: function () {        
-        inCartPay.forEach(i => {
-          // to shop orders
-          // writeOnPayComplete(i.store_uid, i.id, i, "orders")
-          
-          // to buyer paid
-          // writeOnPayComplete(userP.uid, i.id, i, "paid")
-          
-          
-          let prcnt = ((i.itm_price * i.count) * 10) / 100;
-          
-          console.log("i.upline", i.upline);
-          
-          if (i.upline) {
-            toAffiliate(i.upline, prcnt, "sales")
-          }
-        })
       },
       callback: function(response){
         inCartPay.forEach(i => {
@@ -575,6 +559,14 @@ payBtnForm.addEventListener('submit', (e) => {
           
           // to buyer paid
           writeOnPayComplete(userP.uid, i.id, i, "paid")
+          
+          let prcnt = ((i.itm_price * i.count) * 10) / 100;
+          
+          console.log("i.upline", i.upline);
+          
+          if (i.upline) {
+            toAffiliate(i.upline, prcnt, "sales")
+          }
           
           // remove from cart
           removeCartItm(i.id)

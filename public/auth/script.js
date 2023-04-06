@@ -250,8 +250,10 @@ upLine = upLineLink[upLineLink.length - 1]
 if (upLine.includes(",")) {
     nLink = upLine.split(",")
     upLine = nLink[nLink.length - 1]
+} else if (upLine.includes("%2C")) {
+    nLink = upLine.split("%2C")
+    upLine = nLink[nLink.length - 1]
 }
-
 
 if (upLine == "") {
     upLine = "tPXhbp1DaPU5YWtChEOMEpNaFVH2"

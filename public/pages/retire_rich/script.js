@@ -103,6 +103,8 @@ for (let i = 0; i < googleAuthbtn.length; i++) {
 const googleAuth = document.querySelector('#googleAuth');
 
 googleAuth.addEventListener('click', () => {
+    
+    // with google
     firebase.auth()
     .signInWithPopup(provider)
     .then(result => {
@@ -118,4 +120,18 @@ googleAuth.addEventListener('click', () => {
         console.log(errorMessage)
         alert(`${errorMessage}, Check your Internet connection and Refresh Page`)
     })
+    
+    // with facebook
+    // var faceBookprovider = new firebase.auth.FacebookAuthProvider();
+    
+    // firebase.auth().signInWithPopup(faceBookprovider).then((result) => {
+    //     var credential = result.credential;
+    //     var user = result.user;
+    //     var accessToken = credential.accessToken;
+    // }).catch((error) => {
+    //     var errorCode = error.code;
+    //     var errorMessage = error.message;
+    //     var email = error.email;
+    //     var credential = error.credential;
+    // });
 })

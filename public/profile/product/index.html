@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:image" content="../../img/sellables.jpeg"/>
+
     <title>Products - stor.com.ng</title>
     <!-- favi -->
     <link rel="apple-touch-icon" sizes="180x180" href="../../img/ico/apple-touch-icon.png">
@@ -199,7 +201,7 @@
                 navigator.clipboard.writeText(copiableLink)
                 popInOut(copyUrlcomplt)
             },
-            copyPrevUrl(){
+            copyPrevUrl(x){
                 if(owner != userP.uid){   
                     copiableLink = location.origin+location.pathname+'?'+this.p.id+','+owner+","+userP.uid;
                 }else{
@@ -208,7 +210,22 @@
                 console.log(copiableLink);
                 navigator.clipboard.writeText(copiableLink)
                 popInOut(copyUrlcomplt)
+                // this.downloadImage(x)
+                location.assign("https://api.whatsapp.com/send?text="+copiableLink);
             },
+            async downloadImage(imageSrc) {
+                // to download images returns error and not used
+                let image = await fetch(imageSrc)
+                let imageBlog = await image.blob()
+                let imageURL = URL.createObjectURL(imageBlog)
+              
+                let link = document.createElement('a')
+                link.href = imageURL
+                link.download = 'StorImg'+ Math.floor((Math.random())*1000)
+                document.body.appendChild(link)
+                link.click()
+                document.body.removeChild(link)
+              },
             seemoreOnthis(){
                 this.picks = []
                 snap(owner, this.detail.id, true)
@@ -530,7 +547,7 @@
                         <h1 class="pt-6 font-bold text-blue-600 text-xl capitalize">Explore more in Our Shop</h1>
                     </div>
                     <div class="absolute top-0 right-0">
-                        <button class="p-2 text-gray-700 rounded hover:bg-blue-300 active:bg-blue-200 disabled:opacity-50 mt-4 w-full flex items-center justify-center rounded-full" @click="copyPrevUrl()">
+                        <button class="p-2 text-gray-700 rounded hover:bg-blue-300 active:bg-blue-200 disabled:opacity-50 mt-4 w-full flex items-center justify-center rounded-full" @click="copyPrevUrl(p.img)">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
                             </svg>
