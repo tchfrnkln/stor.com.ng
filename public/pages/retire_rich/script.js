@@ -103,35 +103,25 @@ for (let i = 0; i < googleAuthbtn.length; i++) {
 const googleAuth = document.querySelector('#googleAuth');
 
 googleAuth.addEventListener('click', () => {
-    
-    // with google
-    firebase.auth()
-    .signInWithPopup(provider)
-    .then(result => {
-        var credential = result.credential;
-        var token = credential.accessToken;
-        var user = result.user;
-        // console.log(user);
-    }).catch(error => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        var email = error.email;
-        var credential = error.credential;
-        console.log(errorMessage)
-        alert(`${errorMessage}, Check your Internet connection and Refresh Page`)
-    })
-    
-    // with facebook
-    // var faceBookprovider = new firebase.auth.FacebookAuthProvider();
-    
-    // firebase.auth().signInWithPopup(faceBookprovider).then((result) => {
-    //     var credential = result.credential;
-    //     var user = result.user;
-    //     var accessToken = credential.accessToken;
-    // }).catch((error) => {
-    //     var errorCode = error.code;
-    //     var errorMessage = error.message;
-    //     var email = error.email;
-    //     var credential = error.credential;
-    // });
+  
+    if (location.search.substring(1,5) == "from") {
+        location.assign("https://wa.me/2348153244501/?text=Hello,%20I'll%20like%20to%20sale%20More%20with%20Your%20Services%20and%20get%20the%20free%20tool%20at%20the%20end%20of%20our%20scheduled%20call.%20%20My%20name%20is%20...")
+    } else {
+        // with google
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then(result => {
+                var credential = result.credential;
+                var token = credential.accessToken;
+                var user = result.user;
+                // console.log(user);
+            }).catch(error => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                var email = error.email;
+                var credential = error.credential;
+                console.log(errorMessage)
+                alert(`${errorMessage}, Check your Internet connection and Refresh Page`)
+            })
+    }
 })
