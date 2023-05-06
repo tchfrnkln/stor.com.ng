@@ -153,7 +153,7 @@ function writeUserData(userId, data) {
 }
 
 // hide waterAds to all except owner
-var waterAds = document.querySelector('#waterAds');
+// var waterAds = document.querySelector('#waterAds');
 var sales_pre = document.querySelector('#sales_pre');
 
 
@@ -163,7 +163,7 @@ const checkUser = () => {
     waterAds.classList.add("hidden");
     sales_pre.classList.add("hidden");
   } else {
-    waterAds.classList.remove("hidden");
+    // waterAds.classList.remove("hidden");
     // Update all data Inputed
     contentEditBtnUpdate.addEventListener('click', (e) => {
       e.preventDefault()

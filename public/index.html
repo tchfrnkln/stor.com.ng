@@ -135,21 +135,21 @@
 </head>
 <body x-data="content" class="p-6">
     
-    <div class="fixed w-screen inset-0 h-max bg-white z-10">
+    <div class="fixed w-screen inset-0 h-max bg-white z-10 py-4">
         <!-- top level -->
         <div class="relative flex justify-between p-6 align-middle">
             
             <div class="absolute inset-0 py-4 -z-10">
                 <a class="flex justify-center align-middle text-blue-600 cursor-pointer" href="../">
-                <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+                <span class="font-bold text-sm">ST<span class="font-bold text-yellow-500">o</span>R</span>
               </a>
             </div>
             
             <!-- <p x-show="togType" class="w-5 h-5 rounded-full bg-gray-500 cursor-pointer" @click="togTypeFunx()"></p> -->
             
-            <i x-show="togType" class="fa-solid fa-location-dot p-3 rounded-full bg-gray-200 cursor-pointer" @click="togTypeFunx()"></i>
+            <i x-show="togType" class="hidden fa-solid fa-location-dot p-3 rounded-full bg-gray-200 cursor-pointer" @click="togTypeFunx()"></i>
             
-            <i x-show="togSearch" class="fa-solid fa-magnifying-glass p-3 rounded-full bg-blue-100 cursor-pointer" @click="togSearchFunx()"></i>
+            <i x-show="togSearch" class="fa-solid fa-magnifying-glass p-3 rounded-full bg-blue-100 cursor-pointer" x-init="togSearchFunx()"  @click="togSearchFunx()"></i>
             
             <!-- <p  @click="togSearchFunx()" class="w-5 h-5 rounded-full bg-blue-500 cursor-pointer"></p> -->
         </div>
@@ -196,7 +196,7 @@
     <div>
         <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
             <template x-for="p in product">
-                    <div class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer">
+                    <div class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer hover:animate-pulse">
                         <div class="h-28 bg-blue-100"  :src="p.img" @click="bigBg(p.img)">
                             <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                         </div>
@@ -222,7 +222,7 @@
     </div>
 
     <!-- bg with images -->
-    <div class="hidden flex justify-center z-100 fixed inset-0" id="bgFullScreen" @click="bgFullScreen()">
+    <div class="hidden flex justify-center z-100 fixed inset-0 backdrop-blur-sm" id="bgFullScreen" @click="bgFullScreen()">
         <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
         </img>
     </div>

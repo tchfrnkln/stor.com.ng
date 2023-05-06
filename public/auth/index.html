@@ -21,7 +21,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('contents', ()=> ({
                 to:location.search.substr(1),
-                src:"https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp",
+                src:"../pages/Ultimate_Tool/img/sellables.jpeg",
                 upd(){
                     console.log(this.src);
                 }
@@ -37,8 +37,8 @@
                 <p class="text-center text-xs">brought to you by <span class="font-bold text-blue-600">SToR</span></p>
                 <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
                     <!-- image top -->
-                    <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0" x-init="upd()">
-                        <img :src="src" class="w-full" alt="stor.com.ng" />
+                    <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0 flex justify-center align-center" x-init="upd()">
+                        <img :src="src" class="w-full md:w-80" alt="stor.com.ng" />
                     </div>
                     
                     <!-- form login, new, verification sent, Email verified -->
@@ -112,7 +112,7 @@
                         <!-- Create a new Account -->
                         <form id="signUp_form" class="">
                             <!-- optional signup -->
-                            <div class="bg-gray-100 rounded p-6 shadow-lg" id="googleAuth">
+                            <div class="bg-gray-100 rounded p-6 shadow-lg cursor-pointer" id="googleAuth">
                                 <div class="flex flex-row items-center justify-center">
                                     <p class="text-lg mb-0 mr-4 font-medium">Sign Up with</p>
                                     <button type="button" data-mdb-ripple="true" data-mdb-ripple-color="light" class="hidden inline-block p-3 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out mx-1">

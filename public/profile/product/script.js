@@ -42,14 +42,14 @@ var newProductAdd = document.querySelector("#newProductAdd");
 var customerStat = document.querySelector("#customerStat");
 
 // hide waterAds to all execpt owner
-var waterAds = document.querySelector('#waterAds');
+// var waterAds = document.querySelector('#waterAds');
 
 
 const checkUserProd = () => {
   if (userP.uid != owner) {
     newProductAdd.classList.add("hidden")
     customerStat.classList.remove("hidden")
-    waterAds.classList.add("hidden")
+    // waterAds.classList.add("hidden")
   } else {
     newProductAdd.classList.remove("hidden")
     customerStat.classList.add("hidden")
@@ -73,8 +73,13 @@ var totalProductSelling;
 addToStore.addEventListener('click', (e) => {
   
   e.preventDefault();
+  
   var file = profileImgInp.files[0];
+  var allFilesImg = profileImgInp.files;
   var plan_life;
+  
+  // return console.log("allFilesImg", allFilesImg.length)
+  
   var uniq = `id${parseInt(totalProductSelling) + 1}` + Math.random((new Date()).getTime()).toString(16).slice(2)
 
   firebase.database().ref(`users/${userP.uid}/`).on('value', (snapshot) => {
@@ -82,15 +87,16 @@ addToStore.addEventListener('click', (e) => {
     plan_life = snapData.life
   })
     
-  if (!file) return alert("Cannot continue without an image upload")
+  // if (!file) return alert("Cannot continue without an image upload")
   
     for (const i of updEditable) {
       newContent[i.title] = escapeInput(i.innerText);
     }
+    
   
-    if(newContent["itm_name"] == "Product Name") return alert("Add the Name of the Products you're Selling")
-    // if (newContent["itm_price"] == 5000) return alert("How much are you willing to sale this item for")
-    if (newContent["letter"] == "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere") return alert("Add a Little description about what you sale")
+    // if(newContent["itm_name"] == "Product Name") return alert("Add the Name of the Products you're Selling")
+    // // if (newContent["itm_price"] == 5000) return alert("How much are you willing to sale this item for")
+    // if (newContent["letter"] == "Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere") return alert("Add a Little description about what you sale")
   
     newContent["alt"] = "stor.com.ng-" + profileImgInp.files[0].name
     newContent["count"] = 1
@@ -102,7 +108,7 @@ addToStore.addEventListener('click', (e) => {
     document.querySelector("#updPriceOffer").classList.remove("hidden")
     alert("Buy a LifeTime Plan To add More Products to your Dashboard, Refresh Page if this won't be the best Time to Buy")
   } else {
-    uploadNew(file, uniq, newContent)
+    uploadNew(file, uniq, newContent, allFilesImg)
   }
 })
 
@@ -172,56 +178,99 @@ const edtInDb = () =>{
     newContentEdt["alt"] = "stor.com.ng-" + profileImgInpEdt.files[0].name
     newContentEdt["count"] = 1
     
-    uploadNew(file, edtUniq, newContentEdt)
+    uploadNew(file, edtUniq, newContentEdt, allFilesImg)
 }
 
 var uploadPop = document.querySelector("#uploadPop");
 
-var uploadNew = (file, key, object) => {
+var uploadNew = (file, key, object, allFilesImg) => {
     var metadata = {
       contentType: 'image/jpeg'
-    };
-    // delete pre images to utilize db
-    preDel(key)
-          
-      var uploadTask = storageRef.child(`images/${userP.uid}/store/${key}/` + file.name).put(file, metadata);
-
-      uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+  };
+  
+  // delete pre images to utilize db
+  preDel(key)
+  
+  var ddUrl = []
+  const updUnitImg = (file) => {
+    var uploadTask = storageRef.child(`images/${userP.uid}/store/${key}/` + file.name).put(file, metadata);
+  
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
+        
+      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('Upload is ' + progress + '% done');
+      switch (snapshot.state) {
+        case firebase.storage.TaskState.PAUSED:
+          console.log('Upload is paused');
+          break;
             
-        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
-        switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED:
-            console.log('Upload is paused');
-            break;
-                
-          case firebase.storage.TaskState.RUNNING:
-            console.log('Upload is running');
-            break;
-        }
-      }, (error) => {
-        switch (error.code) {
-          case 'storage/unauthorized':
-            console.log("err unauthorized");
-            break;
-                
-          case 'storage/canceled':
-            console.log("err canceled by user");
-            break;
-                
-          case 'storage/unknown':
-            console.log("err storage unknown");
-            break;
-        }
-      }, () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          object["id"] = key;
-          object["img"] = downloadURL;
-          writeUserData(userP.uid, key, object); 
-          popInOut(uploadPop);
-        });
+        case firebase.storage.TaskState.RUNNING:
+          console.log('Upload is running');
+          break;
       }
-    );
+    }, (error) => {
+      switch (error.code) {
+        case 'storage/unauthorized':
+          console.log("err unauthorized");
+          break;
+            
+        case 'storage/canceled':
+          console.log("err canceled by user");
+          break;
+            
+        case 'storage/unknown':
+          console.log("err storage unknown");
+          break;
+      }
+    }, () => {
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        ddUrl.push(downloadURL)
+      });
+    })
+  }
+  
+  
+  if (allFilesImg.length > 1) {
+    for (const i in allFilesImg) {
+      if (allFilesImg.hasOwnProperty.call(allFilesImg, i)) {
+        updUnitImg(allFilesImg[i]);
+      }
+    }
+    
+    var ticker = setInterval(() => {
+       if (ddUrl.length == allFilesImg.length) { 
+         clearInterval(ticker);
+        
+          object["id"] = key;
+         object["img"] = ddUrl[0];
+         object["imgL"] = ddUrl.length;
+         
+         for (let i = 0; i < ddUrl.length; i++) {
+          object[`img${i}`] = ddUrl[i];
+         }
+         
+         writeUserData(userP.uid, key, object);
+         popInOut(uploadPop);
+       }
+     }, 100);
+    
+  } else {
+    updUnitImg(file)
+    
+    var ticker = setInterval(() => {
+      if (ddUrl.length == 1) { 
+        clearInterval(ticker);
+        object["id"] = key;
+        object["img"] = ddUrl[0];
+        object["imgL"] = ddUrl.length;
+        
+        writeUserData(userP.uid, key, object);
+        popInOut(uploadPop);
+      }
+    }, 100);
+    
+  }
+  
 }
 
 

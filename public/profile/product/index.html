@@ -48,7 +48,7 @@
                 // {id:2, itm_name:"Medium Stuff Satchel", itm_price:40000, count:1, type:"blue", img:"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg", alt:"Blue Medium Stuff Satchel"}
             ],
             upd:{
-                img:"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",itm_name:"Product Name", price:5000, letter:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere"
+                img:"https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",itm_name:"Product Name", price:5000, letter:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias at aliquid repellat, esse autem doloribus quo nihil voluptatibus suscipit sint iure facere",sizes:"13,14,16,18,19"
             },
             totalPrice(x){
                 let total = 0
@@ -69,11 +69,43 @@
                 this.showcart = !this.showcart;
                 document.querySelector("#cart").classList.remove("hidden");
             },
-            addTocart(key, count){
+            addTocart(key, count, size){
                 // current referenced in script
                 snap(this.store_uid, key, true)
                 current["count"] = count
+                current["size"] = size
+                // return this.askForSize(current)
                 writeUserCart(userP.uid, key, current);
+            },
+            addTocartPreCntnt:"",
+            addTocartPre(x){
+                this.addTocartPreCntnt = x;
+                this.allShopSize = []
+                this.addTocartPreCntnt.all_sizes.split(',').forEach(i => {
+                    let obj = {}
+                    obj.size = i
+                    this.allShopSize.push(obj)
+                })
+                this.askForSize(this.addTocartPreCntnt.all_sizes)
+            },
+            askForSizeTog:false,
+            askForSize(x){
+                this.askForSizeTog = !this.askForSizeTog
+                document.querySelector("#askForSizeId").classList.remove("hidden");
+                if(x == "add"){
+                    if(this.mySize == 0) {
+                        this.askForSizeTog = !this.askForSizeTog
+                       return alert("Select a Valid Size")
+                    }
+                    console.log("Should Write users Now");
+                    
+                    this.addTocart(this.addTocartPreCntnt.id, this.addTocartPreCntnt.count, this.mySize)
+                }
+            },
+            allShopSize:[{size:13},{size:14},{size:16}],
+            mySize:0,
+            chooseThisSize(x){
+                this.mySize = x
             },
             getPreCart(){
                 // cartCurrent referenced in script
@@ -262,12 +294,47 @@
                 location.assign("../ordered")
             },
             bgFullScreenImg:"",
+            bgScreens:[],
             bgFullScreen(){
                 document.querySelector('#bgFullScreen').classList.toggle("hidden")
             },
-            bigBg(a){
-                this.bgFullScreenImg = a
-                this.bgFullScreen()
+            bigBg(ma){
+                this.bgFullScreenImg = ma.img
+                this.bgFullScreen()             
+                allAry = []
+                frTmFlp = []
+                Object.keys(ma).forEach(i =>{ 
+                  if(i.includes("img") && (!(i.includes("imgL"))) && (!(i == "img"))){
+                        ary = {}
+                        ary.img = ma[i]
+                        frTmFlp.push(ma[i])
+                        allAry.push(ary)
+                    }
+                })
+                
+                
+                this.bgScreens = allAry
+                
+                if(allAry.length <= 0) return this.bgFullScreenImg = ma.img
+                
+                
+                
+                
+                //  uses frTmFlp to display new images on intervals
+                var a = 1
+                var fliper = setInterval(() => {
+                    this.bgFullScreenImg = frTmFlp[a]
+                    a++
+                    if(a >= frTmFlp.length){
+                        clearInterval(fliper)
+                    }
+                }, 4000);
+            },
+            bcmFullScrn(image){
+                this.bgFullScreenImg = image
+            },
+            shwDis(x){
+                console.log("x", x);
             }
         }))
     })
@@ -320,7 +387,7 @@
                     <div class="fixed inset-0 bg-gray-700 bg-opacity-75 transition-opacity" @click="toggleCart()"></div>
                     <!-- cart -->
                     <div class="fixed inset-0 overflow-hidden">
-                        <div class="absolute inset-0 overflow-hidden">
+                        <div class="absolute inset-0 overflow-hidden backdrop-blur-sm">
                             <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 z-10">
                                 <div class="pointer-events-auto w-screen max-w-md">
                                     <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
@@ -368,6 +435,7 @@
                                                                     <!-- quantity and remove btn -->
                                                                     <div class="flex flex-1 items-end justify-between text-sm">
                                                                         <p class="text-gray-500" x-text="'Qty '+li.count"></p>
+                                                                        <p class="text-gray-500" x-text="'Size '+li.size"></p>
 
                                                                         <div class="flex">
                                                                             <button type="button" class="font-medium text-blue-600 hover:text-blue-500" @click="removeItm(li.id)">Remove</button>
@@ -432,16 +500,18 @@
             </div>
         </div>
         
+
+        
         <!-- preview of 1 product -->
         <div class="grid grid-cols-1 gap-4 p-4">
             <template x-for="p in picks" :key="p.id">
                 <div class="relative">
                     <div class="w-full flex justify-center md:justify-start align-middle  flex-col md:flex-row flex-col-reverse">
                         <!-- product -->
-                        <div class="w-sm md:w-1/5 bg-white shadow rounded p-4 h-max">
+                        <div class="w-sm md:w-2/6 bg-white shadow rounded p-4 h-max">
                             <!-- product image -->
                             <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
-                                <img loading="lazy" @click="bigBg(p.img)" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                                <img loading="lazy" @click="bigBg(p)" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                                 
                                 <!-- plus(+) and select svgs -->
                                 <div class="flex justify-between align-middle hidden">
@@ -470,68 +540,53 @@
                             </div>
                             <!-- product details -->
                             <div class="p-4 flex flex-col items-center">
-                                    <p class="text-gray-400 font-light text-xs text-center" x-text="store_name"></p>
-                                    <h1 class="text-gray-800 text-center mt-1" x-text="p.itm_name"></h1>
-                                    <p class="text-center text-gray-800 mt-1" x-text="currency+ ' '+ calcTotalP()"></p>
-                                    <!-- numbers button -->
-                                    <div class="inline-flex items-center mt-2">      
-                                        <button
-                                            class="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200" @click="deduceP(false)">
-                                            <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-6 w-4"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M20 12H4"
-                                            />
-                                            </svg>
-                                        </button>
-                                        <div class="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none" x-text="p.count">
-                                        </div>
-                                        <button class="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200" @click="deduceP(true)">
-                                            <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-6 w-4"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
-                                            >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M12 4v16m8-8H4"
-                                            />
-                                            </svg>
-                                        </button>
-                                    </div>
-                                    <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocart(p.id, p.count)">Add to order
+                                <p class="text-gray-400 font-light text-xs text-center" x-text="store_name"></p>
+                                <h1 class="text-gray-800 text-center md:py-2 mt-1" x-text="p.itm_name"></h1>
+                                <p class="text-center text-gray-800 mt-1 md:py-2" x-text="currency+ ' '+ calcTotalP()"></p>
+                                <!-- numbers button -->
+                                <div class="inline-flex items-center mt-2 md:py-2">      
+                                    <button
+                                        class="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200" @click="deduceP(false)">
                                         <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            class="h-6 w-6 ml-2"
-                                            fill="none"
-                                            viewBox="0 0 24 24"
-                                            stroke="currentColor"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        class="h-6 w-4"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
                                         >
-                                            <path
+                                        <path
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                                            />
+                                            d="M20 12H4"
+                                        />
                                         </svg>
-                                    </button>  
+                                    </button>
+                                    <div class="bg-gray-100 border-t border-b border-gray-100 text-gray-600 hover:bg-gray-100 inline-flex items-center px-4 py-1 select-none" x-text="p.count">
+                                    </div>
+                                    <button class="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200" @click="deduceP(true)">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                            class="h-6 w-4"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M12 4v16m8-8H4"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocartPre(p)">Add to order
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                    </svg>
+                                </button>  
                             </div>   
                         </div>
                         
                         <!-- sales letter and more -->
-                        <div class="p-4 md:w-4/5">
+                        <div class="p-4 md:w-4/6">
                             <h1 class="text-2xl font-bold pt-6" x-text="p.itm_name"></h1>
                             <p class="text-xs" x-text="'by '+ store_name"></p>
                             <div style="white-space:pre-wrap" class="my-6" x-text="p.letter"></div>
@@ -556,7 +611,7 @@
                     <div class="w-80 bg-white shadow rounded p-6">
                         <!-- product image -->
                         <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded relative overflow-hidden">
-                            <img loading="lazy" @click="bigBg(detail.img)" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
+                            <img loading="lazy" @click="bigBg(detail)" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
                             <!-- plus(+) and delete svgs-->
                             <div class="absolute p-4 top-0 right-0 flex justify-between align-middle w-full">
                                 <button title="delete item" class="text-red-800" @click="selectedProductcheck(this)" x-show="isOwner">
@@ -587,7 +642,7 @@
                                     </div>
                                     <button class="bg-white rounded-r border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200" @click="deduce(true)"><i class="fa-solid fa-plus"></i></button>
                             </div>
-                            <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocart(detail.id, detail.count)">Add to order 
+                            <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocartPre(detail)">Add to order 
                                 <i class="pl-4 fa-solid fa-cart-shopping"></i>
                             </button>
                             <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="seemoreOnthis()">View Decription</button>
@@ -595,6 +650,32 @@
                     </div>
                 </div>
             </template>
+        </div>
+        
+        
+        <!-- availiable sizes -->
+        <div class="hidden flex justify-center align-middle w-100 h-100 backdrop-blur-sm fixed inset-0 p-12" x-show="askForSizeTog" id="askForSizeId">
+
+            <div class="flex justify-center align-middle w-80 bg-blue-900 rounded py-24 p-6 text-center">
+                <div>
+                    <h1 class="text-xl md:text-2xl text-white" x-text="'Pick a size for Your '+ addTocartPreCntnt.itm_name"></h1>
+                    <div class="grid grid-cols-3 gap-2 p-6 my-4">
+                        <template x-for="sZ in allShopSize" :key="sZ.size">
+                            <div class="px-4 py-3 bg-white cursor-pointer active:bg-gray-200 active:text-blue-700 border rounded" x-text="sZ.size" @click="chooseThisSize(sZ.size)"></div>
+                        </template>
+                    </div>
+                    
+                    <h1 class="md:text-2xl font-medium text-center text-white animate-pulse my-6" x-text="mySize">13</h1>
+                    
+                    <button class="py-2 px-4 bg-gray-100 text-blue-700 rounded active:bg-gray-200 disabled:opacity-50 mt-4 w-full flex items-center justify-center font-bold" @click="askForSize('add')">Continue</button>
+                    
+                    <!-- cancel btn -->
+                    <button class="absolute top-0 right-0 md:top-5 md:right-5 p-2 m-4 w-10 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white" @click="askForSize()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                    
+                </div>
+            </div>
         </div>
         
         <!-- Add new button and Subscrib btn -->
@@ -637,30 +718,30 @@
                 <!-- product image upd -->
                 <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden" @click="updImgUpload()">
                     <img loading="lazy" :src="upd.img" :alt="upd.alt" class="h-full w-full object-cover object-center">
-                    <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="updImgPreview(event)">
+                    <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="updImgPreview(event)" multiple>
                 </div>
                 <!-- product details -->
                 <div class="p-4 flex flex-col items-center">
                     <p x-text="store_uid" title="store_uid" class="hidden" id="updEditable"></p>
-                    <p class="text-gray-400 font-light text-xs text-center" x-text="store_name"></p>
-                    <h1 class="pb-2 text-gray-800 text-center mt-1" x-text="upd.itm_name" id="updEditable" title="itm_name"></h1>
-                    <p class="text-xs font-light capitalize" x-text="currency"></p>
-                    <p class="text-center pb-2 text-gray-800 mt-1" x-text="upd.price" id="updEditable" title="itm_price"></p>
-                    <p class="pt-2 text-xs font-bold capitalize">Describe What you have For sale</p>
-                    <div class="p-2 h-32 overflow-y-auto" x-text="upd.letter" id="updEditable" title="letter"></div>
-                    <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" id="addToStore" click="toggleUpd()">Add to Store
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </button>    
-                    <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="toggleUpd()">Cancel</button>    
+                    <p class="text-gray-700 font-light text-xs text-center" x-text="store_name"></p>
+                    <h1 class="p-4 text-gray-800 text-center mt-1" x-text="upd.itm_name" id="updEditable" title="itm_name"></h1>
+                    <div class="flex">
+                        <p class="text-xs font-light capitalize pr-2" x-text="currency"></p>
+                        <p class="text-center p-3 text-gray-800" x-text="upd.price" id="updEditable" title="itm_price"></p>
+                    </div>
+                    <!-- asgvagsv -->
+                    <!-- <p class="pt-2 text-xs font-bold capitalize">Describe What you have For sale</p> -->
+                    <div class="p-4 h-32 overflow-y-auto mb-2" x-text="upd.letter" id="updEditable" title="letter"></div>
+                    <div class="p-4 h-max overflow-y-auto" x-text="upd.sizes" id="updEditable" title="all_sizes"></div>
+                    <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-max flex items-center justify-center fixed bottom-10 right-10" id="addToStore" click="toggleUpd()">
+                        <!-- Add to Store -->
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
                 </div>
                 
                 <!-- cancel btn -->
-                <button class="absolute top-0 right-0 md:top-5 md:right-5 p-2 m-4 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white" @click="toggleUpd()">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                <button class="absolute top-0 right-0 md:top-5 md:right-5 p-2 m-4 w-10 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white" @click="toggleUpd()">
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
                 <!-- errors -->
                 <!-- uis for errors and messages comming soon -->
@@ -763,25 +844,27 @@
                     <!-- product details -->
                     <div class="p-4 flex flex-col items-center">
                         <p x-text="store_uid" title="store_uid" class="hidden" id="updEditer" contenteditable></p>
-                        <p class="text-gray-400 font-light text-xs text-center" x-text="store_name"></p>
-                        <h1 class="pb-2 text-gray-800 text-center mt-1" x-text="edt.itm_name" id="updEditer" contenteditable title="itm_name"></h1>
-                        <p class="text-xs font-light capitalize" x-text="currency"></p>
-                        <p class="text-center pb-2 text-gray-800 mt-1" x-text="edt.itm_price" id="updEditer" contenteditable title="itm_price"></p>
-                        <p class="pt-2 text-xs font-bold capitalize">Describe What you have For sale</p>
-                        <div class="p-2 h-32 overflow-y-auto" x-text="edt.letter" id="updEditer" contenteditable title="letter"></div>
-                        <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="saveEdit()">Save Changes
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                            </svg>
-                        </button>    
-                        <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="editProductog()">Cancel</button>    
+                        <p class="text-gray-600 font-light text-xs text-center" x-text="store_name"></p>
+                        <h1 class="p-4 text-gray-800 text-center" x-text="edt.itm_name" id="updEditer" contenteditable title="itm_name"></h1>
+                        <div class="flex">
+                            <p class="text-xs font-light capitalize p-2" x-text="currency"></p>
+                            <p class="text-center text-gray-800 p-4" x-text="edt.itm_price" id="updEditer" contenteditable title="itm_price"></p>
+                        </div>
+                        
+                        <!-- asgvagsv -->
+                        
+                        <div class="p-4 h-32 overflow-y-auto" x-text="edt.letter" id="updEditer" contenteditable title="letter"></div>
+                        
+                        <div class="p-4 h-max overflow-y-auto" x-text="edt.sizes" id="updEditer" title="all_sizes"></div>
+                        <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-max flex items-center justify-center fixed bottom-10 right-10" @click="saveEdit()">
+                            <!-- Save Changes -->
+                            <i class="fa-solid fa-check"></i>
+                        </button>
                     </div>
                     
                     <!-- cancel btn float top-right-->
-                    <button class="absolute top-0 right-0 md:top-5 md:right-5 p-2 m-4 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white cursor-pointer" @click="editProductog()">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                    <button class="absolute top-0 right-0 md:top-5 md:right-5 p-2 m-4 w-10 rounded-full bg-gray-800 hover:bg-gray-900 transition text-white cursor-pointer" @click="editProductog()">
+                        <i class="fa-solid fa-xmark"></i>
                     </button>
                     <!-- errors -->
                     <!-- uis for errors and messages comming soon -->
@@ -837,9 +920,8 @@
     </div>
     
     <!-- watermark -->
-    <div class="w-full hidden p-6 bg-blue-300 flex justify-center align-middle flex-col" id="waterAds">
+    <!-- <div class="hidden w-full hidden p-6 bg-blue-300 flex justify-center align-middle flex-col" id="waterAds">
         <div class="flex justify-center align-middle p-4 flex-col md:flex-row md:justify-evenly">
-            <!-- description and details -->
             <div class="flex justify-center align-middle flex-col lg:w-max">
                 <p class="max-w-sm p-2 my-6">
                     <b>How to sell more of your products in 30days than you’ve sold in the Last 3months even if you have no experience selling online</b>
@@ -850,18 +932,7 @@
                     <br><br>
                     Let's go on a <b>Tour</b>
                 </p>
-                <!-- <p class="max-w-sm p-2 my-6">
-                    This is a preview version of <b>SToR,</b> please note that there are certain features that are only avaliable for <b>Premuim.</b>
-                    <br><br>
-                    The Premium comes with a Full package of <b>SToR</b> Which allows you take payments and monitor your <b>Brand's</b> growth
-                    <br><br> 
-                    Valued at a one-Time fee of <b class="line-through">50,000naira</b>
-                    given away for only <b>5,000naira</b>                
-                    <br><br>
-                    <span class="text-lg text-left font-bold">You can now start Selling directly From Your Stor, Collect Payments and Deliver to your Customers Addresses</span>
-                </p> -->
             </div>
-            <!-- image and CTA -->
             <div class="flex justify-center align-middle flex-col">
                 <img loading="lazy" class="w-48 h-48 mt-12 mx-auto rounded-full shadow-sm flex items-center justify-center" src="../../img/me.jpg" alt="SToR">
                 <div class="px-6 flex justify-center align-middle">
@@ -872,13 +943,20 @@
             </div>
         </div>
         <p class="text-center text-sm">Your customers don't see this ads</p>
-    </div>
+    </div> -->
     
     
     <!-- bg with images -->
-    <div class="hidden flex justify-center z-100 fixed inset-0" id="bgFullScreen" @click="bgFullScreen()">
-        <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
+    <div class="hidden flex justify-center z-100 fixed inset-0 flex-col backdrop-blur-sm" id="bgFullScreen">
+        <i @click="bgFullScreen()" class="fixed top-12 right-12 bg-red-200 active:bg-red-500 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
+        <img class="w-100 rounded overflow-hidden h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
         </img>
+        
+        <div class="w-full flex justify-center align-middle p-6 flex-row">
+            <template x-for="scr in bgScreens">
+                <img class="w-12 h-12 rounded mx-2 object-contain object-center cursor-pointer" :src="scr.img" @click="bcmFullScrn(scr.img)"></img>
+            </template>
+        </div>
     </div>
   
     
