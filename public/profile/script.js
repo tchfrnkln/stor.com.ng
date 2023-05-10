@@ -160,7 +160,7 @@ var sales_pre = document.querySelector('#sales_pre');
 const checkUser = () => {
   if (userP.uid != location.search.substring(1)) {
     addContentEditBtn.classList.add("hidden");
-    waterAds.classList.add("hidden");
+    // waterAds.classList.add("hidden");
     sales_pre.classList.add("hidden");
   } else {
     // waterAds.classList.remove("hidden");

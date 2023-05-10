@@ -53,7 +53,7 @@ const checkUserProd = () => {
   } else {
     newProductAdd.classList.remove("hidden")
     customerStat.classList.add("hidden")
-    waterAds.classList.remove("hidden")
+    // waterAds.classList.remove("hidden")
   }
 }
 
