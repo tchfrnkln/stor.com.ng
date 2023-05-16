@@ -155,6 +155,7 @@ function writeUserData(userId, data) {
 // hide waterAds to all except owner
 // var waterAds = document.querySelector('#waterAds');
 var sales_pre = document.querySelector('#sales_pre');
+var ordered_pre = document.querySelector('#ordered_pre');
 
 
 const checkUser = () => {
@@ -162,6 +163,7 @@ const checkUser = () => {
     addContentEditBtn.classList.add("hidden");
     // waterAds.classList.add("hidden");
     sales_pre.classList.add("hidden");
+    ordered_pre.classList.add("hidden");
   } else {
     // waterAds.classList.remove("hidden");
     // Update all data Inputed
@@ -352,15 +354,26 @@ const genMainStat = (x, y, z, onlyCount) => {
   });
 }
 
-genMainStat("store", "Product")
+genMainStat("store", "Products")
 genMainStat("reviews", "Reviews")
 genMainStat("stor_subs", "Subscribed")
 
 genMainStat("affiliate", "Marketer", "count", "onlyCount")
-genMainStat("affiliate", "commision", "sales")
+genMainStat("affiliate", "Commision", "sales")
+genMainStat("affiliate", "Payout", "paid")
+
 
 
 
 var getgenerated = () => {
   return genVal
 }
+
+
+
+// store_statID = document.querySelector("#store_statID")
+  
+// store_statID.addEventListener("dblclick", () => {
+//   alert("double clicked")
+// })
+  

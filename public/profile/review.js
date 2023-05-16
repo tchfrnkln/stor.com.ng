@@ -93,7 +93,9 @@ var reviews_main = document.querySelector("#reviews_main")
 var reviews_pre = document.querySelector("#reviews_pre")
 
 reviews_pre.addEventListener('click', () => {
+  let ht = document.querySelector("body").scrollHeight;
   reviewUpdater.click()
   reviews_main.classList.toggle("hidden")
-  // reviews_pre.classList.add("hidden")
+  reviews_pre.classList.add("hidden")
+  window.scrollTo(0, ht+500)
 })

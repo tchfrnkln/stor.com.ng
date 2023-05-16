@@ -32,7 +32,7 @@
             store_desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?",
             store_about:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis suscipit tenetur magnam dolore assumenda accusamus, aut nulla excepturi veniam quis, molestias tempora repellat harum sapiente pariatur ipsam exercitationem asperiores eveniet?",
             profile_img:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.juuce.com.au%2Fwp-content%2Fuploads%2F2013%2F06%2FGTI.jpg&f=1&nofb=1&ipt=fc8c7b5fb7b4bde56e10bbb9ebde3161b3bcb1d1a1e019274343b7cd4e9a20b3&ipo=images",
-            subText:"Become a Subscriber",
+            subText:"Subscribe",
             updateAll(){
                 if(sessionStorage.getItem('store_name') && (location.search.substring(1,4) != "get")){    
                     this.store_name = sessionStorage.getItem('store_name')
@@ -86,7 +86,8 @@
             subStat(){
                 // side change subscribe btn
                 if(subsVal.includes(userP.email)){
-                    this.subText = "Thanks for Being a Subscriber"
+                    this.subText = "Subscribed"
+                    document.querySelector('#bellICO').classList.add("text-red-500")
                 }
                 //carry generated statistics
                 this.genStat();  
@@ -128,13 +129,13 @@
     <!-- profile main -->
     <div class="p-4" x-show="stgt">
         <!-- top detail/about, review and update btn -->
-        <div class="w-full bg-white p-8 shadow-sm rounded mt-24 font-bold flex flex-col">
+        <div class="w-full bg-white p-8 rounded mt-24 font-bold flex flex-col">
             <!-- top -->
             <div class="grid grid-cols-1 lg:grid-cols-3">   
                  <!-- store statistics  -->
-                <div class="grid grid-cols-3 text-center gap-4 lg:text-left order-last lg:order-first mt-6 lg:mt-0">
+                <div class="grid grid-cols-3 text-center gap-4 lg:text-left order-last lg:order-first mt-6 lg:mt-0" id="store_statID">
                     <template x-for="d in stat" :key="d.name">
-                        <div class="hover:shadow p-2 rounded cursor-pointer lg:w-max">
+                        <div class="p-2 rounded cursor-pointer lg:w-max">
                             <p class="font-bold text-gray-700 text-xl" x-text="d.num"></p>        
                             <p class="text-gray-400 text-xs md:text-sm" x-text="d.name"></p>      
                         </div>
@@ -151,9 +152,12 @@
                 </div>    
                 <!-- Top buttons -->
                 <div class="flex mt-32 lg:mt-0 justify-between align-middle">
-                    <div class="h-max flex justify-between w-full">
-                        <a class="text-white p-3 rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg transition transform hover:-translate-y-0.5 text-center text-md mx-2" :href=`./product${location.search}`> Hottest Products</a>    
-                        <a  class="text-white text-center p-3 rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg transition transform hover:-translate-y-0.5 text-md mx-2 cursor-pointer" @click="subsToStore()" x-text="subText">Subscribe</a>    
+                    <div class="h-max flex justify-center w-full">
+                        <a class="text-white p-3 rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg transition transform hover:-translate-y-0.5 text-center text-md mx-2 w-32" :href=`./product${location.search}`>Shop</a>   
+                        <div class="flex justify-center align-middle cursor-pointer">
+                            <a  class="text-center p-3 rounded text-gray-800 transition transform hover:-translate-y-0.5 text-md mx-2" @click="subsToStore()" x-text="subText"></a>
+                            <i id="bellICO" class="fa-solid fa-bell text-gray-700 animate-pulse"></i>
+                        </div> 
                     </div>
                 </div>  
             </div> 
@@ -177,13 +181,16 @@
                 </div>
                 <!-- review btn -->
                 <div class="w-sm flex justify-center flex-col md:flex-row">
-                    <a :href=`./product${location.search}` id="reviewBtn" class="md:w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-blue-700 focus:bg-blue-400 border rounded bg-blue-600 cursor-pointer md:mr-6">Mouth Watering Deals</a> 
+                    <a :href=`./product${location.search}` id="reviewBtn" class="hidden md:w-80 text-white text-center py-5 p-4 mt-4 hover:shadow-lg hover:bg-blue-700 focus:bg-blue-400 border rounded bg-blue-600 cursor-pointer md:mr-6">Mouth Watering Deals</a> 
                     
-                    <a :href=`./sales/` id="sales_pre" class="md:w-80 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-green-700 border rounded bg-green-600 cursor-pointer">Sales Chart</a>
+                    <div class="flex justify-between">
+                        <a :href=`./ordered/` id="ordered_pre" class="md:w-45 text-dark text-center py-5 p-4 md:mt-4 mt-12 rounded cursor-pointer flex justify-center">Orders <p class="w-2 h-2 m-2 rounded-full bg-green-600 animate-ping"></p></a>
+                        
+                        <a :href=`./sales/` id="sales_pre" class="md:w-45 text-dark text-center py-5 p-4 md:mt-4 mt-12 rounded cursor-pointer flex justify-center">Sales <p class="w-2 h-2 m-2 rounded-full bg-blue-600 animate-ping"></p></a>
+                    </div>
                     
-                    <button id="reviews_pre" class="mx-6 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'top Reviews about '+store_name"></button>
-                    
-                </div> 
+                    <button id="reviews_pre" class="mx-6 text-white text-center py-5 p-4 md:mt-4 mt-12 hover:shadow-lg hover:bg-gray-900 border rounded bg-gray-800 cursor-pointer" x-text="'Reviews - '+store_name"></button>
+                </div>
                 <!-- update btn -->
                 <div class="w-sm flex justify-center">
                     <a id="contentEditBtnUpdate" class="hidden w-32 text-white text-center p-4 mt-4 hover:shadow-lg hover:bg-green-600 border rounded bg-green-500 cursor-pointer mx-6">Update</a>  
@@ -224,7 +231,7 @@
     <!-- add a review form -->
     <div x-show="stgt">
         <div id="reviews_main" class="hidden">
-            <h1 class="text-2xl p-6 m-4 capitalize font-bold" x-text="'Why Customers Chooses '+store_name"></h1>
+            <h1 class="text-2xl p-6 m-4 capitalize font-bold" x-text="'Reviews - '+store_name"></h1>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto items-center shadow-sm mt-6 mx-8 mb-4">
                 <template x-for="rev in reviews" key="rev.id">
                     <div class="card min-w-lg bg-base-100 shadow-sm flex justify-center align-middle my-6">
