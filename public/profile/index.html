@@ -145,7 +145,7 @@
                 <div class="relative">     
                     <div class="border-4 w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500 bg-center bg-cover bg-no-repeat" :style="`background-image:url(${profile_img})`" id="profileImg" @click="bigBg(profile_img)">
                     </div>    
-                    <div title="Copy Profile Link to Clipboard" id="copyProfileUrlbtn" @click="copyProUrl()" class="absolute bottom-3 left-5 text-gray-600 p-2 hover:bg-gray-100 focus:bg-gray-100 active:bg-gray-100 active:text-blue-400 rounded-full cursor-pointer">
+                    <div title="Copy Profile Link to Clipboard" id="copyProfileUrlbtn" @click="copyProUrl()" class="absolute bottom-3 left-5 text-gray-600 p-2 hover:bg-gray-100 focus:bg-gray-100 bg-gray-100 active:bg-gray-100 active:text-blue-400 rounded-full cursor-pointer">
                         <i class="fa-regular fa-copy"></i>
                     </div>
                     <input accept="image/*" type="file" name="image" id="profileImgInp" class="hidden" @change="showPreview(event)">

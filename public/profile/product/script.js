@@ -106,7 +106,7 @@ addToStore.addEventListener('click', (e) => {
   if ((totalProductSelling == 5) && (plan_life != true)) {
     document.querySelector("#updMainID").classList.add("hidden")
     document.querySelector("#updPriceOffer").classList.remove("hidden")
-    alert("Buy a LifeTime Plan To add More Products to your Dashboard, Refresh Page if this won't be the best Time to Buy")
+    alert("Buy a LifeTime Plan To add More Products to your Dashboard")
   } else {
     uploadNew(file, uniq, newContent, allFilesImg)
   }
