@@ -120,13 +120,33 @@
                 // location.assign(`profile/product/?${x},${y}`)
                 return `profile/product/?${x},${y}`
             },
+            buyQuickId:"",
+            buyQuickStid:"",
             bgFullScreenImg:"",
             bgFullScreen(){
                 document.querySelector('#bgFullScreen').classList.toggle("hidden")
+                document.querySelector('#buyQuick').classList.toggle("hidden")
             },
             bigBg(a){
-                this.bgFullScreenImg = a
+                this.bgFullScreenImg = a.img
                 this.bgFullScreen()
+                this.scrOver(a)
+            },
+            scrPrMain:"",
+            scrPrP:"",
+            scrprct:"",
+            scrOver(a){
+                var lrx = Math.floor(Math.random()*2);
+                this.scrPrMain = parseInt(a.itm_price).toLocaleString()
+                if(lrx == 0){
+                    this.scrPrP = Math.round(a.itm_price * 1.6).toLocaleString()
+                    this.scrprct = "40%"
+                }else{   
+                    this.scrPrP = (a.itm_price * 2).toLocaleString()
+                    this.scrprct = "50%"
+                }
+                this.buyQuickId = a.id
+                this.buyQuickStid = a.store_uid
             },
             midflowHide: false
         }))
@@ -134,6 +154,7 @@
     </script>
 </head>
 <body x-data="content" class="p-6">
+    
     
     <div class="fixed w-screen inset-0 h-max bg-white z-10 py-4">
         <!-- top level -->
@@ -192,13 +213,13 @@
         </div>
     </div>
     
-    <!-- Resulting products -->
+    <!-- Resulting products and Loaders-->
     <div>
-        <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12">
+        <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-6 gap-3 my-12 relative">
             <template x-for="p in product">
                     <div class="w-full h-52 bg-gray-100 rounded overflow-hidden cursor-pointer hover:animate-pulse">
-                        <div class="h-28 bg-blue-100"  :src="p.img" @click="bigBg(p.img)">
-                            <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
+                        <div class="h-28 bg-blue-100"  :src="p.img" @click="bigBg(p)">
+                            <img loading="lazy" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center"/>
                         </div>
                         <a :href="prdClicked(p.id, p.store_uid)">
                             <div class="p-4">
@@ -222,9 +243,26 @@
     </div>
 
     <!-- bg with images -->
-    <div class="hidden flex justify-center z-100 fixed inset-0 backdrop-blur-sm" id="bgFullScreen" @click="bgFullScreen()">
-        <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
-        </img>
+    <div class="hidden flex justify-center z-20 fixed inset-0 backdrop-blur-sm" id="bgFullScreen" @click="bgFullScreen()">
+        <img class="w-100 rounded h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg"/>
+    </div>
+    
+    <!-- Scroll Over on Image Preview-->
+    <div class="hidden w-full z-20 fixed top-10 md:px-2" id="buyQuick">
+        <a :href="prdClicked(buyQuickId, buyQuickStid)" class="flex justify-center align-center flex-col bg-green-100 rounded p-2 cursor-pointer w-max">
+            <div class="flex justify-between align-bottom md:w-80 w-full">
+                <div class="flex flex-col p-1 border border-green-200 rounded">
+                    <p class="text-xs">Cost Price</p>
+                    <p class="line-through" x-text="scrPrP+'naira'"></p>
+                </div>
+                <div class="flex flex-col p-1 border border-green-200 rounded">
+                    <p class="text-xs">Buy Now</p>
+                    <p x-text="scrPrMain+'naira'"></p>
+                </div>
+                <p class="text-xs bg-amber-400 rounded h-max p-1" x-text="scrprct+'OFF'"></p>
+            </div>
+            <p class="text-center text-xs p-1 ">click to view more</p>
+        </a>
     </div>
     
     <div class="text-center font-medium text-green-700"><span id="counter">0</span>%</div>

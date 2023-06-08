@@ -21,7 +21,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.data('contents', ()=> ({
                 to:location.search.substr(1),
-                src:"../pages/Ultimate_Tool/img/sellables.jpeg",
+                src:"../img/ui.png",
                 upd(){
                     console.log(this.src);
                 }
@@ -37,12 +37,12 @@
                 <p class="text-center text-xs">brought to you by <span class="font-bold text-blue-600">SToR</span></p>
                 <div class="flex xl:justify-center lg:justify-between justify-center items-center flex-wrap h-full g-6">
                     <!-- image top -->
-                    <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0 flex justify-center align-center" x-init="upd()">
-                        <img :src="src" class="w-full md:w-80" alt="stor.com.ng" />
+                    <div class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 my-6 md:mb-0 flex justify-center align-center" x-init="upd()">
+                        <img :src="src" class="w-full md:w-80 border-2 border-blue-200 rounded" />
                     </div>
                     
                     <!-- form login, new, verification sent, Email verified -->
-                    <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
+                    <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-6 md:mb-0">
                         <!-- Log in -->
                         <form id="logIn_form" class="hidden">
                             <!-- optional signup -->

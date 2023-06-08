@@ -609,6 +609,7 @@ payBtnForm.addEventListener('submit', (e) => {
           // to buyer paid
           writeOnPayComplete(userP.uid, i.id, i, "paid")
           
+          // 10%
           let prcnt = ((i.itm_price * i.count) * 10) / 100;
           
           console.log("i.upline", i.upline);
