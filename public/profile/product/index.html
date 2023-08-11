@@ -22,7 +22,6 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@2.41.0/dist/full.css" rel="stylesheet" type="text/css" />
     <!-- /daisy end -->
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
     <script defer>
     document.addEventListener('alpine:init', () => {
         Alpine.data('content', ()=> ({
@@ -329,10 +328,17 @@
                     if(a >= frTmFlp.length){
                         clearInterval(fliper)
                     }
-                }, 4000);
+                }, 3000);
             },
             bcmFullScrn(image){
                 this.bgFullScreenImg = image
+            },
+            valToNxt:0,
+            bgChangeToNext(){
+                var val = Math.floor(Math.random()*this.bgScreens.length)
+                if(val == this.valToNxt) return this.bgChangeToNext()
+                this.bgFullScreenImg = this.bgScreens[val].img
+                this.valToNxt = val
             },
             shwDis(x){
                 console.log("x", x);
@@ -953,12 +959,11 @@
     <!-- bg with images -->
     <div class="hidden flex justify-center z-100 fixed inset-0 flex-col backdrop-blur-sm" id="bgFullScreen">
         <i @click="bgFullScreen()" class="fixed top-12 right-12 bg-red-200 active:bg-red-500 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
-        <img class="w-100 rounded overflow-hidden h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg">
-        </img>
+        <img class="w-100 rounded overflow-hidden h-4/5 m-6 md:m-12 object-contain object-center" :src="bgFullScreenImg" @click="bgChangeToNext()">
         
         <div class="w-full flex justify-center align-middle p-6 flex-row">
             <template x-for="scr in bgScreens">
-                <img class="w-12 h-12 rounded mx-2 object-contain object-center cursor-pointer" :src="scr.img" @click="bcmFullScrn(scr.img)"></img>
+                <img class="w-12 h-12 rounded mx-2 object-contain object-center cursor-pointer" :src="scr.img" @click="bcmFullScrn(scr.img)">
             </template>
         </div>
     </div>
