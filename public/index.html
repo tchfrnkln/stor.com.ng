@@ -248,8 +248,9 @@
     </div>
     
     <!-- Scroll Over on Image Preview-->
-    <div class="hidden w-full z-20 fixed top-10 md:px-2" id="buyQuick">
-        <a :href="prdClicked(buyQuickId, buyQuickStid)" class="flex justify-center align-center flex-col bg-green-100 rounded p-2 cursor-pointer w-max">
+    <div class="hidden w-max z-20 fixed bottom-10 right-10 md:px-2 flex justify-center align-middle flex-col cursor-pointer" id="buyQuick">
+        <p class="p-4 bg-amber-400 rounded w-max">Shop Now</p>
+        <a :href="prdClicked(buyQuickId, buyQuickStid)" class="flex justify-center align-center flex-col bg-green-100 rounded p-2 w-max">
             <div class="flex justify-between align-bottom md:w-80 w-full">
                 <div class="flex flex-col p-1 border border-green-200 rounded">
                     <p class="text-xs">Cost Price</p>
