@@ -100,6 +100,8 @@
                         this.stlCncl = true
                         this.stlUpdBtn = true
                         this.editSettlements(true)
+                        document.querySelector('#stlUpdBtnMain').classList.remove("hidden");
+                        document.querySelector('#stlEdtbtncncl').classList.remove("hidden");
                     }
                 },
                 stlUpdBtnClicked(){           
@@ -164,7 +166,7 @@
         <!-- top stor -->
         <div class="mt-6">
             <a class="flex justify-center align-middle text-blue-600 cursor-pointer" href="../../">
-            <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+            <span class="font-bold text-sm">ST<span class="font-bold text-yellow-500">o</span>R</span>
             </a>
         </div>
     </div>
@@ -172,9 +174,9 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-2">
         <!-- for Order Stat -->
-        <div class="w-full flex flex-col justify-center">
-            <div class="flex w-full max-w-md">
-                <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
+        <div class="flex justify-center align-middle">
+            <div class="flex w-full max-w-md bg-gray-100 rounded p-6 h-max">
+                <div class="h-max flex-1 m-5 relative rounded bg-blue-200 shadow">
                     <div class="bg-green-500 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
                         <i class="fa fa-chart-simple w-5"></i>
                     </div>
@@ -184,8 +186,8 @@
                         <div class="text-right text-2xl" x-text="salesCount()">0pcs</div>
                     </div>
                 </div>
-                <div class="flex-1 m-5 relative rounded bg-blue-200 shadow">
-                    <div class="bg-red-800 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
+                <div class="h-max flex-1 m-5 relative rounded bg-blue-200 shadow">
+                    <div class="bg-blue-800 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
                         <i class="fa fa-sack-dollar"></i>
                     </div>
             
@@ -194,54 +196,43 @@
                         <div class="text-right text-2xl" x-text="cashFlow()">0k</div>
                     </div>
                 </div>        
-            </div>
-            
-            <!-- bonus -->
-            <div class="hidden flex-1 m-6 relative rounded bg-blue-200 shadow">
-                <div class="bg-blue-800 pl-10 pr-10 pt-8 pb-8 ml-3 top-0 -mt-4 -mr-4 rounded text-white fill-current shadow">
-                    <i class="fa fa-trophy"></i>
-                </div>
-        
-                <div class="bg-gray-100 p-3 rounded float-left top-0 m-3 w-max">
-                    <div class="text-right text-sm">Bonus</div>
-                    <div class="text-right text-2xl">N 10,000</div>
-                </div>
-            </div>        
+            </div>                   
         </div>
-    
         <!-- Settlemens -->
-        <div class="w-full flex justify-center flex-col p-6 relative">
-            <div class="w-full flex justify-center">
-                <div class="w-full max-w-sm text-center rounded grid grid-cols-2 p-4 gap-4">
-                    <div class="text-center py-6 bg-accent rounded-box font-medium text-xs relative">
-                        <accNum title="acc_number" x-text="settle.acc_number" id="stlDet"></accNum>
-                        <i class="absolute bottom-3 right-3 text-white fa fa-piggy-bank"></i>
+        <div class="flex justify-center align-middle">
+            <div class="w-full flex justify-center flex-col p-6 relative max-w-md bg-gray-100 rounded text-white">
+                <div class="w-full flex justify-center">
+                    <div class="w-full max-w-sm text-center rounded grid grid-cols-2 p-4 gap-4">
+                        <div class="text-center py-6 bg-green-500 rounded-box font-medium text-xs relative">
+                            <accNum title="acc_number" x-text="settle.acc_number" id="stlDet"></accNum>
+                            <i class="absolute bottom-3 right-3 text-white fa fa-piggy-bank"></i>
+                        </div>
+                        <div class="text-center py-6 rounded-box bg-blue-500 font-medium text-xs capitalize relative">
+                            <p title="bank_name" x-text="settle.bank_name" id="stlDet"></p>
+                            <i class="absolute bottom-3 right-3 text-white fa fa-building-columns"></i>                    
+                        </div>
+                        
                     </div>
-                    <div class="text-center py-6 rounded-box bg-error font-medium text-xs capitalize relative">
-                        <p title="bank_name" x-text="settle.bank_name" id="stlDet"></p>
-                        <i class="absolute bottom-3 right-3 text-white fa fa-building-columns"></i>                    
-                    </div>
-                    
                 </div>
-            </div>
-            <div class="w-90 text-center p-6 rounded-box bg-error font-medium capitalize relative">
-                <p title="acc_name" x-text="settle.acc_name" id="stlDet"></p>
-                <i class="fa fa-signature absolute bottom-3 right-3 text-white"></i>
-            </div>
-            
-            <button class="btn my-6 transition" id="stlUpdBtnMain" x-show="stlUpdBtn" @click="stlUpdBtnClicked()">update</button>
-            
-            <!-- setting -->
-            <div class="absolute top-0 right-2 p-6">
-                <i @click="edtSettlements(true)" x-show="stlhd" class="bg-blue-200 active:bg-blue-500 active:text-white cursor-pointer rounded-full p-2 fa-regular fa-hand"></i>
-                <i @click="edtSettlements(false)" x-show="stlCncl" class="bg-red-200 active:bg-red-500 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
+                <div class="w-90 text-center p-6 rounded-box bg-blue-500 font-medium capitalize relative">
+                    <p title="acc_name" x-text="settle.acc_name" id="stlDet"></p>
+                    <i class="fa fa-signature absolute bottom-3 right-3 text-white"></i>
+                </div>
+                
+                <button class="hidden btn my-6 transition" id="stlUpdBtnMain" x-show="stlUpdBtn" @click="stlUpdBtnClicked()">update</button>
+                
+                <!-- setting -->
+                <div class="absolute top-0 right-2 p-6">
+                    <i @click="edtSettlements(true)" x-show="stlhd" class="bg-blue-200 active:bg-blue-500 text-gray-900 active:text-white cursor-pointer rounded-full p-2 fa-regular fa-hand"></i>
+                    <i @click="edtSettlements(false)" id="stlEdtbtncncl" x-show="stlCncl" class="hidden bg-red-200 active:bg-red-500 text-gray-900 active:text-white cursor-pointer w-8 text-center rounded-full p-2  fa fa-xmark"></i>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="p-6">
         <!-- Ordedered and Delivery -->
-        <div>
+        <div class="px-2">
             <!-- card for ordered customers -->
             <p class="p-3 font-bold text-2xl">Recent Orders (<span x-text="orders.length" class="text-green-600"></span>)</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-blue-100 mx-3 rounded">

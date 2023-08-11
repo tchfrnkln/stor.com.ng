@@ -57,10 +57,15 @@ var reviewBtn = document.querySelector('#reviewBtn');
 var cEditStart = document.querySelector('#cEditStart');
 
 
+var updonEdt = document.querySelector('#updonEdt');
+
+
+
 // content edit base
 addContentEditBtn.addEventListener('click', (e) => {
   e.preventDefault()
   addContentEditBtn.classList.add("hidden")
+  updonEdt.classList.remove("hidden")
   popInOut(cEditStart)
   
   // loop through and set attr + addlisteners to all values

@@ -244,11 +244,13 @@
                 popInOut(copyUrlcomplt)
                 location.assign("https://api.whatsapp.com/send?text="+copiableLink);
             },
-            seemoreOnthis(){
+            seemoreOnthis(val){
                 this.picks = []
                 snap(owner, this.detail.id, true)
                 window.scrollTo(0,0)
                 this.replaceNewLines(current)
+                this.bigBg(val)
+                this.bgFullScreen()
             },
             spaceOutPickLetter(){
                 picksLetter = this.picks[0].letter
@@ -312,7 +314,6 @@
                     }
                 })
                 
-                
                 this.bgScreens = allAry
                 
                 if(allAry.length <= 0) return this.bgFullScreenImg = ma.img
@@ -323,11 +324,11 @@
                 //  uses frTmFlp to display new images on intervals
                 var a = 1
                 var fliper = setInterval(() => {
-                    this.bgFullScreenImg = frTmFlp[a]
+                    this.bgFullScreenImg = frTmFlp[a];
+                    if(this.picks[0].img) this.picks[0].img = frTmFlp[a];                    
+                    
                     a++
-                    if(a >= frTmFlp.length){
-                        clearInterval(fliper)
-                    }
+                    if(a >= frTmFlp.length) a = 0;
                 }, 3000);
             },
             bcmFullScrn(image){
@@ -342,6 +343,10 @@
             },
             shwDis(x){
                 console.log("x", x);
+            },
+            prodImgOnly(val){
+                this.picks = []
+                this.bigBg(val)
             }
         }))
     })
@@ -507,17 +512,15 @@
             </div>
         </div>
         
-
-        
         <!-- preview of 1 product -->
         <div class="grid grid-cols-1 gap-4 p-4">
             <template x-for="p in picks" :key="p.id">
                 <div class="relative">
                     <div class="w-full flex justify-center md:justify-start align-middle  flex-col md:flex-row flex-col-reverse">
                         <!-- product -->
-                        <div class="w-sm md:w-2/6 bg-white shadow rounded p-4 h-max">
+                        <div class="w-sm md:w-2/6 bg-white rounded p-4 h-max">
                             <!-- product image -->
-                            <div class="h-48 w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
+                            <div class="h-max w-100 bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded overflow-hidden relative">
                                 <img loading="lazy" @click="bigBg(p)" :src="p.img" :alt="p.alt" class="h-full w-full object-cover object-center">
                                 
                                 <!-- plus(+) and select svgs -->
@@ -584,7 +587,7 @@
                                         </svg>
                                     </button>
                                 </div>
-                                <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocartPre(p)">Add to order
+                                <button class="py-2 p-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocartPre(p)">Add to order
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
                                     </svg>
@@ -618,7 +621,7 @@
                     <div class="w-80 bg-white shadow rounded p-6">
                         <!-- product image -->
                         <div class="h-48 w-full bg-gray-200 flex flex-col justify-between bg-cover bg-center rounded relative overflow-hidden">
-                            <img loading="lazy" @click="bigBg(detail)" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
+                            <img loading="lazy" @click="prodImgOnly(detail)" :src="detail.img" :alt="detail.alt" class="h-full w-full object-cover object-center">
                             <!-- plus(+) and delete svgs-->
                             <div class="absolute p-4 top-0 right-0 flex justify-between align-middle w-full">
                                 <button title="delete item" class="text-red-800" @click="selectedProductcheck(this)" x-show="isOwner">
@@ -652,7 +655,7 @@
                             <button class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="addTocartPre(detail)">Add to order 
                                 <i class="pl-4 fa-solid fa-cart-shopping"></i>
                             </button>
-                            <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="seemoreOnthis()">View Decription</button>
+                            <button class="py-2 px-4 bg-gray-500 text-white rounded hover:bg-gray-600 active:bg-gray-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center" @click="seemoreOnthis(detail)">View Decription</button>
                         </div>   
                     </div>
                 </div>
@@ -690,7 +693,7 @@
             <!-- top stor -->
             <div class="absolute top-0 left-0 w-max px-2">
                 <a class="flex justify-center align-middle text-blue-600 cursor-pointer" href="../../">
-                  <span class="font-bold text-xl">ST<span class="font-bold text-yellow-500">o</span>R</span>
+                  <span class="font-bold text-sm">ST<span class="font-bold text-yellow-500">o</span>R</span>
                 </a>
             </div>
             
