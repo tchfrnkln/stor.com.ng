@@ -60,6 +60,7 @@ const checkUserProd = () => {
 // store data to db
 var updEditable = document.querySelectorAll('#updEditable');
 var addToStore = document.querySelector('#addToStore');
+var addToStoreIcons = document.querySelectorAll('#addToStore i');
 var profileImgInp = document.querySelector('#profileImgInp');
 
 
@@ -77,6 +78,10 @@ addToStore.addEventListener('click', (e) => {
   var file = profileImgInp.files[0];
   var allFilesImg = profileImgInp.files;
   var plan_life;
+
+  //make loading ui visible
+  addToStoreIcons[0].classList.add('hidden')
+  addToStoreIcons[1].classList.remove('hidden')
   
   // return console.log("allFilesImg", allFilesImg.length)
   
@@ -266,6 +271,8 @@ var uploadNew = (file, key, object, allFilesImg) => {
         
         writeUserData(userP.uid, key, object);
         popInOut(uploadPop);
+        addToStoreIcons[0].classList.remove('hidden')
+        addToStoreIcons[1].classList.add('hidden')
       }
     }, 100);
     
