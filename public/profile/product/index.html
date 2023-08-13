@@ -315,21 +315,21 @@
                 })
                 
                 this.bgScreens = allAry
-                
-                if(allAry.length <= 0) return this.bgFullScreenImg = ma.img
-                
-                
-                
-                
                 //  uses frTmFlp to display new images on intervals
                 var a = 1
                 var fliper = setInterval(() => {
-                    this.bgFullScreenImg = frTmFlp[a];
-                    if(this.picks[0].img) this.picks[0].img = frTmFlp[a];                    
+                    console.log("frTmFlp[a]", frTmFlp[a])
+                    if(frTmFlp[a] != undefined){
+                        this.bgFullScreenImg = frTmFlp[a];
+                    }else{
+                        clearInterval(fliper)
+                    }
+                    if(this.picks[0] != undefined) this.picks[0].img = frTmFlp[a];                    
                     
                     a++
                     if(a >= frTmFlp.length) a = 0;
                 }, 3000);
+                
             },
             bcmFullScrn(image){
                 this.bgFullScreenImg = image
