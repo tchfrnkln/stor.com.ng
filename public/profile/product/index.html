@@ -321,11 +321,8 @@
                     console.log("frTmFlp[a]", frTmFlp[a])
                     if(frTmFlp[a] != undefined){
                         this.bgFullScreenImg = frTmFlp[a];
-                    }else{
-                        clearInterval(fliper)
-                    }
-                    if(this.picks[0] != undefined) this.picks[0].img = frTmFlp[a];                    
-                    
+                    }else{clearInterval(fliper)}
+                    if((this.picks[0] != undefined) && (frTmFlp[a] != undefined)) this.picks[0].img = frTmFlp[a];
                     a++
                     if(a >= frTmFlp.length) a = 0;
                 }, 3000);
@@ -352,7 +349,7 @@
     })
     </script>
 </head>
-<body data-theme="light" x-data="content" x-init="getData()" class="overflow-x-hidden">
+<body data-theme="light" x-data="content" x-init="getData()" class="overflow-x-hidden min-h-screen">
     
     <div class="w-100 flex justify-center align-middle p-6 flex-col pt-24">
         <!-- updaters/ triggers -->
