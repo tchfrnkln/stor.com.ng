@@ -14,7 +14,7 @@ auth.onAuthStateChanged(user => {
         paymentFormInp[3].value = U_names[1]
   } else {
         console.log('User is logged out!')
-        location.assign('../../auth?redirect=' + location.href)
+        // location.assign('../../auth?redirect=' + location.href)
   }
 })
 
@@ -49,8 +49,10 @@ function payWithPaystack(e) {
 var payNowBtnAll = document.querySelectorAll('#payNowBtn')
 
 for (let i = 0; i < payNowBtnAll.length; i++) {
-    payNowBtnAll[i].addEventListener('click', () => {
-        payWithPaystackBtn.click()       
+  payNowBtnAll[i].addEventListener('click', () => {
+      var URL =  "https://api.whatsapp.com/send/?phone=2348153244501&text=I%20want%20to%20make%20payment%20Immediately"
+      return window.open(URL, '_blank');
+      payWithPaystackBtn.click()       
     })
     
 }
