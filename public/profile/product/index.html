@@ -93,14 +93,13 @@
                 this.askForSizeTog = !this.askForSizeTog
                 document.querySelector("#askForSizeId").classList.remove("hidden");
                 if(x == "add"){
-                    // if(this.mySize == 0) {
-                    //     this.askForSizeTog = !this.askForSizeTog
-                    //    return alert("Select a Valid Size")
-                    // }
-                    // console.log("Should Write users Now");
+                    if(this.mySize == 0) {
+                        this.askForSizeTog = !this.askForSizeTog
+                       return alert("Select a Valid Size")
+                    }
+                    console.log("Should Write users Now");
                     
-                    // this.addTocart(this.addTocartPreCntnt.id, this.addTocartPreCntnt.count, this.mySize)
-                    this.addTocart(this.addTocartPreCntnt.id, this.addTocartPreCntnt.count, 10)
+                    this.addTocart(this.addTocartPreCntnt.id, this.addTocartPreCntnt.count, this.mySize)
                 }
             },
             allShopSize:[{size:13},{size:14},{size:16}],
